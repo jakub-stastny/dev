@@ -12,6 +12,7 @@ end
 
 environment.each do |var_name|
   var_content = ENV.fetch(var_name)
+  abort "#{var_name} cannot be empty" if var_name.empty?
   args << "-e #{var_name}=#{var_content}"
 end
 
@@ -22,8 +23,11 @@ end
 puts "docker create -it #{args.join(' ')} --name #{name} --hostname #{name} botanicus/dev"
 puts "docker start #{name}"
 
-puts "\nAutomatically connect to this docker instance on login? (Enter/C-c) "
-STDIN.read
+begin
+  puts "\nAutomatically connect to this docker instance on login? (Enter/C-c) "
+  STDIN.readline
+rescue Interrupt
+end
 
 File.open(File.join(ENV['HOME'], '.bashrc'), 'a') do |file|
   file.puts <<~EOF
