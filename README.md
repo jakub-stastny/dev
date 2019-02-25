@@ -2,6 +2,8 @@
 
 ## VPS setup
 
+_Do not copy it from Vim, not even with `set nonu`, it'll preserve unwanted line breaks._
+
 1. Create a new VPS with my _iPad generic_ SSH key.
 2. Add a Blink host entry.
 3. `DEBIAN_FRONTEND=noninteractive apt update && apt upgrade -y && apt autoremove -y`
@@ -14,7 +16,7 @@
 ## SSH keys
 
 1. Generate `ssh-keygen -t rsa`
-2. Add to GitHub/GitLab.
+2. Add to [GitHub](https://github.com/settings/keys)/[GitLab](https://gitlab.mobile-sphere.com/profile/keys).
 
 _I might use 1 VM with multiple images, more users, and exporting a different range for each project and then `mosh riffr@server` etc. One thing is it should have the same user, otherwise proxying between host and guest `~/.ssh` screws permissions._
 
