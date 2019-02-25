@@ -12,12 +12,12 @@ end
 
 environment.each do |var_name|
   var_content = ENV.fetch(var_name)
-  abort "#{var_name} cannot be empty" if var_name.empty?
+  abort "#{var_name} cannot be empty" if var_content.empty?
   args << "-e #{var_name}=#{var_content}"
 end
 
 volumes.each do |path|
-  args << "-v #{path}:#{path}"
+  args << "-v #{path}:#{File.expand_path(path)}"
 end
 
 puts "docker create -it #{args.join(' ')} --name #{name} --hostname #{name} botanicus/dev"
