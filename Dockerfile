@@ -14,7 +14,7 @@ RUN /opt/rubies/ruby-*/bin/gem install pry prowl
 RUN apt-get install -y libevent-dev libncurses-dev pkg-config && git clone https://github.com/tmux/tmux.git && cd tmux && sh autogen.sh && ./configure && make && make install && cd .. && rm -rf tmux
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-RUN cd /root && git clone https://github.com/botanicus/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/dotfiles/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:botanicus/dotfiles.git
+RUN cd /root && git clone https://github.com/botanicus/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/dotfiles/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:botanicus/dotfiles.git && rm -rf ~/.ssh
 RUN nvim +PlugInstall +qall
 RUN chsh -s $(which zsh)
 
