@@ -20,4 +20,4 @@ _NOTE: As DigitalOcean runs SSD's, there's no swap file enabled by default. It's
 
 It's best to keep the host OS without SSH keys and only generate them in the Docker environments using [docker-project-manager](https://github.com/botanicus/docker-project-manager).
 
-Among other things, without dotfiles that have ~.gitconfig` with name and email, it's impossible to commit without setting these up first.
+Among other things, without dotfiles that have `~/.gitconfig` with name and email, it's impossible to commit without setting these up first.
