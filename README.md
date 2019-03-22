@@ -6,7 +6,7 @@ _Do not copy it from Vim, not even with `set nonu`, it'll preserve unwanted line
 
 1. Create a new VPS with my _iPad generic_ SSH key.
 2. Add a Blink host entry.
-3. `DEBIAN_FRONTEND=noninteractive apt update && apt upgrade -y && apt autoremove -y`
+3. `apt update && DEBIAN_FRONTEND=noninteractive apt upgrade -y && apt autoremove -y`
 4. Install Docker and mosh:
 `apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common mosh && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && apt install -y docker-ce docker-ce-cli containerd.io`
 5. Run `docker login`.
