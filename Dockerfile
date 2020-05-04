@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 # Keep up to date with the current Ruby version.
-ENV RUBY_VERSION=2.6.5
+ENV RUBY_VERSION=2.7.1
 
 # Add Crystal sources (without installing it).
 # https://crystal-lang.org/reference/installation/on_debian_and_ubuntu.html
@@ -18,7 +18,7 @@ ENV PATH="/opt/rubies/ruby-${RUBY_VERSION}/bin:${PATH}"
 RUN gem install pry
 
 # https://github.com/nodesource/distributions
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - && apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 RUN apt-get install -y libevent-dev libncurses-dev pkg-config && git clone https://github.com/tmux/tmux.git && cd tmux && sh autogen.sh && ./configure && make && make install && cd .. && rm -rf tmux
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
