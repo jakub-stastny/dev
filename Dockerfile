@@ -1,3 +1,5 @@
+# TODO: No need to compile tmux anymore (probably).
+#
 # Upgrade note: don't forget to do docker pull ubuntu!
 FROM ubuntu:latest
 
