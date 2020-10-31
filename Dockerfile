@@ -15,7 +15,6 @@ RUN wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install
 RUN ruby-install ruby -- --disable-install-doc
 
 ENV PATH="/opt/rubies/ruby-${RUBY_VERSION}/bin:${PATH}"
-RUN gem install pry
 
 # https://github.com/nodesource/distributions
 RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - && apt-get install -y nodejs
@@ -24,7 +23,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata apt-utils && echo "
 
 RUN cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/dotfiles/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 ENV PATH="/root/.scripts:${PATH}"
-RUN nvim +PlugInstall +qall
 RUN chsh -s $(which zsh)
 
 RUN date > /etc/docker-image-build-time
