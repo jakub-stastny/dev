@@ -21,7 +21,7 @@ RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - && apt-get install -
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-RUN cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/dotfiles/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
+RUN cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 ENV PATH="/root/.scripts:${PATH}"
 RUN chsh -s $(which zsh)
 
