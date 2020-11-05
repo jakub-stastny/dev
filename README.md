@@ -1,23 +1,20 @@
 # About
 
+The primary use of this is to build a Docker image suitable for development, that is, with the software I use and with my dotfiles. It also supports setting up a VPS in order to always have a uniform, predictable environment to work with.
+
+## Docker image
+
+Docker is traditionally presented more as a deployment solution, in my opinion. I like to use Docker to spin off development environments, one for each project.
+
+I use my own [docker-project-manager](https://github.com/jakub-stastny/docker-project-manager) to automate the usual project workflow: create a project, spin off a Docker image with the development environment, create a new pair of SSH keys, set up port sharing, and attach to the running image.
+
+```
+rake build push
+```
+
 ## VPS setup
 
-_Do not copy it from Vim, not even with `set nonu`, it'll preserve unwanted line breaks._
+In the past I tried to use rather bare VPS', but I found having 2 different environments unnecessarily complicated. For that reason I decided to install both my VPS and my development images in the same way.
 
-1. Create a new VPS with my _iPad generic_ SSH key.
-2. Add a Blink host entry.
-3. `apt update && DEBIAN_FRONTEND=noninteractive apt upgrade -y && apt autoremove -y`
-4. Install Docker and mosh:
-`apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common mosh && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && apt install -y docker-ce docker-ce-cli containerd.io`
-5. Run `docker login`.
-6. Use [docker-project-manager](https://github.com/jakub-stastny/docker-project-manager) to create your environments.
-
-_NOTE: As DigitalOcean runs SSD's, there's no swap file enabled by default. It's easier to up RAM, but if you need to, here's a [guide](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent)._
-
-## Caveats
-
-### Local SSH keys & Git
-
-It's best to keep the host OS without SSH keys and only generate them in the Docker environments using [docker-project-manager](https://github.com/jakub-stastny/docker-project-manager).
-
-Among other things, without dotfiles that have `~/.gitconfig` with name and email, it's impossible to commit without setting these up first.
+```
+```

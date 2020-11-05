@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# _Do not copy it from Vim, not even with `set nonu`, it'll preserve unwanted line breaks._
+
+# 1. Create a new VPS with my _iPad generic_ SSH key.
+# 2. Add a Blink host entry.
+# 3. `apt update && DEBIAN_FRONTEND=noninteractive apt upgrade -y && apt autoremove -y`
+# 4. Install Docker and mosh:
+# `apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common mosh && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && apt install -y docker-ce docker-ce-cli containerd.io`
+# 5. Run `docker login`.
+# 6. Use [docker-project-manager](https://github.com/jakub-stastny/docker-project-manager) to create your environments.
+
+# _NOTE: As DigitalOcean runs SSD's, there's no swap file enabled by default. It's easier to up RAM, but if you need to, here's a [guide](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent)._
+
+# Swap
+# https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
+fallocate -l 2.5G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show # Make sure it reports swap.
+free -m # Make sure it reports swap.
+
+# Persistent swap
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# Already installed: git tmux htop
+apt update && apt upgrade -y && apt install -y mosh zsh neovim build-essential silversearcher-ag
+apt remove -y vim nano
+apt autoremove --yes
+
+chsh -s $(which zsh)
+
+git clone --bare https://github.com/jakub-stastny/dotfiles.git ~/.dotfiles.git
+
+git --git-dir=$HOME/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git --git-dir=$HOME/.dotfiles.git fetch
+git --git-dir=$HOME/.dotfiles.git branch --set-upstream-to=origin/master master
+git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+zsh ~/.scripts/hooks/dotfiles.install
+git --git-dir=$HOME/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
+
+cp /usr/share/zoneinfo/America/New_York /etc/localtime
+cat /dev/zero | ssh-keygen -q -N ""
+
+# Install Docker
+# https://docs.docker.com/engine/install/ubuntu
+apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+apt update && apt upgrade -y
+add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt update && apt upgrade -y
+apt install docker-ce docker-ce-cli containerd.io
+
+# DPM
+docker install jakubstastny/docker-project-manager
+mkdir projects
+docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager # Dry run only to download it.
+
+echo "  Add your new key to https://github.com/settings/keys and reboot\n\n"
+cat ~/.ssh/id_rsa.pub
+
+# Ubuntu has broken locale, verify by running adduser.
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+

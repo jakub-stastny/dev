@@ -1,27 +1,10 @@
-# Upgrade note: don't forget to do docker pull ubuntu!
 FROM ubuntu:latest
 
 # Keep up to date with the current Ruby version.
 ENV RUBY_VERSION=2.7.2
 
-# Add Crystal sources (without installing it).
-# https://crystal-lang.org/reference/installation/on_debian_and_ubuntu.html
-#
-# Add Yarn sources (without installing it).
-# https://yarnpkg.com/lang/en/docs/install/#debian-stable
-RUN apt-get update && apt-get upgrade -y && apt-get install -y build-essential locales automake zsh wget htop sudo curl git silversearcher-ag neovim docker.io tmux && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && curl -sL "https://keybase.io/crystal/pgp_keys.asc" | apt-key add - && echo "deb https://dist.crystal-lang.org/apt crystal main" | tee /etc/apt/sources.list.d/crystal.list && apt-get update
-RUN locale-gen en_US.UTF-8
-RUN wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz && tar -xzvf ruby-install-0.7.0.tar.gz && cd ruby-install-0.7.0 && make install && cd .. && rm -rf ruby-install-0.7.0* && wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz && tar -xzvf chruby-0.3.9.tar.gz && cd chruby-0.3.9 && make install && cd .. && rm -rf chruby-0.3.9*
-RUN ruby-install ruby -- --disable-install-doc
-
-ENV PATH="/opt/rubies/ruby-${RUBY_VERSION}/bin:${PATH}"
-
-# https://github.com/nodesource/distributions
-RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - && apt-get install -y nodejs
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
-
-RUN cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
+ADD scripts /
+RUN /scripts/install && rm -rf /scripts
 ENV PATH="/root/.scripts:${PATH}"
 RUN chsh -s $(which zsh)
 
