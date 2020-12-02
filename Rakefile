@@ -16,7 +16,7 @@ task :build do
   sh "docker pull ubuntu"
   sh "git commit -a -m 'Automated commit on #{DATE}' 2> /dev/null; true"
   puts "Build metadata: #{build_metadata.inspect}"
-  sh "docker build . -t jakubstastny/dev --build-arg 'BUILD_METADATA=#{JSON.generate(build_metadata)}' &> >(tee -a #{LOG})"
+  sh "bash -c 'docker build . -t jakubstastny/dev --build-arg \'BUILD_METADATA=#{JSON.generate(build_metadata)}\' &> >(tee -a #{LOG}')"
   # command > >(tee -a stdout.log) 2> >(tee -a stderr.log >&2)
 end
 
