@@ -24,7 +24,9 @@ task :build do
 
   File.open(LOG, 'w') do |log|
     commands.each do |(command_args, can_fail)|
-      command = command_args.join(' ')
+      command = command_args.reduce('') do |buffer, chunk|
+        [buffer, chunk.match(/ /) ? "'#{chunk}'" : chunk].join(' ')
+      end
       puts "\n#{`tput setaf 1`}# #{`tput setaf 7`}#{command}#{`tput sgr0`}"
       log.puts("\n$ #{command}")
       Open3.popen3(*command_args) do |stdin, stdout, stderr, status_thread|
