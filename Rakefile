@@ -25,7 +25,7 @@ task :build do
   File.open(LOG, 'w') do |log|
     commands.each do |(command_args, can_fail)|
       command = "$ #{command_args.join(' ')}"
-      puts "#{`tput setaf 3`}#{command}#{`tput sgr0`}"; log.puts(command)
+      puts "#{`tput setaf 4`}#{command}#{`tput sgr0`}"; log.puts(command)
       Open3.popen3(*command_args) do |stdin, stdout, stderr, status_thread|
         [stdout, stderr].each do |stream|
           stream.each_line do |line|
