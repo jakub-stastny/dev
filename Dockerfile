@@ -13,7 +13,7 @@ RUN apt-get update && apt-get upgrade -y
 # both to the install script and to the final environment.
 # Locale is generated in the install script.
 ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
-RUN apt-get install -y locales && dpkg-reconfigure locales #locale-gen $LC_ALL
+RUN apt-get install -y locales && locale-gen $LC_ALL
 
 # Install Ruby and ZSH.
 # This has been extracted out in order to cache the build,
