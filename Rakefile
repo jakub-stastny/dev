@@ -15,8 +15,10 @@ end
 
 desc "Build the image"
 task :build do
+  log = File.open(LOG, 'w')
   sh "docker pull ubuntu"
   sh "git commit -a -m 'Automated commit on #{DATE}' 2> /dev/null; true"
+  log.puts
   puts "Build metadata: #{build_metadata.inspect}"
 
   docker_build_args = [
@@ -35,6 +37,8 @@ task :build do
   end
 rescue Interrupt
   puts
+ensure
+  log.close
 end
 
 desc "Push the image to Dockerhub"
