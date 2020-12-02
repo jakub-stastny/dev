@@ -42,3 +42,6 @@ gem install pry #gdrive-cli
 # Install expect in order to be able to auto-login.
 echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
 apt-get install -y expect-dev
+
+# ZSH is the default shell.
+chsh -s $(which zsh)
