@@ -13,7 +13,7 @@ end
 desc "Build the image"
 task :build do
   sh "docker pull ubuntu"
-  sh "git commit -a -m 'Automated commit on #{DATE}' 2> /dev/null"
+  sh "git commit -a -m 'Automated commit on #{DATE}' 2> /dev/null; true"
   puts "Build metadata: #{build_metadata.inspect}"
   sh "docker build . -t jakubstastny/dev --build-arg 'BUILD_METADATA=#{JSON.generate(build_metadata)}'"
 end
