@@ -12,7 +12,8 @@ ENV RUBY_VERSION=2.7.2
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
-RUN locale-gen $LC_ALL
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y locales && locale-gen $LC_ALL
 
 # Install Ruby and ZSH.
 # This has been extracted out in order to cache the build,
