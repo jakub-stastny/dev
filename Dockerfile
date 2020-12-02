@@ -19,7 +19,7 @@ RUN /build-scripts/install
 
 ENV PATH="/root/.scripts:${PATH}"
 
-RUN $BUILD_METADATA > /etc/docker-image-build-metadata.json
+RUN echo "'$BUILD_METADATA'" > /etc/docker-image-build-metadata.json
 
 WORKDIR /root
 CMD ["/usr/bin/zsh"]
