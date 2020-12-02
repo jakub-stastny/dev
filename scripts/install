@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# This is needed so tput doesn't complain.
+export TERM=xterm-256color
+
 apt-get update && apt-get upgrade -y
 apt-get install -y build-essential locales automake zsh wget htop sudo curl git silversearcher-ag neovim docker.io tmux
 
@@ -22,9 +25,8 @@ cd .. && rm -rf ruby-install-0.7.0*
 
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz && tar -xzvf chruby-0.3.9.tar.gz && cd chruby-0.3.9 && make install && cd .. && rm -rf chruby-0.3.9*
 ruby-install ruby -- --disable-install-doc
-# FIXME: how do I load chruby in zsh?
-
-ENV PATH="/opt/rubies/ruby-${RUBY_VERSION}/bin:${PATH}"
+source /usr/local/share/chruby/chruby.sh
+chruby $RUBY_VERSION
 
 # https://github.com/nodesource/distributions
 curl -sL https://deb.nodesource.com/setup_15.x | bash - && apt-get install -y nodejs
@@ -34,19 +36,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata apt-utils && echo "Amer
 cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 
 # Install Pry.
-if which ruby &> /dev/null; then
-  echo "$(tput setaf 2)~$(tput sgr0) Installing Ruby utilities."
-  gem install pry gdrive-cli
-else
-  echo "$(tput setaf 1)~$(tput sgr0) Ruby not installed, cannot install utilities."
-fi
+echo "$(tput setaf 2)~$(tput sgr0) Installing Ruby utilities."
+gem install pry #gdrive-cli
 
 # Install expect in order to be able to auto-login.
-if test $UID -eq 0; then
-  echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
-  apt-get install -y expect-dev
-else
-  echo "$(tput setaf 1)~$(tput sgr0) Cannot install expect."
-fi
-
-chsh -s $(which zsh)
+echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
+apt-get install -y expect-dev
