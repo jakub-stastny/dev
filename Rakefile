@@ -31,7 +31,7 @@ task :build do
   # ]
 
   commands.each do |command_args|
-    Open3.popen3(*docker_build_args) do |stdin, stdout, stderr, status_thread|
+    Open3.popen3(*command_args) do |stdin, stdout, stderr, status_thread|
       [stdout, stderr].each do |stream|
         stream.each_line do |line|
           puts line
