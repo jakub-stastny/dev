@@ -33,6 +33,8 @@ task :build do
 
    raise "Error" unless status_thread.value.success?
   end
+rescue Interrupt
+  puts
 end
 
 desc "Push the image to Dockerhub"
