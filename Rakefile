@@ -16,14 +16,14 @@ end
 desc "Build the image"
 task :build do
   commands = [
-    ['docker', 'pull', 'ubuntu'],
-    ['git', 'commit', '-a', '-m', "Automated commit on #{DATE}"],
-    ['echo', build_metadata.inspect],
-    ['docker', 'build', '.', '-t', IMAGE, '--build-arg', "BUILD_METADATA=#{JSON.generate(build_metadata)}"]
+    [['docker', 'pull', 'ubuntu'], true],
+    [['git', 'commit', '-a', '-m', "Automated commit on #{DATE}"], true],
+    [['echo', build_metadata.inspect], true],
+    [['docker', 'build', '.', '-t', IMAGE, '--build-arg', "BUILD_METADATA=#{JSON.generate(build_metadata)}"], false]
   ]
 
   File.open(LOG, 'w') do |log|
-    commands.each do |command_args|
+    commands.each do |(command_args, can_fail)|
       command = "$ #{command_args.join(' ')}"
       puts command; log.puts(command)
       Open3.popen3(*command_args) do |stdin, stdout, stderr, status_thread|
@@ -33,7 +33,9 @@ task :build do
           end
         end
 
-       raise "Error" unless status_thread.value.success?
+        if !can_fail && !status_thread.value.success?
+          abort "Something failed running command: #{command}"
+        end
       end
     end
   end
