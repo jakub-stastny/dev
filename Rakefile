@@ -54,7 +54,7 @@ task :build do
       end
     end
 
-    puts "\n#{`tput setaf 2`}~#{`tput sgr0`} Metadata: #{build_metadata.to_json}"
+    puts "\n#{`tput setaf 2`}~#{`tput sgr0`} Metadata: #{`tput setaf 7`}#{build_metadata.to_json}#{`tput sgr0`}"
     log.puts "\n~ Metadata: #{build_metadata.to_json}"
 
     File.open(STDERR_LOG, 'w') do |stderr_log|
