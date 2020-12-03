@@ -19,7 +19,7 @@ def run(command_args, log, &block)
   command = command_args.reduce do |buffer, chunk|
     p [buffer, chunk]
     [buffer, chunk.match(/ /) ? "'#{chunk}'" : chunk].join(' ')
-  end.strip
+  end
 
   puts "\n#{`tput setaf 1`}# #{`tput setaf 7`}#{command}#{`tput sgr0`}"
   log.puts("\n$ #{command}")
