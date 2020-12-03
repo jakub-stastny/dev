@@ -16,7 +16,7 @@ def build_metadata
 end
 
 def run(command_args, log, &block)
-  p command_args: command_args, log: log
+  p command_args: command_args
   command = command_args.reduce do |buffer, chunk|
     [buffer, chunk.match(/ /) ? "'#{chunk}'" : chunk].join(' ')
   end
@@ -57,6 +57,7 @@ task :build do
     log.puts "\n~ Metadata: #{build_metadata.to_json}"
 
     File.open(STDERR_LOG, 'w') do |stderr_log|
+      require 'pry'; binding.pry ###
       run(docker_build_command, log) do |stdout, stderr, status_thread|
         stdout.each_line do |line|
           puts line; log.puts(line)
