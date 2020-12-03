@@ -16,8 +16,9 @@ def build_metadata
 end
 
 def run(command_args, log, &block)
+  p command_args: command_args
   command = command_args.reduce do |buffer, chunk|
-    p [buffer, chunk]
+    p buffer: buffer, chunk: chunk
     [buffer, chunk.match(/ /) ? "'#{chunk}'" : chunk].join(' ')
   end
 
@@ -33,7 +34,6 @@ task :build do
   commands = [
     ['docker', 'pull', 'ubuntu'],
     ['git', 'commit', '-a', '-m', "Automated commit on #{DATE}"],
-    ['echo', build_metadata.inspect],
   ]
 
   docker_build_command = [
@@ -45,7 +45,7 @@ task :build do
 
   File.open(LOG, 'w') do |log|
     commands.each do |command_args|
-      run command_args, log do |stdout, stderr, status_thread|
+      run(command_args, log) do |stdout, stderr, status_thread|
         [stdout, stderr].each do |stream|
           stream.each_line do |line|
             puts line; log.puts(line)
@@ -54,8 +54,11 @@ task :build do
       end
     end
 
+    puts "\n#{`tput setaf 2`}~#{`tput sgr0`} Metadata: #{build_metadata.to_json}"
+    log.puts "\n~ Metadata: #{build_metadata.to_json}"
+
     File.open(STDERR_LOG, 'w') do |stderr_log|
-      run docker_build_command, log do |stdout, stderr, status_thread|
+      run(docker_build_command, log) do |stdout, stderr, status_thread|
         stdout.each_line do |line|
           puts line; log.puts(line)
         end
