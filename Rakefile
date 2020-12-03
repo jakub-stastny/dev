@@ -65,14 +65,18 @@ task :build do
           puts line; log.puts(line); stderr.puts(line)
         end
 
-        if !can_fail && !status_thread.value.success?
-          abort "Something failed during docker build"
+        unless status_thread.value.success?
+          abort "\n#{`tput setaf 1`}Something failed during docker build!#{`tput sgr0`}\n\nCheck the log files for details."
         end
       end
     end
   end
 rescue Interrupt
   puts
+ensure
+  Dir.glob('*.log').each do |log_file|
+    File.unlink(log_file) if File.zero?(log_file)
+  end
 end
 
 desc "Push the image to Dockerhub"
