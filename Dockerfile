@@ -17,6 +17,8 @@ RUN apt-get update && apt-get upgrade -y
 ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 RUN apt-get install -y locales && locale-gen $LC_ALL
 
+# FIXME: the caching doesn't seem to be working, it's rebuilding every time.
+
 # Install Ruby and ZSH.
 # This has been extracted out in order to cache the build,
 # so then if we change the install script, we don't have to recompile Ruby.
@@ -30,7 +32,8 @@ RUN /build-scripts/install
 
 ENV PATH="/root/.scripts:${PATH}"
 
-RUN echo "'$BUILD_METADATA'" > /etc/docker-image-build-metadata.json
+# Will this work? If not, can we use RUN with array args? (Not sure if it works with redirect.)
+RUN echo "$BUILD_METADATA" > /etc/docker-image-build-metadata.json
 
 WORKDIR /root
 CMD ["/usr/bin/zsh"]
