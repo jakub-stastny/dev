@@ -62,7 +62,7 @@ task :build do
         end
 
         stderr.each_line do |line|
-          puts line; log.puts(line); stderr.puts(line)
+          puts line; log.puts(line); stderr_log.puts(line)
         end
 
         unless status_thread.value.success?
