@@ -37,7 +37,7 @@ task :build do
 
   docker_build_command = [
     'docker', 'build', '.', '-t', IMAGE, '--build-arg', "BUILD_METADATA=#{JSON.generate(build_metadata)}"
-  ],
+  ]
 
   File.rename(LOG, LOG_PREV) if File.exist?(LOG)
   File.rename(STDERR_LOG, STDERR_LOG_PREV) if File.exist?(STDERR_LOG)
