@@ -16,7 +16,6 @@ def build_metadata
 end
 
 def run(command_args, log, &block)
-  p command_args: command_args
   command = command_args.reduce do |buffer, chunk|
     [buffer, chunk.match(/ /) ? "'#{chunk}'" : chunk].join(' ')
   end
