@@ -32,7 +32,6 @@ RUN /build-scripts/install
 
 ENV PATH="/root/.scripts:${PATH}"
 
-# Will this work? If not, can we use RUN with array args? (Not sure if it works with redirect.)
 RUN echo "$BUILD_METADATA" > /etc/docker-image-build-metadata.json
 
 WORKDIR /root
