@@ -1,8 +1,7 @@
 require 'json'
-require 'time'
 require 'open3'
 
-DATE  = Time.now.iso8601
+DATE  = Time.now.strftime('%T')
 IMAGE = 'jakubstastny/dev'
 
 LOG, LOG_PREV = 'build.log', 'prev_build.log'
@@ -31,7 +30,7 @@ desc "Build the image"
 task :build do
   commands = [
     ['docker', 'pull', 'ubuntu'],
-    ['git', 'commit', '-a', '-m', "Automated commit on #{DATE}"],
+    ['git', 'commit', '-a', '-m', "Automated commit from 'rake build' on #{DATE}"],
   ]
 
   docker_build_command = [
