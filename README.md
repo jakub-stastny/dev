@@ -17,4 +17,6 @@ rake build push
 In the past I tried to use rather bare VPS', but I found having 2 different environments unnecessarily complicated. For that reason I decided to install both my VPS and my development images in the same way.
 
 ```
+wget https://raw.githubusercontent.com/jakub-stastny/dev/master/scripts/server.install
+sh < server.install
 ```
