@@ -36,5 +36,9 @@ gem install pry #gdrive-cli
 echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
 apt-get install -y expect-dev
 
+# Emacs.
+echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs."
+apt-get install -y emacs-nox
+
 # ZSH is the default shell.
 chsh -s $(which zsh)
