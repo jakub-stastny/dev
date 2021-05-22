@@ -20,3 +20,8 @@ In the past I tried to use rather bare VPS', but I found having 2 different envi
 wget https://raw.githubusercontent.com/jakub-stastny/dev/master/scripts/server.install
 sh < server.install
 #+END_SRC
+
+** Pending
+*** TODO Check out [[https://nixos.org][Nix]]
+
+Can it help?
