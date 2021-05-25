@@ -2,7 +2,7 @@
 
 The primary use of this is to build a Docker image suitable for development, that is, with the software I use and with my dotfiles. It also supports setting up a VPS in order to always have a uniform, predictable environment to work with.
 
-** Docker image
+* Docker image
 
 Docker is traditionally presented more as a deployment solution, in my opinion. I like to use Docker to spin off development environments, one for each project.
 
@@ -12,7 +12,7 @@ I use my own [[https://github.com/jakub-stastny/docker-project-manager][docker-p
 rake build push
 #+END_SRC
 
-** VPS setup
+* VPS setup
 
 In the past I tried to use rather bare VPS', but I found having 2 different environments unnecessarily complicated. For that reason I decided to install both my VPS and my development images in the same way.
 
@@ -21,7 +21,7 @@ wget https://raw.githubusercontent.com/jakub-stastny/dev/master/scripts/server.i
 sh < server.install
 #+END_SRC
 
-** Pending
-*** TODO Check out [[https://nixos.org][Nix]]
+* Pending
+** TODO Check out [[https://nixos.org][Nix]]
 
 Can it help?
