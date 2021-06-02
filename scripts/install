@@ -7,6 +7,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get install -y apt-utils locales automake htop sudo curl git silversearcher-ag neovim docker.io tmux emacs-nox
 
+apt-get install -y build-essential wget && wget -O ruby-install-0.8.1.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.1.tar.gz && tar -xzvf ruby-install-0.8.1.tar.gz && cd ruby-install-0.8.1 && make install && cd .. && rm -rf ruby-install-0.8.1*
+
 # Add Yarn sources (without installing it).
 # https://yarnpkg.com/lang/en/docs/install/#debian-stable
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
