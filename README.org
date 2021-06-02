@@ -9,6 +9,7 @@ Docker is traditionally presented more as a deployment solution, in my opinion. 
 I use my own [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]] to automate the usual project workflow: create a project, spin off a Docker image with the development environment, create a new pair of SSH keys, set up port sharing, and attach to the running image.
 
 #+BEGIN_SRC shell
+apt install ruby -y
 rake build push
 #+END_SRC
 
