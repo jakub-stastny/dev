@@ -18,6 +18,13 @@ RUN apt-get install -y zsh
 
 # Let's not delete the build scripts afterwards,
 # they might come in handy for future inspection.
+#
+# Whatever runs inside the script don't get cached,
+# not suited for compilations.
+#
+# With that said this should be environment agnostic,
+# it should provide sources to install commonly used
+# utilities, not necessary include them.
 ADD scripts /build-scripts
 RUN /build-scripts/install
 
