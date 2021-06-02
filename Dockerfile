@@ -2,9 +2,6 @@ FROM ubuntu:21.04
 
 ARG BUILD_METADATA
 
-# Keep up to date with the current Ruby version.
-ENV RUBY_VERSION=3.0.1
-
 # Update the system.
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
