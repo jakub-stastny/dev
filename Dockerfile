@@ -26,6 +26,13 @@ RUN apt-get install -y locales && locale-gen $LC_ALL
 ADD scripts /build
 RUN /build/install
 
+# Even though we do this in dotfiles,
+# having it exported means we can use these custom scripts
+# when building a DPM image.
+#
+# For instance in the home image we use dotfiles from ~/.script/dotfiles.
+ENV PATH="/root/.scripts:${PATH}"
+
 RUN echo "$BUILD_METADATA" > /build/metadata.json
 
 WORKDIR /root
