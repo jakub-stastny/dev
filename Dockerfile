@@ -14,8 +14,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 RUN apt-get install -y locales && locale-gen $LC_ALL
 
-RUN apt-get install -y zsh
-
 # Let's not delete the build scripts afterwards,
 # they might come in handy for future inspection.
 #
@@ -27,8 +25,6 @@ RUN apt-get install -y zsh
 # utilities, not necessary include them.
 ADD scripts /build-scripts
 RUN /build-scripts/install
-
-ENV PATH="/root/.scripts:${PATH}"
 
 RUN echo "$BUILD_METADATA" > /etc/docker-image-build-metadata.json
 
