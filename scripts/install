@@ -1,11 +1,15 @@
-#!/usr/bin/env zsh
+#!/bin/sh
+
+# This used to be ZSH script, but considering it's not really doing
+# anything complex, I prefer to simplify Dockerfile by not having to
+# install ZSH upfront.
 
 # This is needed so tput doesn't complain.
 #export TERM=xterm-256color
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get install -y apt-utils locales automake htop sudo curl git silversearcher-ag neovim docker.io tmux emacs-nox
+apt-get install -y zsh apt-utils locales automake htop sudo curl git silversearcher-ag neovim docker.io tmux emacs-nox
 
 apt-get install -y build-essential wget && wget -O ruby-install-0.8.1.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.1.tar.gz && tar -xzvf ruby-install-0.8.1.tar.gz && cd ruby-install-0.8.1 && make install && cd .. && rm -rf ruby-install-0.8.1*
 
