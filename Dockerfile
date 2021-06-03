@@ -2,7 +2,7 @@ FROM ubuntu:21.04
 
 ARG BUILD_METADATA
 
-# Update the system.
+# Update the system, so we can fix the locale.
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
 # Ubuntu has broken locale.
@@ -23,10 +23,10 @@ RUN apt-get install -y locales && locale-gen $LC_ALL
 # With that said this should be environment agnostic,
 # it should provide sources to install commonly used
 # utilities, not necessary include them.
-ADD scripts /build-scripts
-RUN /build-scripts/install
+ADD scripts /build
+RUN /build/install
 
-RUN echo "$BUILD_METADATA" > /etc/docker-image-build-metadata.json
+RUN echo "$BUILD_METADATA" > /build/metadata.json
 
 WORKDIR /root
 CMD ["/usr/bin/zsh"]
