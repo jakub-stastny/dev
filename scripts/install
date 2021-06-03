@@ -9,7 +9,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get install -y zsh apt-utils locales automake htop sudo curl git silversearcher-ag neovim docker.io tmux emacs-nox
+apt-get install -y zsh apt-utils locales automake htop sudo curl git silversearcher-ag neovim docker.io tmux emacs-nox tree
 
 apt-get install -y build-essential wget && wget -O ruby-install-0.8.1.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.1.tar.gz && tar -xzvf ruby-install-0.8.1.tar.gz && cd ruby-install-0.8.1 && make install && cd .. && rm -rf ruby-install-0.8.1*
 
@@ -34,10 +34,6 @@ apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone &
 
 cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 
-# Install Pry.
-echo "$(tput setaf 2)~$(tput sgr0) Installing Ruby utilities."
-gem install pry #gdrive-cli
-
 # Install expect in order to be able to auto-login.
 echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
 apt-get install -y expect-dev
@@ -45,6 +41,9 @@ apt-get install -y expect-dev
 # Emacs.
 echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs."
 apt-get install -y emacs-nox
+
+# GH CLI.
+wget https://github.com/cli/cli/releases/download/v1.10.3/gh_1.10.3_linux_amd64.deb && dpkg -i gh_1.10.3_linux_amd64.deb
 
 # ZSH is the default shell.
 chsh -s $(which zsh)
