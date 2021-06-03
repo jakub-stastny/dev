@@ -1,11 +1,10 @@
 # Let's stick to Vim for this one.
 load ~/.zsh/environments/helpers.zsh && save-function-list
 load ~/.zsh/environments/basic.zsh
+load ~/.zsh/environments/docker.zsh
 
 # Custom functions, aliases and hooks.
-setup() {
-  apt-get install ruby
-}
+docker-login
 
 push() {
   docker push jakubstastny/dev
