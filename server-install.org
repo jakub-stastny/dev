@@ -1,9 +1,8 @@
-#!/bin/sh
+* Swap
 
-# TODO: make this an Org mode thing, go literate programming rather than just running everything.
+As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
 
-# As DigitalOcean runs SSD's, there's no swap file enabled by default. It's easier to up RAM, but if you need to, here's a [guide](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent).
-
+#+BEGIN_SRC shell
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export DEBIAN_FRONTEND=noninteractive
@@ -18,8 +17,15 @@ free -m # Make sure it reports swap.
 
 # Persistent swap
 echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+#+END_SRC
 
-# Already installed: git tmux htop
+* Install
+
+Already installed: git tmux htop
+
+** Basic tools
+
+#+BEGIN_SRC shell
 apt update && apt upgrade -y
 apt install -y mosh zsh neovim build-essential silversearcher-ag
 apt remove -y vim nano
@@ -27,6 +33,13 @@ apt autoremove --yes
 
 chsh -s $(which zsh)
 
+cp /usr/share/zoneinfo/America/New_York /etc/localtime
+cat /dev/zero | ssh-keygen -q -N ""
+#+END_SRC
+
+** Dotfiles
+
+#+BEGIN_SRC shell
 git clone --bare https://github.com/jakub-stastny/dotfiles.git ~/.dotfiles.git
 
 git --git-dir=$HOME/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
@@ -37,12 +50,13 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 zsh ~/.scripts/hooks/dotfiles.install
 git --git-dir=$HOME/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
+#+END_SRC
 
-cp /usr/share/zoneinfo/America/New_York /etc/localtime
-cat /dev/zero | ssh-keygen -q -N ""
+** Docker
 
-# Install Docker
-# https://docs.docker.com/engine/install/ubuntu
+[[https://docs.docker.com/engine/install/ubuntu][Docker Ubuntu installation guide]].
+
+#+BEGIN_SRC shell
 apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
@@ -50,11 +64,15 @@ add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu
    stable"
 apt-get update && apt upgrade -y
 apt-get install -y docker-ce docker-ce-cli containerd.io
+#+END_SRC
 
-# DPM
+** DPM
+
+#+BEGIN_SRC shell
 docker install jakubstastny/docker-project-manager
 mkdir projects
 docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager # Dry run only to download it.
 
 echo "  Add your new key to https://github.com/settings/keys and reboot\n\n"
 cat ~/.ssh/id_rsa.pub
+#+END_SRC
