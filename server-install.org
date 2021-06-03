@@ -1,3 +1,7 @@
+* About
+
+[[http://howardism.org/Technical/Emacs/literate-devops.html][Literate DevOps]]
+
 * Swap
 
 As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
