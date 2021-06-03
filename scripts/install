@@ -47,3 +47,10 @@ wget https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.
 
 # ZSH is the default shell.
 chsh -s $(which zsh)
+
+# SSH
+apt-get install -y openssh-server mosh && mkdir /run/sshd
+echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
+echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
+
+echo y | unminimize
