@@ -37,7 +37,7 @@ RUN echo "$BUILD_METADATA" > /build/metadata.json
 
 WORKDIR /root
 
-RUN echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c 32) | chpasswd
+RUN echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
 RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 RUN apt-get install -y openssh-server mosh && mkdir /run/sshd
 CMD ["/usr/sbin/sshd", "-p", "2222", "-D", "-e"]
