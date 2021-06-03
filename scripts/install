@@ -53,4 +53,4 @@ apt-get install -y openssh-server mosh && mkdir /run/sshd
 echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
 
-echo y | unminimize
+yes | unminimize
