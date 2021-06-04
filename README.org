@@ -16,12 +16,18 @@ See [[VPS setup]] for setting up the host machine.
 * Usage
 
 #+BEGIN_SRC shell
-build push
+build && push
 #+END_SRC
 
 * VPS setup
 
-** Prerequisities for literate DevOps
+** Setup for literate DevOps
+*** Install Emacs
+
+#+BEGIN_SRC shell
+apt update && apt upgrade -y && apt install emacs-nox
+#+END_SRC
+
 *** Install Dotfiles
 
 #+BEGIN_SRC shell
@@ -35,12 +41,6 @@ ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 zsh ~/.scripts/hooks/dotfiles.install
 git --git-dir=$HOME/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
-#+END_SRC
-
-** Install Emacs
-
-#+BEGIN_SRC shell
-apt update && apt upgrade -y && apt install emacs-nox
 #+END_SRC
 
 ** Set up using literate DevOps
