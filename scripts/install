@@ -17,11 +17,11 @@ apt-get install -y build-essential wget && wget -O ruby-install-0.8.1.tar.gz htt
 # https://yarnpkg.com/lang/en/docs/install/#debian-stable
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-# Add Crystal sources (without installing it).
-# https://crystal-lang.org/reference/installation/on_debian_and_ubuntu.html
-curl -sL "https://keybase.io/crystal/pgp_keys.asc" | apt-key add - && echo "deb https://dist.crystal-lang.org/apt crystal main" | tee /etc/apt/sources.list.d/crystal.list
+# Install Crystal
+# https://crystal-lang.org/install
 
-apt-get update
+echo 'deb http://download.opensuse.org/repositories/devel:/languages:/crystal/xUbuntu_21.04/ /' | tee /etc/apt/sources.list.d/devel:languages:crystal.list
+curl -fsSL https://download.opensuse.org/repositories/devel:languages:crystal/xUbuntu_21.04/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/devel_languages_crystal.gpg > /dev/null && apt-get update
 
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz && tar -xzvf chruby-0.3.9.tar.gz && cd chruby-0.3.9 && make install && cd .. && rm -rf chruby-0.3.9*
 
