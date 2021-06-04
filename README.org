@@ -4,12 +4,14 @@ My development environment with my favourite tools and dotfiles.
 
 I use it with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which automates the usual project workflow: creating a project, spinning off a Docker image with (this) environment, creating a new pair of SSH keys, setting up port sharing and attaching to the running container.
 
+# GH doesn't handle the following link well, but it works in Emacs using C-c C-o.
 See [[VPS setup]] for setting up the host machine.
 
 * Dependencies
 
 - Ruby is require by the =bin/build= script.
 - My dotfiles automatically source =.profile.zsh=, in case anyone ever forks this, you will need to source the file manually.
+- The =push= command requires Docker authentication (=docker login=).
 
 * Usage
 
