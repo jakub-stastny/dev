@@ -50,6 +50,10 @@ wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -O in
 emacs install.org
 #+END_SRC
 
+** Set up AWS EC2
+
+[[https://blink.sh/docs/cloud-providers/aws]]
+
 ** Set up using literate DevOps
 
 From here on you can run blocks of code from this very README using [[http://howardism.org/Technical/Emacs/literate-devops.html][Literate DevOps]].
