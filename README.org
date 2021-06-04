@@ -39,14 +39,14 @@ git --git-dir=$HOME/.dotfiles.git branch --set-upstream-to=origin/master master
 git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-zsh ~/.scripts/hooks/dotfiles.install
+~/.scripts/hooks/dotfiles.install
 git --git-dir=$HOME/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
 #+END_SRC
 
 *** Download this README
 
 #+BEGIN_SRC shell
-wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -o install.org
+wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -O install.org
 emacs install.org
 #+END_SRC
 
