@@ -1,24 +1,3 @@
-*** Swap
-
-As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
-
-#+BEGIN_SRC shell
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export DEBIAN_FRONTEND=noninteractive
-
-# Swap
-fallocate -l 2.5G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-swapon --show # Make sure it reports swap.
-free -m # Make sure it reports swap.
-
-# Persistent swap
-echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
-#+END_SRC
-
 * About
 
 My development environment with my favourite tools and my dotfiles.
