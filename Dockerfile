@@ -37,4 +37,6 @@ RUN echo "$BUILD_METADATA" > /build/metadata.json
 
 WORKDIR /root
 
-CMD ["/usr/sbin/sshd", "-p", "2222", "-D", "-e"]
+# CMD ["/usr/sbin/sshd", "-p", "2222", "-D", "-e"]
+ENV SSHD_PORT=2222
+CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
