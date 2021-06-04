@@ -21,7 +21,7 @@ build && push
 
 * VPS setup
 
-** Setup for literate DevOps
+** Set up for literate DevOps
 *** Install Emacs
 
 #+BEGIN_SRC shell
@@ -43,15 +43,12 @@ zsh ~/.scripts/hooks/dotfiles.install
 git --git-dir=$HOME/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
 #+END_SRC
 
-** Set up using literate DevOps
-
-From here on you can run blocks of code from this very README using [[http://howardism.org/Technical/Emacs/literate-devops.html][Literate DevOps]].
+*** Download this README
 
 #+BEGIN_SRC shell
 wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -o install.org
 emacs install.org
 #+END_SRC
-
 
 *** Swap
 
@@ -74,14 +71,80 @@ free -m # Make sure it reports swap.
 echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
 #+END_SRC
 
-* Install
+*** Swap
+
+As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
+
+#+BEGIN_SRC shell
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export DEBIAN_FRONTEND=noninteractive
+
+# Swap
+fallocate -l 2.5G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show # Make sure it reports swap.
+free -m # Make sure it reports swap.
+
+# Persistent swap
+echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+#+END_SRC
+
+*** Swap
+
+As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
+
+#+BEGIN_SRC shell
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export DEBIAN_FRONTEND=noninteractive
+
+# Swap
+fallocate -l 2.5G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show # Make sure it reports swap.
+free -m # Make sure it reports swap.
+
+# Persistent swap
+echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+#+END_SRC
+
+** Set up using literate DevOps
+
+From here on you can run blocks of code from this very README using [[http://howardism.org/Technical/Emacs/literate-devops.html][Literate DevOps]].
+
+*** Swap
+
+As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
+
+#+BEGIN_SRC shell
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export DEBIAN_FRONTEND=noninteractive
+
+# Swap
+fallocate -l 2.5G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show # Make sure it reports swap.
+free -m # Make sure it reports swap.
+
+# Persistent swap
+echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+#+END_SRC
+
+*** Install
 
 Already installed: git tmux htop
 
-** Basic tools
+**** Basic tools
 
 #+BEGIN_SRC shell
-apt update && apt upgrade -y
 apt install -y mosh zsh neovim build-essential silversearcher-ag
 apt remove -y vim nano
 apt autoremove --yes
@@ -93,7 +156,7 @@ cat /dev/zero | ssh-keygen -q -N ""
 #+END_SRC
 
 
-** Docker
+**** Docker
 
 [[https://docs.docker.com/engine/install/ubuntu][Docker Ubuntu installation guide]].
 
