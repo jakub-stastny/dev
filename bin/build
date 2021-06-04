@@ -10,12 +10,10 @@ IMAGE = 'jakubstastny/dev'
 LOG, LOG_PREV = 'build.log', 'prev_build.log'
 STDERR_LOG, STDERR_LOG_PREV = 'build.stderr.log', 'prev_build.stderr.log'
 
-def build_metadata
-  {
-    git_commit: `git rev-parse HEAD`.chomp,
-    date: DATE
-  }
-end
+BUILD_METADATA = {
+  git_commit: `git rev-parse HEAD`.chomp,
+  date: DATE
+}
 
 def run(command_args, log, &block)
   command = command_args.reduce do |buffer, chunk|
@@ -36,7 +34,7 @@ def main # So we can rescue
   ]
 
   docker_build_command = [
-    'docker', 'build', '.', '-t', IMAGE, '--build-arg', "BUILD_METADATA=#{JSON.generate(build_metadata)}"
+    'docker', 'build', '.', '-t', IMAGE, '--build-arg', "BUILD_METADATA=#{JSON.generate(BUILD_METADATA)}"
   ]
 
   File.rename(LOG, LOG_PREV) if File.exist?(LOG)
@@ -53,8 +51,8 @@ def main # So we can rescue
       end
     end
 
-    puts "\n#{`tput setaf 2`}~#{`tput sgr0`} Metadata: #{`tput setaf 7`}#{build_metadata.to_json}#{`tput sgr0`}"
-    log.puts "\n~ Metadata: #{build_metadata.to_json}"
+    puts "\n#{`tput setaf 2`}~#{`tput sgr0`} Metadata: #{`tput setaf 7`}#{BUILD_METADATA.to_json}#{`tput sgr0`}"
+    log.puts "\n~ Metadata: #{BUILD_METADATA.to_json}"
 
     File.open(STDERR_LOG, 'w') do |stderr_log|
       run(docker_build_command, log) do |stdout, stderr, status_thread|
