@@ -112,7 +112,7 @@ https://github.com/nodesource/distributions
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing Deno."
-  wget https://github.com/denoland/deno/releases/download/v1.10.3/deno-x86_64-unknown-linux-gnu.zip && unzip deno-x86_64-unknown-linux-gnu.zip && mv deno /usr/bin/ && rm deno-x86_64-unknown-linux-gnu.zip
+  wget -q https://github.com/denoland/deno/releases/download/v1.10.3/deno-x86_64-unknown-linux-gnu.zip && unzip deno-x86_64-unknown-linux-gnu.zip && mv deno /usr/bin/ && rm deno-x86_64-unknown-linux-gnu.zip
 #+END_SRC
 
 ** Time zone
@@ -153,7 +153,7 @@ Install expect in order to be able to auto-login.
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing GitHub CLI."
-  wget https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb && dpkg -i gh_1.11.0_linux_amd64.deb && rm gh_1.11.0_linux_amd64.deb
+  wget -q https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb && dpkg -i gh_1.11.0_linux_amd64.deb && rm gh_1.11.0_linux_amd64.deb
 #+END_SRC
 
 ** Make ZSH the default shell
