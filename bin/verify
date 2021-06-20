@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree deno expect)
+exit_status=0
+
+for binary in $expected_binaries; do
+  if docker run --rm jakubstastny/dev which $binary > /dev/null; then
+    echo "$(tput setaf 2)✓$(tput sgr0) $binary"
+  else
+    echo "$(tput setaf 1)✘$(tput sgr0) $binary"
+    exit_status=1
+  fi
+done
+
+exit $exit_status
