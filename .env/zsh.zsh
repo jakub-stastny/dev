@@ -26,7 +26,8 @@ push() {
 }
 
 clean() {
-  rm -rf $(cat .gitignore)
+  local command="rm -rf $(tr '\n' ' ' < .gitignore)"
+  echo $command; zsh -c $command
 }
 
 report-custom-functions
