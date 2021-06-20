@@ -17,12 +17,12 @@ tangle() {
   cd -
 }
 
-docker-login
-start-emacs-session
-rename-first-tab
-
 push() {
   docker push jakubstastny/dev
 }
+
+docker-login
+start-emacs-session
+rename-first-tab
 
 report-custom-functions
