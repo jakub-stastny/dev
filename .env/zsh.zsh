@@ -25,9 +25,4 @@ push() {
   docker push jakubstastny/dev
 }
 
-clean() {
-  local command="rm -rf $(tr '\n' ' ' < .gitignore)"
-  echo $command; zsh -c $command
-}
-
 report-custom-functions
