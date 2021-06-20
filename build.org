@@ -29,10 +29,10 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 - There's a Perl locale error when setting up locales. Ignore.
 
 #+BEGIN_SRC Dockerfile :tangle Dockerfile
-  RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+  RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y > /dev/null
 
   ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
-  RUN apt-get install -y locales && locale-gen $LC_ALL
+  RUN apt-get install -y locales > /dev/null && locale-gen $LC_ALL
 #+END_SRC
 
 ** Add the build scripts
@@ -91,7 +91,7 @@ This used to be ZSH script, but considering it's not really doing anything compl
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing basic tools."
-  apt-get install -y zsh apt-utils locales automake htop curl git silversearcher-ag neovim docker.io tmux emacs-nox tree
+  apt-get install -y zsh apt-utils locales automake htop curl git silversearcher-ag neovim docker.io tmux emacs-nox tree > /dev/null
 #+END_SRC
 
 ** Node.js & Yarn sources
@@ -119,7 +119,7 @@ https://github.com/nodesource/distributions
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Setting up time zone."
-  apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+  apt-get install -y tzdata apt-utils > /dev/null && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 #+END_SRC
 
 ** Dotfiles
@@ -137,7 +137,7 @@ Install expect in order to be able to auto-login.
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
-  apt-get install -y expect-dev
+  apt-get install -y expect-dev > /dev/null
 #+END_SRC
 
 ** Clojure & babashka
@@ -167,7 +167,7 @@ Install expect in order to be able to auto-login.
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Set the OpenSSH server and secure the installation."
-  apt-get install -y openssh-server mosh && mkdir /run/sshd
+  apt-get install -y openssh-server mosh > /dev/null && mkdir /run/sshd
   echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
 #+END_SRC
