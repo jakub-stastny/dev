@@ -184,3 +184,10 @@ Install expect in order to be able to auto-login.
   echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
 #+END_SRC
+
+** Make sure X11 didn't make their way in
+
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Making sure X11 is not installed."
+  apt-get remove -y x11-common > /dev/null
+#+END_SRC
