@@ -114,6 +114,13 @@ We are passing these build args to =docker build= in [[./bin/build]].
   apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 #+END_SRC
 
+** Emacs
+
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs."
+  apt-get install -y emacs-nox
+#+END_SRC
+
 ** Dotfiles
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
@@ -121,17 +128,20 @@ We are passing these build args to =docker build= in [[./bin/build]].
 #+END_SRC
 
 ** Expect
-  # Install expect in order to be able to auto-login.
+
+Install expect in order to be able to auto-login.
+
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing expect for auto-login scripts."
   apt-get install -y expect-dev
 #+END_SRC
 
-** Emacs
+** Clojure & babashka
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs."
-  apt-get install -y emacs-nox
+  curl -O https://download.clojure.org/install/linux-install-1.10.3.855.sh && chmod +x linux-install-1.10.3.855.sh && ./linux-install-1.10.3.855.sh
+
+  curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
 #+END_SRC
 
 ** GH CLI

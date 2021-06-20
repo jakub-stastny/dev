@@ -30,7 +30,7 @@ end
 def main # So we can rescue
   commands = [
     ['docker', 'pull', 'ubuntu'],
-    ['git', 'commit', '-a', '-m', "Automated commit from 'rake build' on #{DATE}"],
+    ['git', 'commit', '-a', '-m', "Automated commit from '#$0' on #{DATE}"],
   ]
 
   docker_build_metadata = BUILD_METADATA.map { |key, value| ["--build-arg", "#{key}=#{value}"] }.flatten
