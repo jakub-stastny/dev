@@ -22,7 +22,7 @@ jobs:
         run: cd $GITHUB_WORKSPACE
 
       - name: Install ZSH
-        run: apt-get install -y zsh
+        run: sudo apt-get install -y zsh
 
       - name: Download the Docker image
         run: docker pull jakubstastny/dev
