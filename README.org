@@ -1,5 +1,7 @@
 * About
 
+[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
+
 My development environment with my favourite tools and dotfiles.
 
 I use it with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which automates the usual project workflow: creating a project, spinning off a Docker image with (this) environment, creating a new pair of SSH keys, setting up port sharing and attaching to the running container.

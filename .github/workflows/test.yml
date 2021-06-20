@@ -1,4 +1,4 @@
-name: Clojure tests
+name: Verify image
 
 # Controls when the action will run.
 on:
