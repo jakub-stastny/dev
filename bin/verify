@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Silence warning on GitHub workflows.
+TERM=xterm-256color
+
 expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree deno expect)
 exit_status=0
 
