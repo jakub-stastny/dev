@@ -1,17 +1,29 @@
 #!/usr/bin/env zsh
 
 # Silence warning on GitHub workflows.
-TERM=xterm-256color
+export TERM=xterm-256color
 
-expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree deno expect)
+image=jakubstastny/dev
 exit_status=0
 
+expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree deno expect)
+unexpected_packages=(x11-common)
+
 for binary in $expected_binaries; do
-  if docker run --rm jakubstastny/dev which $binary > /dev/null; then
-    echo "$(tput setaf 2)✓$(tput sgr0) $binary"
+  if docker run --rm $image which $binary > /dev/null; then
+    echo "$(tput setaf 2)✓ $(tput setaf 7)$binary$(tput sgr0) has been correctly installed."
   else
-    echo "$(tput setaf 1)✘$(tput sgr0) $binary"
+    echo "$(tput setaf 1)✘ $(tput setaf 7)$binary$(tput sgr0) hasn't been correctly installed."
     exit_status=1
+  fi
+done
+
+for package in $unexpected_packages; do
+  if docker run --rm $image dpkg -l | grep $package > /dev/null; then
+    echo "$(tput setaf 1)✘ $(tput setaf 7)$package$(tput sgr0) shouldn't be installed, but is."
+    exit_status=1
+  else
+    echo "$(tput setaf 2)✓ $(tput setaf 7)$package$(tput sgr0) isn't installed."
   fi
 done
 
