@@ -76,9 +76,7 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 * The build script
 
-# This used to be ZSH script, but considering it's not really doing
-# anything complex, I prefer to simplify Dockerfile by not having to
-# install ZSH upfront.
+This used to be ZSH script, but considering it's not really doing anything complex, I prefer to simplify Dockerfile by not having to install ZSH upfront.
 
 ** Install basic tools
 
@@ -88,7 +86,7 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
   export DEBIAN_FRONTEND=noninteractive
 
-  apt-get install -y zsh apt-utils locales automake htop sudo curl git silversearcher-ag neovim docker.io tmux emacs-nox tree
+  apt-get install -y zsh apt-utils locales automake htop curl git silversearcher-ag neovim docker.io tmux emacs-nox tree
 #+END_SRC
 
 ** Node.js & Yarn sources
@@ -139,7 +137,8 @@ Install expect in order to be able to auto-login.
 ** Clojure & babashka
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  curl -O https://download.clojure.org/install/linux-install-1.10.3.855.sh && chmod +x linux-install-1.10.3.855.sh && ./linux-install-1.10.3.855.sh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing Clojure CLI & babashka."
+  curl -O https://download.clojure.org/install/linux-install-1.10.3.855.sh && chmod +x linux-install-1.10.3.855.sh && ./linux-install-1.10.3.855.sh && rm linux-install-1.10.3.855.sh
 
   curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
 #+END_SRC
@@ -147,6 +146,7 @@ Install expect in order to be able to auto-login.
 ** GH CLI
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing GitHub CLI."
   wget https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb && dpkg -i gh_1.11.0_linux_amd64.deb && rm gh_1.11.0_linux_amd64.deb
 #+END_SRC
 
