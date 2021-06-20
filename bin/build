@@ -79,4 +79,7 @@ ensure
   end
 end
 
+start_build_time = Time.now
 main
+
+puts "\n#{`tput setaf 4`}Build time:#{`tput sgr0`} #{(Time.now - start_build_time) / 60} min"
