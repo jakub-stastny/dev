@@ -82,4 +82,4 @@ end
 start_build_time = Time.now
 main
 
-puts "\n#{`tput setaf 4`}Build time:#{`tput sgr0`} #{(Time.now - start_build_time) / 60} min"
+puts "\n#{`tput setaf 5`}Build time:#{`tput sgr0`} #{((Time.now - start_build_time) / 60).round(2)} min"

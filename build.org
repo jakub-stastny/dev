@@ -29,7 +29,7 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 - There's a Perl locale error when setting up locales. Ignore.
 
 #+BEGIN_SRC Dockerfile :tangle Dockerfile
-  RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+  RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
   ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
   RUN apt-get install -y locales && locale-gen $LC_ALL
@@ -80,11 +80,11 @@ This used to be ZSH script, but considering it's not really doing anything compl
 
 ** Environment variables
 
+=TERM= is set to silence =tput= warnings.
+
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   export DEBIAN_FRONTEND=noninteractive
-  # This is needed so tput doesn't complain.
-  #export TERM=xterm-256color
-
+  export TERM=xterm-256color
 #+END_SRC
 
 ** Install basic tools
