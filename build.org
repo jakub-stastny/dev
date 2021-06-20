@@ -95,9 +95,10 @@ This makes man pages available.
 Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Unminimize the system."
+  echo "$(tput setaf 2)~$(tput sgr0) Unminimising the system."
   yes | unminimize > /dev/null
 #+END_SRC
+
 ** Install basic tools
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
@@ -123,6 +124,7 @@ https://github.com/nodesource/distributions
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing Deno."
+  apt-get install -y unzip > /dev/null
   wget -q https://github.com/denoland/deno/releases/download/v1.10.3/deno-x86_64-unknown-linux-gnu.zip && unzip deno-x86_64-unknown-linux-gnu.zip && mv deno /usr/bin/ && rm deno-x86_64-unknown-linux-gnu.zip
 #+END_SRC
 
@@ -170,14 +172,14 @@ Install expect in order to be able to auto-login.
 ** Make ZSH the default shell
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Make ZSH the default shell."
+  echo "$(tput setaf 2)~$(tput sgr0) Making ZSH the default shell."
   chsh -s $(which zsh)
 #+END_SRC
 
 ** Set up SSH and change root password
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Set the OpenSSH server and secure the installation."
+  echo "$(tput setaf 2)~$(tput sgr0) Setting the OpenSSH server and securing the installation."
   apt-get install -y openssh-server mosh > /dev/null && mkdir /run/sshd
   echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
