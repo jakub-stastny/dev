@@ -33,7 +33,7 @@ def main # So we can rescue
     ['git', 'commit', '-a', '-m', "Automated commit from 'rake build' on #{DATE}"],
   ]
 
-  docker_build_metadata = BUILD_METADATA.map { |key, value| "--build-arg #{key}=#{value}" }
+  docker_build_metadata = BUILD_METADATA.map { |key, value| ["--build-arg", "#{key}=#{value}"] }.flatten
   docker_build_command = [
     'docker', 'build', '.', '-t', IMAGE, *docker_build_metadata
   ]
