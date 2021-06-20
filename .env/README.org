@@ -1,0 +1,27 @@
+* About
+
+Literate DevOps script to set up the current project.
+
+* Installation
+** Emacs packages
+
+We want to keep environment-specific configuration out of our =~/.emacs=.
+
+That's what =.env/emacs.el= is for and here we install all the packages specific to the project's environment.
+
+*** [[https://github.com/emacs-evil/evil-collection][Package evil-collection]]
+
+Magit buffers don't support Vim movement keys (=hjkl=) by default, which is what the =evil-collection= package is about.
+
+It supports other common packages, not only Magit.
+
+*** [[https://magit.vc][Magit]]
+
+Use =C-x g= to enter the mode.
+
+#+BEGIN_SRC elisp :results silent
+  (dolist (package '(clojure-mode cider lispy lispyville magit evil-collection))
+    (unless (package-installed-p package)
+      (message "~ Installing %s." package)
+      (package-install package)))
+#+END_SRC

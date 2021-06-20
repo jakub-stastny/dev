@@ -1,3 +1,86 @@
+#+TITLE: Rental property management: main module
+#+AUTHOR: Jakub Šťastný
+
+* Dockerfile
+** Ubuntu
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  FROM ubuntu:21.04
+#+END_SRC
+
+** Build metadata
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  ARG BUILD_METADATA
+#+END_SRC
+
+** Fix locale
+
+- First update the system, so we can fix the locale.
+- Ubuntu has broken locale.
+- We need to set these here, in order for them to be available
+- both to the install script and to the final environment.
+- Locale is generated in the install script.
+- There's a Perl locale error when setting up locales. Ignore.
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+
+  ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
+  RUN apt-get install -y locales && locale-gen $LC_ALL
+#+END_SRC
+
+** Add the build scripts
+
+- Let's not delete the build scripts afterwards,
+- they might come in handy for future inspection.
+
+- Whatever runs inside the script don't get cached,
+- not suited for compilations.
+
+- With that said this should be environment agnostic,
+- it should provide sources to install commonly used
+- utilities, not necessary include them.
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  ADD scripts /build
+  RUN /build/install
+#+END_SRC
+
+** Set up =$PATH=
+
+- Even though we do this in dotfiles,
+- having it exported means we can use these custom scripts
+- when building a DPM image.
+
+- For instance in the home image we use dotfiles from ~/.script/dotfiles.
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  ENV PATH="/root/.scripts:${PATH}"
+#+END_SRC
+
+** Save build metadata
+ 
+#+BEGIN_SRC Dockerfile :tangle yes
+  RUN echo "$BUILD_METADATA" > /build/metadata.json
+#+END_SRC
+
+** Set =WORKDIR=
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  WORKDIR /root
+#+END_SRC
+
+** Run OpenSSH server
+
+#+BEGIN_SRC Dockerfile :tangle yes
+  # CMD ["/usr/sbin/sshd", "-p", "2222", "-D", "-e"]
+  ENV SSHD_PORT=2222
+  CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
+#+END_SRC
+
+
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes
 #!/bin/sh
 
 # This used to be ZSH script, but considering it's not really doing
@@ -48,3 +131,4 @@ echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
 
 yes | unminimize
+#+END_SRC
