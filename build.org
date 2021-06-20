@@ -96,7 +96,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Unminimize the system."
-  yes | unminimize
+  yes | unminimize > /dev/null
 #+END_SRC
 ** Install basic tools
 
