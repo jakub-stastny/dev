@@ -20,7 +20,7 @@ It supports other common packages, not only Magit.
 Use =C-x g= to enter the mode.
 
 #+BEGIN_SRC elisp :results silent
-  (dolist (package '(clojure-mode cider lispy lispyville magit evil-collection))
+  (dolist (package '(cider lispy lispyville magit evil-collection))
     (unless (package-installed-p package)
       (message "~ Installing %s." package)
       (package-install package)))

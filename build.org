@@ -79,8 +79,9 @@
   CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 #+END_SRC
 
+* The build script
 
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang yes
 #!/bin/sh
 
 # This used to be ZSH script, but considering it's not really doing

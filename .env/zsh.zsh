@@ -1,13 +1,10 @@
 load ~/.zsh/environments/helpers.zsh && save-function-list
-load ~/.zsh/environments/basic.zsh
 load ~/.zsh/environments/emacs.zsh
+load ~/.zsh/environments/basic.zsh
+load ~/.zsh/environments/git.zsh
+load ~/.zsh/environments/docker.zsh
 
-try-load ~/blog.meta/inherit/env/zsh.zsh
-
-start-emacs-session
-rename-first-tab
-
-# Custom functions & aliases.
+# Custom functions, aliases and hooks.
 
 # We compile on save, but for the first-time compilation,
 # we want to be able to do it from the shell, rather than
@@ -20,12 +17,12 @@ tangle() {
   cd -
 }
 
-run() {
-  clj -M -m rpm.main
-}
+docker-login
+start-emacs-session
+rename-first-tab
 
-t() {
-  clj -X:test
+push() {
+  docker push jakubstastny/dev
 }
 
 report-custom-functions
