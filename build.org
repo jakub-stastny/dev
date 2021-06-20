@@ -87,6 +87,17 @@ This used to be ZSH script, but considering it's not really doing anything compl
   export TERM=xterm-256color
 #+END_SRC
 
+
+** Unminimise the system
+
+This makes man pages available.
+
+Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
+
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Unminimize the system."
+  yes | unminimize
+#+END_SRC
 ** Install basic tools
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
@@ -170,13 +181,4 @@ Install expect in order to be able to auto-login.
   apt-get install -y openssh-server mosh > /dev/null && mkdir /run/sshd
   echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
-#+END_SRC
-
-** Unminimise the system
-
-This makes man pages available.
-
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Unminimize the system."
-  yes | unminimize
 #+END_SRC
