@@ -1,13 +1,13 @@
 #!/usr/bin/env zsh
 
-# Silence warning on GitHub workflows.
+# Silence tput warning on GitHub workflows.
 export TERM=xterm-256color
 
 image=jakubstastny/dev
 exit_status=0
 
 expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree deno expect)
-unexpected_packages=(x11-common)
+unexpected_packages=(x11-common node yarn)
 
 for binary in $expected_binaries; do
   if docker run --rm $image which $binary > /dev/null; then

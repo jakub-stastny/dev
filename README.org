@@ -18,7 +18,7 @@ See [[VPS setup]] for setting up the host machine.
 * Usage
 
 #+BEGIN_SRC shell
-build && push
+build && verify && push
 #+END_SRC
 
 * VPS setup

@@ -78,50 +78,56 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 This used to be ZSH script, but considering it's not really doing anything complex, I prefer to simplify Dockerfile by not having to install ZSH upfront.
 
-** Install basic tools
+** Environment variables
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  export DEBIAN_FRONTEND=noninteractive
   # This is needed so tput doesn't complain.
   #export TERM=xterm-256color
 
-  export DEBIAN_FRONTEND=noninteractive
+#+END_SRC
 
+** Install basic tools
+
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing basic tools."
   apt-get install -y zsh apt-utils locales automake htop curl git silversearcher-ag neovim docker.io tmux emacs-nox tree
 #+END_SRC
 
 ** Node.js & Yarn sources
 
+Add Yarn sources (without installing it).
+https://yarnpkg.com/lang/en/docs/install/#debian-stable
+https://github.com/nodesource/distributions
+
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  # Add Yarn sources (without installing it).
-  # https://yarnpkg.com/lang/en/docs/install/#debian-stable
+  echo "$(tput setaf 2)~$(tput sgr0) Adding apt sources for Node.js."
+
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-  # https://github.com/nodesource/distributions
   curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 #+END_SRC
 
 ** Deno
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing Deno."
   wget https://github.com/denoland/deno/releases/download/v1.10.3/deno-x86_64-unknown-linux-gnu.zip && unzip deno-x86_64-unknown-linux-gnu.zip && mv deno /usr/bin/ && rm deno-x86_64-unknown-linux-gnu.zip
 #+END_SRC
 
 ** Time zone
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Setting up time zone."
   apt-get install -y tzdata apt-utils && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
-#+END_SRC
-
-** Emacs
-
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs."
-  apt-get install -y emacs-nox
 #+END_SRC
 
 ** Dotfiles
 
+Emacs packages will get installed
+
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing dotfiles."
   cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 #+END_SRC
 
@@ -153,12 +159,14 @@ Install expect in order to be able to auto-login.
 ** Make ZSH the default shell
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Make ZSH the default shell."
   chsh -s $(which zsh)
 #+END_SRC
 
 ** Set up SSH and change root password
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Set the OpenSSH server and secure the installation."
   apt-get install -y openssh-server mosh && mkdir /run/sshd
   echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
@@ -169,5 +177,6 @@ Install expect in order to be able to auto-login.
 This makes man pages available.
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~$(tput sgr0) Unminimize the system."
   yes | unminimize
 #+END_SRC
