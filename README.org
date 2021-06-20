@@ -138,3 +138,7 @@ cat ~/.ssh/id_rsa.pub
 Nix is a tool that takes a unique approach to package management and system configuration. Learn how to make reproducible, declarative and reliable systems.
 
 It looks very interesting. I don't need it at this moment, but let's keep it here as a reference.
+* Pending matters
+** TODO Test the output image
+
+- For each command, run with =docker run --rm "which <command>"= to verify it's been installed.

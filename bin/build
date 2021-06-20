@@ -11,8 +11,8 @@ LOG, LOG_PREV = 'build.log', 'prev_build.log'
 STDERR_LOG, STDERR_LOG_PREV = 'build.stderr.log', 'prev_build.stderr.log'
 
 BUILD_METADATA = {
-  git_commit: `git rev-parse HEAD`.chomp,
-  date: DATE
+  DOCKER_IMAGE_GIT_SHA: `git rev-parse HEAD`.chomp,
+  DOCKER_IMAGE_BUILD_DATE: DATE
 }
 
 def run(command_args, log, &block)
@@ -33,8 +33,9 @@ def main # So we can rescue
     ['git', 'commit', '-a', '-m', "Automated commit from 'rake build' on #{DATE}"],
   ]
 
+  docker_build_metadata = BUILD_METADATA.map { |key, value| "--build-arg #{key}=#{value}" }
   docker_build_command = [
-    'docker', 'build', '.', '-t', IMAGE, '--build-arg', "BUILD_METADATA=#{JSON.generate(BUILD_METADATA)}"
+    'docker', 'build', '.', '-t', IMAGE, *docker_build_metadata
   ]
 
   File.rename(LOG, LOG_PREV) if File.exist?(LOG)
