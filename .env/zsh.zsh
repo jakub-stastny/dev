@@ -25,4 +25,8 @@ push() {
   docker push jakubstastny/dev
 }
 
+clean() {
+  rm -rf $(cat .gitignore)
+}
+
 report-custom-functions
