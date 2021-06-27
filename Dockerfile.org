@@ -108,13 +108,17 @@ We are passing these build args to =docker build= in [[./bin/build]].
     echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) $@."
   }
 
-  run() {
+  run-verbosely() {
     echo "$(tput setaf 7)\$ $(tput sgr0)$@"
-    $@ > /dev/null
+    $@
+  }
+
+  run-silently() {
+    run $@ > /dev/null
   }
 
   run-with-timer() {
-    time (run $@)
+    time (run-silently $@)
   }
 
   package() {
@@ -131,6 +135,8 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 #+begin_src shell :tangle scripts/unminimise-system
   <<zsh-helpers>>
 
+  run-verbosely ls
+  run-silently ls
   label "Unminimising the system"
   package man
   run-with-timer yes | unminimize
