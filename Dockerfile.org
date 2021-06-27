@@ -114,7 +114,8 @@ We are passing these build args to =docker build= in [[./bin/build]].
   }
 
   run-silently() {
-    run-verbosely $@ > /dev/null
+    echo "$(tput setaf 7)\$ $(tput sgr0)$@ $(tput setaf 7)> /dev/null$(tput sgr0)"
+    $@ > /dev/null
   }
 
   run-with-timer() {
