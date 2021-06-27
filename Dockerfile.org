@@ -105,6 +105,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 #+BEGIN_SRC shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/usr/bin/env zsh
   echo "$(tput setaf 2)~$(tput sgr0) Unminimising the system."
   time (yes | unminimize > /dev/null)
+  which man # TODO
 #+END_SRC
 
 ** Install Emacs 28 with native compilation and fast JSON parser
@@ -112,8 +113,12 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 #+BEGIN_SRC shell :tangle scripts/build-emacs :mkdirp yes :shebang #!/usr/bin/env zsh
   echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs 28."
 
+  export DEBIAN_FRONTEND=noninteractive
   export LOG_PATH=/root/.emacs.d/configure.log
   export CC="gcc-10"
+
+  # Install Git
+  apt-get install -y git
 
   git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git
 
