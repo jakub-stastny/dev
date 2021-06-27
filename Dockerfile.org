@@ -114,7 +114,7 @@ We are passing these build args to =docker build= in [[./bin/build]].
   }
 
   run-silently() {
-    run $@ > /dev/null
+    run-verbosely $@ > /dev/null
   }
 
   run-with-timer() {
