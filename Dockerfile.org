@@ -110,7 +110,7 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
   run() {
     echo "$(tput setaf 7)\$ $(tput sgr0) $@"
-    $@
+    $@ > /dev/null
   }
 
   run-with-timer() {
@@ -118,7 +118,8 @@ We are passing these build args to =docker build= in [[./bin/build]].
   }
 
   install() {
-    run DEBIAN_FRONTEND=noninteractive apt-get install -y $@ > /dev/null
+    DEBIAN_FRONTEND=noninteractive
+    run apt-get install -y $@
   }
 #+end_src
 
