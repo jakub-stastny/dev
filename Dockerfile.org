@@ -60,8 +60,8 @@ BROKEN into several scripts, that way we get caching.
 
 #+BEGIN_SRC Dockerfile :tangle Dockerfile
   ADD scripts /build
-  RUN /build/unminimise-system
   RUN /build/install-basic-tools
+  RUN /build/unminimise-system
   RUN /build/build-emacs
   RUN /build/install
 #+END_SRC
