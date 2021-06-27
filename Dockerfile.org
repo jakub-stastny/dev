@@ -14,6 +14,14 @@
   WORKDIR /root
 #+END_SRC
 
+** Set =TERM to =xterm-256color=
+
+Silence =tput= warnings and show colours instead.
+
+#+BEGIN_SRC Dockerfile :tangle Dockerfile
+  ENV TERM=xterm-256color
+#+END_SRC
+
 ** Set up =$PATH=
 
 Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from ~/.script/dotfiles.
@@ -46,12 +54,15 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 - it should provide sources to install commonly used
 - utilities, not necessary include them.
 
-*** TODO See whether this doesn't invalidate Docker cache
-
 Since the =mtime= will change every time we tangle this file.
+
+BROKEN into several scripts, that way we get caching.
 
 #+BEGIN_SRC Dockerfile :tangle Dockerfile
   ADD scripts /build
+  RUN /build/unminimise-system
+  RUN /build/install-basic-tools
+  RUN /build/build-emacs
   RUN /build/install
 #+END_SRC
 
@@ -74,41 +85,32 @@ We are passing these build args to =docker build= in [[./bin/build]].
   CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 #+END_SRC
 
-* The build script
+* The build scripts
 
-This used to be ZSH script, but considering it's not really doing anything complex, I prefer to simplify Dockerfile by not having to install ZSH upfront.
-
-** Environment variables
-
-=TERM= is set to silence =tput= warnings.
-
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  export DEBIAN_FRONTEND=noninteractive
-  export TERM=xterm-256color
-#+END_SRC
-
-
-** Unminimise the system
+* Unminimise the system
 
 This makes man pages available.
 
 Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
 
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+#+BEGIN_SRC shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Unminimising the system."
   yes | unminimize > /dev/null
 #+END_SRC
 
 ** Install basic tools
 
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
+#+BEGIN_SRC shell :tangle scripts/install-basic-tools :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing basic tools."
+
+  export DEBIAN_FRONTEND=noninteractive
+
   apt-get install -y zsh apt-utils locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree > /dev/null
 #+END_SRC
 
 ** Install Emacs 28 with native compilation and fast JSON parser
 
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/usr/bin/env zsh
+#+BEGIN_SRC shell :tangle scripts/build-emacs :mkdirp yes :shebang #!/usr/bin/env zsh
   echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs 28."
 
   export LOG_PATH=/root/.emacs.d/configure.log
