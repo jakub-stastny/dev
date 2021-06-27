@@ -176,7 +176,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   package libacl1 libasound2 libc6 libdbus-1-3 libgmp10 libgnutls30 libgpm2 libjansson4 liblcms2-2 libselinux1 libsystemd0 libtinfo6 libxml2 zlib1g
 
   # Dependencies for building Emacs.
-  package build-essential texinfo
+  package build-essential texinfo autoconf
 
   # Needed for fast JSON
   package libjansson4 libjansson-dev
