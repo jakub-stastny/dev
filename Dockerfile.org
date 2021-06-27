@@ -104,7 +104,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 #+begin_src shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/usr/bin/env zsh
   echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) Unminimising the system."
-  time(DEBIAN_FRONTEND=noninteractive apt-get install -y man > /dev/null)
+  time (DEBIAN_FRONTEND=noninteractive apt-get install -y man > /dev/null)
   time (yes | unminimize > /dev/null)
 #+end_src
 
