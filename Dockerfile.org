@@ -61,8 +61,8 @@ BROKEN into several scripts, that way we get caching.
 #+BEGIN_SRC Dockerfile :tangle Dockerfile
   ADD scripts /build
   RUN /build/unminimise-system
-  RUN /build/install-basic-tools
   RUN /build/build-emacs
+  RUN /build/install-basic-tools
   RUN /build/install
 #+END_SRC
 
@@ -86,16 +86,6 @@ We are passing these build args to =docker build= in [[./bin/build]].
 #+END_SRC
 
 * The build scripts
-** Install basic tools
-
-#+BEGIN_SRC shell :tangle scripts/install-basic-tools :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Installing basic tools."
-
-  export DEBIAN_FRONTEND=noninteractive
-
-  apt-get install -y zsh apt-utils locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree > /dev/null
-#+END_SRC
-
 ** Unminimise the system
 
 This makes man pages available.
@@ -103,15 +93,15 @@ This makes man pages available.
 Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
 
 #+BEGIN_SRC shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/usr/bin/env zsh
-  echo "$(tput setaf 2)~$(tput sgr0) Unminimising the system."
+  echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) Unminimising the system."
+  time(DEBIAN_FRONTEND=noninteractive apt-get install -y man > /dev/null)
   time (yes | unminimize > /dev/null)
-  which man # TODO
 #+END_SRC
 
 ** Install Emacs 28 with native compilation and fast JSON parser
 
 #+BEGIN_SRC shell :tangle scripts/build-emacs :mkdirp yes :shebang #!/usr/bin/env zsh
-  echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs 28."
+  echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) Installing Emacs 28."
 
   export DEBIAN_FRONTEND=noninteractive
   export LOG_PATH=/root/.emacs.d/configure.log
@@ -134,13 +124,24 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   # Dependencies for native compilation
   apt-get install -y zlib1g-dev libgccjit0 libgccjit-10-dev gcc-10 > /dev/null
 
-  echo "$(tput setaf 2)~$(tput sgr0) Building Emacs 28."
+  echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) Building Emacs 28."
   cd emacs
   ./autogen.sh && ./configure --with-native-compilation && make -j$(nproc) && make install
   # ./autogen.sh && ./configure --with-native-compilation > $LOG_PATH && make -j$(nproc) > /dev/null && make install > /dev/null
 #+END_SRC
 
-** Node.js & Yarn sources
+** Install basic tools
+
+#+BEGIN_SRC shell :tangle scripts/install-basic-tools :mkdirp yes :shebang #!/bin/sh
+  echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) Installing basic tools."
+
+  export DEBIAN_FRONTEND=noninteractive
+
+  apt-get install -y zsh apt-utils locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree > /dev/null
+#+END_SRC
+
+** Rest
+*** Node.js & Yarn sources
 
 Add Yarn sources (without installing it).
 https://yarnpkg.com/lang/en/docs/install/#debian-stable
@@ -154,7 +155,7 @@ https://github.com/nodesource/distributions
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 #+END_SRC
 
-** Deno
+*** Deno
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing Deno."
@@ -162,22 +163,22 @@ https://github.com/nodesource/distributions
   wget -q https://github.com/denoland/deno/releases/download/v1.10.3/deno-x86_64-unknown-linux-gnu.zip && unzip deno-x86_64-unknown-linux-gnu.zip && mv deno /usr/bin/ && rm deno-x86_64-unknown-linux-gnu.zip
 #+END_SRC
 
-** Time zone
+*** Time zone
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Setting up time zone."
   apt-get install -y tzdata apt-utils > /dev/null && echo "America/New_York" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 #+END_SRC
 
-** Dotfiles
-*** TODO Tangle (in script/hooks/install)
+*** Dotfiles
+**** TODO Tangle (in script/hooks/install)
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing dotfiles."
   cd /root && mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 #+END_SRC
 
-** Expect
+*** Expect
 
 Install expect in order to be able to auto-login.
 
@@ -186,7 +187,7 @@ Install expect in order to be able to auto-login.
   apt-get install -y expect-dev > /dev/null
 #+END_SRC
 
-** Clojure & babashka
+*** Clojure & babashka
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing Clojure CLI & babashka."
@@ -195,21 +196,21 @@ Install expect in order to be able to auto-login.
   curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
 #+END_SRC
 
-** GH CLI
+*** GH CLI
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing GitHub CLI."
   wget -q https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb && dpkg -i gh_1.11.0_linux_amd64.deb && rm gh_1.11.0_linux_amd64.deb
 #+END_SRC
 
-** Make ZSH the default shell
+*** Make ZSH the default shell
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Making ZSH the default shell."
   chsh -s $(which zsh)
 #+END_SRC
 
-** Set up SSH and change root password
+*** Set up SSH and change root password
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Setting the OpenSSH server and securing the installation."
