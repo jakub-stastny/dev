@@ -103,7 +103,7 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 * The build scripts
   :PROPERTIES:
-  :header-args: :shebang #!/usr/bin/env zsh :mkdirp yes :noweb yes
+  :header-args: :shebang #!/usr/bin/env bb :mkdirp yes :noweb yes
   :END:
 
 ** Helpers
@@ -112,47 +112,59 @@ The helpers are good, but the downside is that changing anything in them will ch
 
 Maybe rather than going noweb, I should make it a separate file and include it? But I'd have to ADD it first, and that'd invalidate the cache anyway.
 
-#+name: zsh-helpers
-#+begin_src shell
-  label() {
-    echo "\n$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) $@."
-  }
+#+name: bb-helpers
+#+begin_src clojure
+  (require '[clojure.java.shell :refer [sh]]) ; rename to exec or sth
 
-  fail() {
-    echo "$(tput setaf 1)ERROR: $(tput sgr0)$@"
-    exit 1
-  }
+  (defn exec [command]
+    (let [chunks (clojure.string/split command #" ")]
+      (apply sh chunks)))
 
-  run-verbosely() {
-    echo "$(tput setaf 7)\$ $(tput sgr0)$@"
-    $@ || fail $@
-  }
+  (defn zsh [command]
+    (apply sh "zsh" "-c" command))
 
-  run-hide-stdout() {
-    echo "$(tput setaf 7)\$ $(tput sgr0)$@ $(tput setaf 7)> /dev/null$(tput sgr0)"
-    $@ > /dev/null || fail $@
-  }
+  (def colours {
+    :red 31 :green 32 :yellow 33
+    :blue 34 :purple 35 :cyan 36
+    :grey 37})
 
-  run-hide-all() {
-    echo "$(tput setaf 7)\$ $(tput sgr0)$@ $(tput setaf 7)&> /dev/null$(tput sgr0)"
-    $@ &> /dev/null || fail $@
-  }
+  ; \033[fg;bgm
+  (defn colour [colour text]
+    (let [colour-code (colour colours)]
+      (str "\033[" colour-code "m" text "\033[0m")))
 
-  run-with-timer-hide-stdout() {
-    start_timestamp=$(date +%s)
-    run-hide-stdout $@
-    echo "  Took $(tput setaf 4)$(expr $(date +%s) - $start_timestamp)s$(tput sgr0)"
-  }
+  (defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
 
-  run-with-timer-hide-all() {
-    start_timestamp=$(date +%s)
-    run-hide-all $@
-    echo "  Took $(tput setaf 4)$(expr $(date +%s) - $start_timestamp)s$(tput sgr0)"
-  }
+  (defn run [command]
+    (let [start-time (current-unix-time)]
+      (println (str "  " (colour :green "λ ") (colour :grey command)))
+      (exec command)
+      (let [duration (- (current-unix-time) start-time)]
+        (println "   " (colour :yellow "=>") "Took" (str (colour :green (str duration "s")) ".")))))
 
-  package() {
-    DEBIAN_FRONTEND=noninteractive run-hide-stdout apt-get install -y $@
-  }
+  (defn fail [result]
+    (println (str (colour :red "Error ") (:exit result)))
+    (let [out (:out result) err (:err result)]
+      (when-not (empty? out) (println out))
+      (when-not (empty? err) (println err)))
+    (System/exit 1))
+
+  (defn ensure-success [result]
+    (if (= (:exit result) 0) result (fail result)))
+
+  (defn label [text]
+    (println (colour :purple text)))
+
+  (defmacro block [name & sexps]
+    `(do
+      (println "Running block" (str (colour :purple ~name) ".\n"))
+      (let [start-time (current-unix-time)]
+        (do ~@sexps)
+        (let [duration (- (current-unix-time) start-time)]
+          (println (colour :yellow "\n  =>") (colour :grey ~name) "took" (str (colour :yellow (str duration "s")) "."))))))
+
+  (defn package [& names]
+    (ensure-success (run (str "apt-get install -y " (clojure.string/join " " names)))))
 #+end_src
 
 ** Unminimise the system
@@ -161,48 +173,47 @@ This makes man pages available.
 
 Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
 
-#+begin_src shell :tangle scripts/unminimise-system
-  <<zsh-helpers>>
+#+begin_src clojure :tangle scripts/unminimise-system
+  <<bb-helpers>>
 
-  label "Unminimising the system"
-  package man
-
-  unminimize-non-interactively() { yes | unminimize }
-  run-with-timer-hide-stdout unminimize-non-interactively
+  (block "unminimising the system"
+    (package "man")
+    (ensure-success (run "yes | unminimize")))
 #+end_src
 
 ** Install Emacs 28 with native compilation and fast JSON parser
 
-#+begin_src shell :tangle scripts/build-emacs :mkdirp yes :shebang #!/usr/bin/env zsh
-  <<zsh-helpers>>
+#+begin_src clojure :tangle scripts/build-emacs
+  <<bb-helpers>>
 
-  export LOG_PATH=/root/.emacs.d/configure.log
-  export CC="gcc-10" # TODO: inline it to make or configure or where is this supposed to go.
+  (block "preparing installation of Emacs 28"
+    (package "git")
+    (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git")) ; TODO put a timer on this one
 
-  label "Installing Emacs 28"
-  package git
+    ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox
+    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls30" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g")
 
-  clone-emacs() { git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git }
-  run-with-timer-hide-all clone-emacs
+    ; Dependencies for building Emacs.
+    (package "build-essential" "texinfo" "autoconf" "pkg-config")
 
-  # Dependencies from https://packages.ubuntu.com/impish/emacs-nox
-  package libacl1 libasound2 libc6 libdbus-1-3 libgmp10 libgnutls30 libgpm2 libjansson4 liblcms2-2 libselinux1 libsystemd0 libtinfo6 libxml2 zlib1g
+    ; Needed for fast JSON
+    (package "libjansson4" "libjansson-dev")
 
-  # Dependencies for building Emacs.
-  package build-essential texinfo autoconf pkg-config
+    ; Dependencies for native compilation
+    (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
 
-  # Needed for fast JSON
-  package libjansson4 libjansson-dev
 
-  # Dependencies for native compilation
-  package zlib1g-dev libgccjit0 libgccjit-10-dev gcc-10
-
-  label "Building Emacs 28 with native compilation and fast JSON"
-  cd emacs
-  run-hide-stdout ./autogen.sh
-  run-verbosely ./configure --with-native-compilation # TODO: log into LOG_PATH, so I have it for a reference
-  run-hide-stdout make -j$(nproc)
-  run-hide-stdout make install
+  (block "building Emacs 28 with native compilation and fast JSON"
+    (with-sh-dir "emacs" (with-sh-env :CC "gcc-10"
+      (ensure-success (run "./autogen.sh"))
+      (ensure-success (run "./configure", "--with-native-compilation"))))
+  )
+  ;; export LOG_PATH=/root/.emacs.d/configure.log
+  ;; export CC="gcc-10" # TODO: inline it to make or configure or where is this supposed to go.
+  ;; run-hide-stdout ./autogen.sh
+  ;; run-verbosely ./configure --with-native-compilation # TODO: log into LOG_PATH, so I have it for a reference
+  ;; run-hide-stdout make -j$(nproc)
+  ;; run-hide-stdout make install
 #+end_src
 
 ** Install basic tools
