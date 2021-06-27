@@ -144,6 +144,12 @@ Maybe rather than going noweb, I should make it a separate file and include it? 
     echo "  Took $(tput setaf 4)$(expr $(date +%s) - $start_timestamp)s$(tput sgr0)"
   }
 
+  run-with-timer-hide-all() {
+    start_timestamp=$(date +%s)
+    run-hide-all $@
+    echo "  Took $(tput setaf 4)$(expr $(date +%s) - $start_timestamp)s$(tput sgr0)"
+  }
+
   package() {
     DEBIAN_FRONTEND=noninteractive run-hide-stdout apt-get install -y $@
   }
