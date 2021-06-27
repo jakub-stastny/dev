@@ -113,17 +113,22 @@ We are passing these build args to =docker build= in [[./bin/build]].
     $@
   }
 
-  run-silently() {
+  run-hide-stdout() {
     echo "$(tput setaf 7)\$ $(tput sgr0)$@ $(tput setaf 7)> /dev/null$(tput sgr0)"
     $@ > /dev/null
   }
 
-  run-with-timer() {
-    time (run-silently $@)
+  run-hide-all() {
+    echo "$(tput setaf 7)\$ $(tput sgr0)$@ $(tput setaf 7)&> /dev/null$(tput sgr0)"
+    $@ &> /dev/null
+  }
+
+  timer() {
+    (time $@)
   }
 
   package() {
-    DEBIAN_FRONTEND=noninteractive run apt-get install -y $@
+    DEBIAN_FRONTEND=noninteractive run-hide-stdout apt-get install -y $@
   }
 #+end_src
 
@@ -137,10 +142,10 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   <<zsh-helpers>>
 
   run-verbosely ls
-  run-silently ls
+  run-hide-stdout ls
   label "Unminimising the system"
   package man
-  run-with-timer yes | unminimize
+  run-hide-all timer yes | unminimize
 #+end_src
 
 ** Install Emacs 28 with native compilation and fast JSON parser
