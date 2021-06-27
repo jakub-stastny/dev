@@ -1,4 +1,4 @@
-#+TITLE: Rental property management: main module
+#+TITLE: My development environment image
 #+AUTHOR: Jakub Šťastný
 
 * Dockerfile
@@ -103,7 +103,30 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing basic tools."
-  apt-get install -y zsh apt-utils locales automake htop curl wget git silversearcher-ag neovim docker.io tmux emacs-nox tree > /dev/null
+  apt-get install -y zsh apt-utils locales build-essential automake htop curl wget git silversearcher-ag neovim docker.io tmux tree > /dev/null
+#+END_SRC
+
+** Install Emacs 28 with native compilation and fast JSON parser
+
+#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/usr/bin/env zsh
+  echo "$(tput setaf 2)~$(tput sgr0) Installing Emacs 28."
+# export LOG_PATH=/root/.emacs.d/configure.log
+
+  test -d emacs || git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git
+
+  # Dependencies from https://packages.ubuntu.com/impish/emacs-nox
+  #-y
+  apt-get install -y libacl1 libasound2 libc6 libdbus-1-3 libgmp10 libgnutls30 libgpm2 libjansson4 liblcms2-2 libselinux1 libsystemd0 libtinfo6 libxml2 zlib1g
+
+  # Needed for fast JSON
+  apt-get install -y libjansson4 libjansson-dev
+
+  # Dependencies for native compilation
+  apt-get install -y zlib1g-dev libgccjit0 libgccjit-10-dev gcc-10
+
+  cd emacs
+  export CC="gcc-10"
+  ./autogen.sh && ./configure --with-native-compilation > $LOG_PATH && make -j$(nproc) && make install
 #+END_SRC
 
 ** Node.js & Yarn sources
@@ -136,8 +159,7 @@ https://github.com/nodesource/distributions
 #+END_SRC
 
 ** Dotfiles
-
-Emacs packages will get installed
+*** TODO Tangle (in script/hooks/install)
 
 #+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
   echo "$(tput setaf 2)~$(tput sgr0) Installing dotfiles."
@@ -183,11 +205,4 @@ Install expect in order to be able to auto-login.
   apt-get install -y openssh-server mosh > /dev/null && mkdir /run/sshd
   echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd
-#+END_SRC
-
-** Make sure X11 didn't make their way in
-
-#+BEGIN_SRC shell :tangle scripts/install :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Making sure X11 is not installed."
-  apt-get remove -y x11-common > /dev/null
 #+END_SRC
