@@ -43,6 +43,12 @@ Even though we do this in dotfiles, having it exported means we can use these cu
   RUN apt-get install -y locales > /dev/null && locale-gen $LC_ALL
 #+END_SRC
 
+** Install ZSH as a prerequisite for the build scripts
+
+#+begin_src shell
+  DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
+#+end_src
+
 ** Add the build scripts
 
 - Let's not delete the build scripts afterwards, they might come in handy for future inspection.
