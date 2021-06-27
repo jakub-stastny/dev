@@ -47,16 +47,16 @@ Even though we do this in dotfiles, having it exported means we can use these cu
   RUN apt-get install -y locales > /dev/null && locale-gen $LC_ALL
 #+end_src
 
-** Install ZSH as a prerequisite for the build scripts
-
-#+begin_src dockerfile
-  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
-#+end_src
-
 ** Install apt-utils in order to avoid annoying warnings every time I try to install anything
 
 #+begin_src dockerfile
   RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils > /dev/null
+#+end_src
+
+** Install ZSH as a prerequisite for the build scripts
+
+#+begin_src dockerfile
+  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
 #+end_src
 
 ** Add the build scripts
