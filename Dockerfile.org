@@ -96,16 +96,44 @@ We are passing these build args to =docker build= in [[./bin/build]].
 #+end_src
 
 * The build scripts
+  :PROPERTIES:
+  :header-args: :shebang #!/usr/bin/env zsh :mkdirp yes
+  :END:
+
+** Helpers
+
+#+name: zsh-helpers
+#+begin_src shell
+  label() {
+    echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) $@."
+  }
+
+  run() {
+    echo "$(tput setaf 7)\$ $(tput sgr0) $@"
+    $@
+  }
+
+  run-with-timer() {
+    time (run $@)
+  }
+
+  install() {
+    run DEBIAN_FRONTEND=noninteractive apt-get install -y $@ > /dev/null
+  }
+#+end_src
+
 ** Unminimise the system
 
 This makes man pages available.
 
 Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
 
-#+begin_src shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/usr/bin/env zsh
-  echo "$(tput setaf 2)~ $(tput setaf 5)$(date +%H:%M:%S)$(tput sgr0) Unminimising the system."
-  time (DEBIAN_FRONTEND=noninteractive apt-get install -y man > /dev/null)
-  time (yes | unminimize > /dev/null)
+#+begin_src shell :tangle scripts/unminimise-system
+  <<zsh-helpers>>
+
+  label "Unminimising the system"
+  install man
+  run-with-timer (yes | unminimize > /dev/null)
 #+end_src
 
 ** Install Emacs 28 with native compilation and fast JSON parser
