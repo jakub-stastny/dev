@@ -86,18 +86,6 @@ We are passing these build args to =docker build= in [[./bin/build]].
 #+END_SRC
 
 * The build scripts
-
-* Unminimise the system
-
-This makes man pages available.
-
-Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
-
-#+BEGIN_SRC shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/bin/sh
-  echo "$(tput setaf 2)~$(tput sgr0) Unminimising the system."
-  time (yes | unminimize > /dev/null)
-#+END_SRC
-
 ** Install basic tools
 
 #+BEGIN_SRC shell :tangle scripts/install-basic-tools :mkdirp yes :shebang #!/bin/sh
@@ -106,6 +94,17 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   export DEBIAN_FRONTEND=noninteractive
 
   apt-get install -y zsh apt-utils locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree > /dev/null
+#+END_SRC
+
+** Unminimise the system
+
+This makes man pages available.
+
+Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
+
+#+BEGIN_SRC shell :tangle scripts/unminimise-system :mkdirp yes :shebang #!/usr/bin/env zsh
+  echo "$(tput setaf 2)~$(tput sgr0) Unminimising the system."
+  time (yes | unminimize > /dev/null)
 #+END_SRC
 
 ** Install Emacs 28 with native compilation and fast JSON parser
