@@ -110,6 +110,8 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 The helpers are good, but the downside is that changing anything in them will change all the build scripts, which then invalidates Docker cache.
 
+Maybe rather than going noweb, I should make it a separate file and include it? But I'd have to ADD it first, and that'd invalidate the cache anyway.
+
 #+name: zsh-helpers
 #+begin_src shell
   label() {
@@ -174,14 +176,14 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   label "Installing Emacs 28"
   package git
 
-  clone-emacs() { time git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git }
-  run-hide-stdout clone-emacs
+  clone-emacs() { git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git }
+  run-with-timer-hide-stdout clone-emacs
 
   # Dependencies from https://packages.ubuntu.com/impish/emacs-nox
-  package libacl1 libasound2 libc6 libdbus-1-3 libgmp10 libgnutls28-dev libgpm2 libjansson4 liblcms2-2 libselinux1 libsystemd0 libtinfo6 libxml2 zlib1g
+  package libacl1 libasound2 libc6 libdbus-1-3 libgmp10 libgnutls30 libgpm2 libjansson4 liblcms2-2 libselinux1 libsystemd0 libtinfo6 libxml2 zlib1g
 
   # Dependencies for building Emacs.
-  package build-essential texinfo autoconf
+  package build-essential texinfo autoconf pkg-config
 
   # Needed for fast JSON
   package libjansson4 libjansson-dev
@@ -191,7 +193,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
   label "Building Emacs 28 with native compilation and fast JSON"
   cd emacs
-  run-verbosely ./autogen.sh
+  run-hide-stdout ./autogen.sh
   run-verbosely ./configure --with-native-compilation # TODO: log into LOG_PATH, so I have it for a reference
   run-hide-stdout make -j$(nproc)
   run-hide-stdout make install
