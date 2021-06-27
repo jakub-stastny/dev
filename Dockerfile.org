@@ -2,6 +2,10 @@
 #+AUTHOR: Jakub Šťastný
 
 * Dockerfile
+  :PROPERTIES:
+  :header-args:  :tangle Dockerfile
+  :END:
+
 ** Use the latest Ubuntu
 
 #+BEGIN_SRC Dockerfile :tangle Dockerfile
@@ -18,7 +22,7 @@
 
 Silence =tput= warnings and show colours instead.
 
-#+BEGIN_SRC Dockerfile :tangle Dockerfile
+#+BEGIN_SRC Dockerfile
   ENV TERM=xterm-256color
 #+END_SRC
 
