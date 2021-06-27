@@ -50,7 +50,7 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 ** Install ZSH as a prerequisite for the build scripts
 
 #+begin_src shell
-  DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
+  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
 #+end_src
 
 ** Add the build scripts
