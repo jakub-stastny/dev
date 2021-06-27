@@ -53,6 +53,12 @@ Even though we do this in dotfiles, having it exported means we can use these cu
   RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
 #+end_src
 
+** Install apt-utils in order to avoid annoying warnings every time I try to install anything
+
+#+begin_src dockerfile
+  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils > /dev/null
+#+end_src
+
 ** Add the build scripts
 
 - Let's not delete the build scripts afterwards, they might come in handy for future inspection.
@@ -163,7 +169,8 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   label "Installing Emacs 28"
   package git
 
-  run-hide-stdout time git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git
+  clone-emacs() { time git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git }
+  run-hide-stdout clone-emacs
 
   # Dependencies from https://packages.ubuntu.com/impish/emacs-nox
   package libacl1 libasound2 libc6 libdbus-1-3 libgmp10 libgnutls30 libgpm2 libjansson4 liblcms2-2 libselinux1 libsystemd0 libtinfo6 libxml2 zlib1g
