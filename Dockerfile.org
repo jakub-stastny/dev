@@ -97,7 +97,7 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 * The build scripts
   :PROPERTIES:
-  :header-args: :shebang #!/usr/bin/env zsh :mkdirp yes
+  :header-args: :shebang #!/usr/bin/env zsh :mkdirp yes :noweb yes
   :END:
 
 ** Helpers
