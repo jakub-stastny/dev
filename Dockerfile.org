@@ -79,6 +79,9 @@ BROKEN into several scripts, that way we get caching.
   ADD scripts/unminimise-system /build/unminimise-system
   RUN /build/unminimise-system
 
+  ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
+  RUN /build/install-emacs-dependencies
+
   ADD scripts/build-emacs /build/build-emacs
   RUN /build/build-emacs
 
@@ -225,7 +228,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 ** Install Emacs 28 with native compilation, fast JSON parser and better redo
 
-#+begin_src clojure :tangle scripts/build-emacs
+#+begin_src clojure :tangle scripts/install-emacs-dependencies
   <<bb-helpers>>
 
   (block "installing Emacs dependencies"
@@ -243,7 +246,10 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
     ; Dependencies for native compilation
     (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
+#+end_src
 
+#+begin_src clojure :tangle scripts/build-emacs
+  <<bb-helpers>>
 
   (block "building Emacs 28 with native compilation and fast JSON"
     (with-sh-dir "emacs"
