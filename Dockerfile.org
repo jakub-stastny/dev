@@ -327,11 +327,10 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 
 #+begin_src clojure
   (block "installing Clojure CLI"
-    (let [script-name "linux-install.sh"]
-      (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o " script-name)))
-      (ensure-success (run (str "chmod +x " script-name))))
-      (ensure-success (run (str "./" script-name)))
-      (ensure-success (run (str "rm " script-name))))
+    (ensure-success (run "curl curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg"))
+    (ensure-success (run "echo 'deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main' | tee /etc/apt/sources.list.d/github-cli.list"))
+    (ensure-success (run "apt-get update"))
+    (package "gh"))
 #+end_src
 
 ** GH CLI
