@@ -173,7 +173,7 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
         (do ~@sexps)
         (let [duration (- (current-unix-time) start-time)]
           (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) "took"
-            (format-duration duration (fn [format-duration]
+            (format-duration duration (fn [formatted-duration]
               (str (colour :yellow (str formatted-duration "s")) ".\n"))))))))
           ; change colours based on duration, more than 1m red etc.
 
