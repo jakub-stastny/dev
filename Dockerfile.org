@@ -289,9 +289,11 @@ https://github.com/nodesource/distributions
 *** Dotfiles
 **** TODO Tangle (in script/hooks/install)
 
+Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
+
 #+begin_src clojure
-  (block "installing dotfiles" (with-sh-dir "/root"
-    (ensure-success (run "mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh"))))
+  (block "installing dotfiles"
+    (ensure-success (run "mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh")))
 
 #+end_src
 
@@ -318,11 +320,11 @@ Install expect in order to be able to auto-login.
 *** GH CLI
 
 #+begin_src clojure
-  (block "installing GitHub CLI"
-    (let [pkg-name "gh-cli.deb"]
-      (download "https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb" pkg-name)
-      (ensure-success (run (str "dpkg -i " pkg-name)))
-      (ensure-success (run (str "rm" pkg-name)))))
+  ;; (block "installing GitHub CLI"
+  ;;   (let [pkg-name "gh-cli.deb"]
+  ;;     (ensure-success (run (str "https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb -O " pkg-name)))
+  ;;     (ensure-success (run (str "dpkg -i " pkg-name)))
+  ;;     (ensure-success (run (str "rm" pkg-name)))))
 #+end_src
 
 *** Make ZSH the default shell
