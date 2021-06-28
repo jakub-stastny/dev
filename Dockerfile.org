@@ -76,10 +76,15 @@ Since the =mtime= will change every time we tangle this file.
 BROKEN into several scripts, that way we get caching.
 
 #+begin_src dockerfile
-  ADD scripts /build
+  ADD scripts/unminimise-system /build/unminimise-system
   RUN /build/unminimise-system
-  RUN /build/build-emacs
+
+  ADD scripts/build-emacs /build/build-emacs
+
+  ADD scripts/install-basic-tools /build/install-basic-tools
   RUN /build/install-basic-tools
+
+  ADD scripts/install /build/install
   RUN /build/install
 #+end_src
 
