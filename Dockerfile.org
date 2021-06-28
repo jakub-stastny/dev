@@ -138,11 +138,19 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
 
   (defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
 
-  (defn format-duration [duration lambda]
-    (if (<= duration 3) (println)
-      (cond
-        (< duration 60) (lambda (str duration "s"))
-        (> duration 60) (lambda (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+  (defn format-duration [duration]
+    (let [colour-name (cond (< duration 35) :green (< duration 90) :yellow :else :red)]
+     (cond
+       (< duration 60) (colour colour-name (str duration "s"))
+       (> duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+  (defn format-duration-wrapper
+    ([duration] (recur duration (fn [x] x)))
+
+    ([duration lambda]
+      (if (<= duration 3) ""
+        (str "took " (format-duration duration) ".\n"))))
+
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
@@ -150,8 +158,9 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
       (flush)
       (let [result (zsh command rest)]
         (let [duration (- (current-unix-time) start-time)]
-          (format-duration duration (fn [formatted-duration]
-            (println  "... took" (str (colour :green formatted-duration) ".")))) result))))
+          (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+            (println (format-duration-wrapper duration format-fn)))
+          result))))
 
   (defn fail [result]
     (println (str (colour :red "    Error ") (:exit result)))
@@ -172,10 +181,7 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
       (let [start-time (current-unix-time)]
         (do ~@sexps)
         (let [duration (- (current-unix-time) start-time)]
-          (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) "took"
-            (format-duration duration (fn [formatted-duration]
-              (str (colour :yellow (str formatted-duration "s")) ".\n"))))))))
-          ; change colours based on duration, more than 1m red etc.
+          (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration))))))
 
   (defn package [& names]
     (let [command (str "apt-get install -y " (clojure.string/join " " names))]
