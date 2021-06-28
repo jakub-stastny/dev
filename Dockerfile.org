@@ -152,7 +152,7 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
       (let [result (zsh command rest)]
         (let [duration (- (current-unix-time) start-time)]
           (format-duration duration (fn [duration]
-            (println  "... took" (str (colour :green duration) "."))) result)))))
+            (println  "... took" (str (colour :green duration) ".")))) result))))
 
   (defn fail [result]
     (println (str (colour :red "    Error ") (:exit result)))
