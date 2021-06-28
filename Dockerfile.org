@@ -320,11 +320,11 @@ Install expect in order to be able to auto-login.
 *** GH CLI
 
 #+begin_src clojure
-  ;; (block "installing GitHub CLI"
-  ;;   (let [pkg-name "gh-cli.deb"]
-  ;;     (ensure-success (run (str "https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb -O " pkg-name)))
-  ;;     (ensure-success (run (str "dpkg -i " pkg-name)))
-  ;;     (ensure-success (run (str "rm" pkg-name)))))
+  (block "installing GitHub CLI"
+    (let [pkg-name "gh-cli.deb"]
+      (ensure-success (run (str "https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb -O " pkg-name)))
+      (ensure-success (run (str "dpkg -i " pkg-name)))
+      (ensure-success (run (str "rm" pkg-name)))))
 #+end_src
 
 *** Make ZSH the default shell
