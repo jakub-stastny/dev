@@ -204,7 +204,8 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   (block "unminimising the system"
     (package "man")
     (ensure-success (run "yes | unminimize")))
-    (println "OUT:")
+
+  (println "OUT:")
 #+end_src
 
 ** Install Emacs 28 with native compilation, fast JSON parser and better redo
