@@ -142,7 +142,7 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
     (if (<= duration 3) (println)
       (cond
         (< duration 60) (lambda (str duration "s"))
-        (> duration 60) (lambda (str (Math/round (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+        (> duration 60) (lambda (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
@@ -172,7 +172,9 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
       (let [start-time (current-unix-time)]
         (do ~@sexps)
         (let [duration (- (current-unix-time) start-time)]
-          (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) "took" (str (colour :yellow (str duration "s")) ".\n"))))))
+          (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) "took"
+            (format-duration duration (fn [format-duration]
+              (str (colour :yellow (str formatted-duration "s")) ".\n"))))))))
           ; change colours based on duration, more than 1m red etc.
 
   (defn package [& names]
@@ -199,33 +201,32 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 #+begin_src clojure :tangle scripts/build-emacs
   <<bb-helpers>>
 
-  (block "installing Emacs dependencies"
-    (package "git")
-    (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
+  ;; (block "installing Emacs dependencies"
+  ;;   (package "git")
+  ;;   (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
 
-    ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)
-    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g" "libncurses-dev")
+  ;;   ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)
+  ;;   (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g" "libncurses-dev")
 
-    ; Dependencies for building Emacs.
-    (package "build-essential" "texinfo" "autoconf" "pkg-config")
+  ;;   ; Dependencies for building Emacs.
+  ;;   (package "build-essential" "texinfo" "autoconf" "pkg-config")
 
-    ; Needed for fast JSON
-    (package "libjansson4" "libjansson-dev")
+  ;;   ; Needed for fast JSON
+  ;;   (package "libjansson4" "libjansson-dev")
 
-    ; Dependencies for native compilation
-    (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
+  ;;   ; Dependencies for native compilation
+  ;;   (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
 
 
-  (block "building Emacs 28 with native compilation and fast JSON"
-    (with-sh-dir "emacs"
-      (let [path (System/getenv "PATH") cc "gcc-10"]
-        (with-sh-env {:PATH path :CC cc}
-          (ensure-success (run "./autogen.sh"))
-          (ensure-success (run "./configure --with-native-compilation"))
-          (println "  Time:" (:out (sh "date" "+%H:%M:%S"))
-          (ensure-success (run "make"))
-          (ensure-success (run "make install"))))))
-    (ensure-success (run "rm -rf emacs")))
+  ;; (block "building Emacs 28 with native compilation and fast JSON"
+  ;;   (with-sh-dir "emacs"
+  ;;     (let [path (System/getenv "PATH") cc "gcc-10"]
+  ;;       (with-sh-env {:PATH path :CC cc}
+  ;;         (ensure-success (run "./autogen.sh"))
+  ;;         (ensure-success (run "./configure --with-native-compilation"))
+  ;;         (ensure-success (run "make"))
+  ;;         (ensure-success (run "make install"))))))
+  ;;   (ensure-success (run "rm -rf emacs")))
 
   ;; export LOG_PATH=/root/.emacs.d/configure.log
   ;; export CC="gcc-10" # TODO: inline it to make or configure or where is this supposed to go.
@@ -246,7 +247,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 ** Rest
    :PROPERTIES:
-   :header-args: :tangle scripts/install
+   :header-args: :tangle scripts/install :noweb yes
    :END:
 
 *** Node.js & Yarn sources
