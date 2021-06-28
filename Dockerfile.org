@@ -114,14 +114,11 @@ Maybe rather than going noweb, I should make it a separate file and include it? 
 
 #+name: bb-helpers
 #+begin_src clojure
-  (require '[clojure.java.shell :refer [sh]]) ; rename to exec or sth
+  (require '[clojure.java.shell :refer [sh]])
 
-  (defn exec [command]
-    (let [chunks (clojure.string/split command #" ")]
-      (apply sh chunks)))
-
-  (defn zsh [command]
-    (apply sh "zsh" "-c" command))
+  (defn zsh
+    ([command] (sh "zsh" "-c" command))
+    ([command env] (apply sh "zsh" "-c" command env)))
 
   (def colours {
     :red 31 :green 32 :yellow 33
@@ -135,15 +132,16 @@ Maybe rather than going noweb, I should make it a separate file and include it? 
 
   (defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
 
-  (defn run [command]
+  (defn run [command & rest]
     (let [start-time (current-unix-time)]
       (println (str "  " (colour :green "λ ") (colour :grey command)))
-      (exec command)
+      (zsh command rest)
       (let [duration (- (current-unix-time) start-time)]
         (println "   " (colour :yellow "=>") "Took" (str (colour :green (str duration "s")) ".")))))
 
   (defn fail [result]
     (println (str (colour :red "Error ") (:exit result)))
+    (println result)
     (let [out (:out result) err (:err result)]
       (when-not (empty? out) (println out))
       (when-not (empty? err) (println err)))
@@ -164,7 +162,8 @@ Maybe rather than going noweb, I should make it a separate file and include it? 
           (println (colour :yellow "\n  =>") (colour :grey ~name) "took" (str (colour :yellow (str duration "s")) "."))))))
 
   (defn package [& names]
-    (ensure-success (run (str "apt-get install -y " (clojure.string/join " " names)))))
+    (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
 #+end_src
 
 ** Unminimise the system
