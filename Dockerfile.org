@@ -253,7 +253,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 ** Rest
    :PROPERTIES:
-   :header-args: :tangle scripts/install :noweb yes
+   :header-args: :tangle scripts/install :noweb yes :shebang #!/usr/bin/env bb
    :END:
 
 *** Node.js & Yarn sources
