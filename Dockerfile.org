@@ -304,10 +304,10 @@ Install expect in order to be able to auto-login.
 #+begin_src clojure
   (block "installing Clojure CLI"
     (let [script-name "linux-install.sh"]
-      (download "https://download.clojure.org/install/linux-install-1.10.3.855.sh" script-name)
-      (ensure-success (run str("chmod +x " script-name))))
-      (ensure-success (run str("./" script-name)))
-      (ensure-success (run str("rm " script-name))))
+      (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -O " script-name)
+      (ensure-success (run (str "chmod +x " script-name))))
+      (ensure-success (run (str "./" script-name)))
+      (ensure-success (run (str "rm " script-name))))
 #+end_src
 
 *** GH CLI
