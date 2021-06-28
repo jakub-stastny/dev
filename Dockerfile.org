@@ -330,17 +330,16 @@ Install expect in order to be able to auto-login.
 *** Make ZSH the default shell
 
 #+begin_src clojure
-  ;; (block "making ZSH the default shell"
-  ;;   (ensure-success (run "chsh -s $(which zsh)")))
+  (block "making ZSH the default shell"
+    (ensure-success (run "chsh -s $(which zsh)")))
 #+end_src
 
 *** Set up SSH and change root password
 
 #+begin_src clojure
-(println "SUCK MI DICK")
-  ;; (block "setting up OpenSSH server and securing the installation"
-  ;;   (package "openssh-server" "mosh")
-  ;;   (ensure-success (run "mkdir /run/sshd"))
-  ;;   (ensure-success (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config"))
-  ;;   (ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)\" | chpasswd")))
+  (block "setting up OpenSSH server and securing the installation"
+    (package "openssh-server" "mosh")
+    (ensure-success (run "mkdir /run/sshd"))
+    (ensure-success (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config"))
+    (ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)\" | chpasswd")))
 #+end_src
