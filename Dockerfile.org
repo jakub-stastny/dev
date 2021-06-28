@@ -149,8 +149,8 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
        (> duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
 
   (defn format-duration-wrapper
-    ([duration] (when (<= duration 3) (str "took " (format-duration duration) ".")))
-    ([duration lambda] (when (<= duration 3) (lambda (format-duration-wrapper duration)))))
+    ([duration] (if (<= duration 3) "" (str "took " (format-duration duration) ".")))
+    ([duration lambda] (if (<= duration 3) "" (lambda (format-duration-wrapper duration)))))
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
