@@ -276,7 +276,9 @@ https://github.com/nodesource/distributions
 
 #+begin_src clojure
   (block "setting up time zone"
-    (ensure-success (run "apt-get install -y tzdata apt-utils > /dev/null && echo America/New_York > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata")))
+    (package "tzdata")
+    (ensure-success (run "echo America/New_York > /etc/timezone"))
+    (ensure-success (run "dpkg-reconfigure -f noninteractive tzdata")))
 #+end_src
 
 *** Dotfiles
