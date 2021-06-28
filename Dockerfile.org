@@ -83,7 +83,7 @@ BROKEN into several scripts, that way we get caching.
   RUN /build/install
 #+end_src
 
-** Save build metadata
+** Save build metadata and log
 
 We are passing these build args to =docker build= in [[./bin/build]].
 
@@ -93,6 +93,10 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
   ENV DOCKER_IMAGE_GIT_SHA=$DOCKER_IMAGE_GIT_SHA
   ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
+
+  # TODO: Move to the very end
+  # TODO: Add every command's STDOUT/STDERR (redirect STDERR to STDOUT) log. I. e. /tmp/var/log/build/<command-name>.log.
+  ADD build.log /
 #+end_src
 
 ** Run OpenSSH server
@@ -200,6 +204,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   (block "unminimising the system"
     (package "man")
     (ensure-success (run "yes | unminimize")))
+    (println "OUT:")
 #+end_src
 
 ** Install Emacs 28 with native compilation, fast JSON parser and better redo
