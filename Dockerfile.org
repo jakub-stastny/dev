@@ -134,14 +134,14 @@ Maybe rather than going noweb, I should make it a separate file and include it? 
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
-      (println (str "  " (colour :green "λ ") (colour :grey command)))
-      (zsh command rest)
-      (let [duration (- (current-unix-time) start-time)]
-        (println "   " (colour :yellow "=>") "Took" (str (colour :green (str duration "s")) ".")))))
+      (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+      (flush)
+      (let [result (zsh command rest)]
+        (let [duration (- (current-unix-time) start-time)]
+          (println  "... took" (str (colour :green (str duration "s")) "."))) result)))
 
   (defn fail [result]
-    (println (str (colour :red "Error ") (:exit result)))
-    (println result)
+    (println (str (colour :red "    Error ") (:exit result)))
     (let [out (:out result) err (:err result)]
       (when-not (empty? out) (println out))
       (when-not (empty? err) (println err)))
@@ -159,11 +159,11 @@ Maybe rather than going noweb, I should make it a separate file and include it? 
       (let [start-time (current-unix-time)]
         (do ~@sexps)
         (let [duration (- (current-unix-time) start-time)]
-          (println (colour :yellow "\n  =>") (colour :grey ~name) "took" (str (colour :yellow (str duration "s")) "."))))))
+          (println (colour :yellow "\n  =>") "Block" (colour :grey ~name) "took" (str (colour :yellow (str duration "s")) "."))))))
 
   (defn package [& names]
     (let [command (str "apt-get install -y " (clojure.string/join " " names))]
-    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+      (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
 #+end_src
 
 ** Unminimise the system
