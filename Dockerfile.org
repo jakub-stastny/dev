@@ -142,7 +142,7 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
     (if (< duration 3) (println)
       (cond
         (> duration 60) (lambda (str duration "s"))
-        (< duration 60) (lambda (str (/ duration 60) (mod duration 60))))))
+        (< duration 60) (lambda (str (/ duration 60.0) ":" (mod duration 60))))))
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
@@ -150,8 +150,8 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
       (flush)
       (let [result (zsh command rest)]
         (let [duration (- (current-unix-time) start-time)]
-          (format-duration duration (fn [duration]
-            (println  "... took" (str (colour :green duration) ".")))) result))))
+          (format-duration duration (fn [formatted-duration]
+            (println  "... took" (str (colour :green formatted-duration) ".")))) result))))
 
   (defn fail [result]
     (println (str (colour :red "    Error ") (:exit result)))
@@ -194,7 +194,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
     (ensure-success (run "yes | unminimize")))
 #+end_src
 
-** Install Emacs 28 with native compilation and fast JSON parser
+** Install Emacs 28 with native compilation, fast JSON parser and better redo
 
 #+begin_src clojure :tangle scripts/build-emacs
   <<bb-helpers>>
@@ -204,7 +204,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
     (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
 
     ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox
-    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g")
+    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g" "libncurses-dev")
 
     ; Dependencies for building Emacs.
     (package "build-essential" "texinfo" "autoconf" "pkg-config")
