@@ -80,12 +80,28 @@ BROKEN into several scripts, that way we get caching.
   RUN /build/unminimise-system
 
   ADD scripts/build-emacs /build/build-emacs
+  RUN /build/build-emacs
 
   ADD scripts/install-basic-tools /build/install-basic-tools
   RUN /build/install-basic-tools
 
-  ADD scripts/install /build/install
-  RUN /build/install
+  ADD scripts/add-node-sources /build/add-node-sources
+  RUN /build/add-node-sources
+
+  ADD scripts/set-up-time-zone /build/set-up-time-zone
+  RUN /build/set-up-time-zone
+
+  ADD scripts/install-dotfiles /build/install-dotfiles
+  RUN /build/install-dotfiles
+
+  ADD scripts/install-clojure-cli /build/install-clojure-cli
+  RUN /build/install-clojure-cli
+
+  ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
+  RUN /build/make-zsh-the-default-shell
+
+  ADD scripts/secure-installation /build/secure-installation
+  RUN /build/secure-installation
 #+end_src
 
 ** Save build metadata and log
@@ -249,19 +265,19 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 ** Install basic tools
 
+=expect-dev= is for autologin scripts.
+
 #+begin_src clojure :tangle scripts/install-basic-tools
   <<bb-helpers>>
 
   (block "installing basic tools"
-    (package "locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree"))
+    (package "locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree expect-dev"))
 #+end_src
 
-** Rest
+** Node.js & Yarn sources
    :PROPERTIES:
-   :header-args: :tangle scripts/install :noweb yes :shebang #!/usr/bin/env bb
+   :header-args: :tangle scripts/add-node-sources :noweb yes :shebang #!/usr/bin/env bb
    :END:
-
-*** Node.js & Yarn sources
 
 Add Yarn sources (without installing it).
 https://yarnpkg.com/lang/en/docs/install/#debian-stable
@@ -277,36 +293,37 @@ https://github.com/nodesource/distributions
     (ensure-success (run "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo deb https://dl.yarnpkg.com/debian/ stable main | tee /etc/apt/sources.list.d/yarn.list")))
 #+end_src
 
-*** Time zone
+** Time zone
+   :PROPERTIES:
+   :header-args: :tangle scripts/set-up-time-zone :noweb yes :shebang #!/usr/bin/env bb
+   :END:
 
 #+begin_src clojure
+  <<bb-helpers>>
+
   (block "setting up time zone"
     (package "tzdata")
     (ensure-success (run "echo America/New_York > /etc/timezone"))
     (ensure-success (run "dpkg-reconfigure -f noninteractive tzdata")))
 #+end_src
 
-*** Dotfiles
+** Dotfiles
+   :PROPERTIES:
+   :header-args: :tangle scripts/install-dotfiles :noweb yes :shebang #!/usr/bin/env bb
+   :END:
+
 **** TODO Tangle (in script/hooks/install)
 
 Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 
 #+begin_src clojure
+  <<bb-helpers>>
+
   (block "installing dotfiles"
     (ensure-success (run "mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh")))
-
 #+end_src
 
-*** Expect
-
-Install expect in order to be able to auto-login.
-
-#+begin_src clojure
-  (block "installing expect for auto-login scripts"
-    (package "expect-dev"))
-#+end_src
-
-*** Clojure CLI
+** Clojure CLI
 
 #+begin_src clojure
   (block "installing Clojure CLI"
@@ -317,9 +334,14 @@ Install expect in order to be able to auto-login.
       (ensure-success (run (str "rm " script-name))))
 #+end_src
 
-*** GH CLI
+** GH CLI
+   :PROPERTIES:
+   :header-args: :tangle scripts/install-clojure-cli :noweb yes :shebang #!/usr/bin/env bb
+   :END:
 
 #+begin_src clojure
+  <<bb-helpers>>
+
   (block "installing GitHub CLI"
     (let [pkg-name "gh-cli.deb"]
       (ensure-success (run (str "https://github.com/cli/cli/releases/download/v1.11.0/gh_1.11.0_linux_amd64.deb -O " pkg-name)))
@@ -327,16 +349,26 @@ Install expect in order to be able to auto-login.
       (ensure-success (run (str "rm" pkg-name)))))
 #+end_src
 
-*** Make ZSH the default shell
+** Make ZSH the default shell
+   :PROPERTIES:
+   :header-args: :tangle scripts/make-zsh-the-default-shell :noweb yes :shebang #!/usr/bin/env bb
+   :END:
 
 #+begin_src clojure
+  <<bb-helpers>>
+
   (block "making ZSH the default shell"
     (ensure-success (run "chsh -s $(which zsh)")))
 #+end_src
 
-*** Set up SSH and change root password
+** Set up SSH and change root password
+   :PROPERTIES:
+   :header-args: :tangle scripts/secure-installation :noweb yes :shebang #!/usr/bin/env bb
+   :END:
 
 #+begin_src clojure
+  <<bb-helpers>>
+
   (block "setting up OpenSSH server and securing the installation"
     (package "openssh-server" "mosh")
     (ensure-success (run "mkdir /run/sshd"))
