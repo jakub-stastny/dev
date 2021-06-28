@@ -185,7 +185,7 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
       (let [start-time (current-unix-time)]
         (do ~@sexps)
         (let [duration (- (current-unix-time) start-time)]
-          (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) ".")))))
+          (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
 
   (defn package [& names]
     (let [command (str "apt-get install -y " (clojure.string/join " " names))]
