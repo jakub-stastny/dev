@@ -57,7 +57,7 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 
 #+begin_src dockerfile
   RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh > /dev/null
-  curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
+  RUN curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
 #+end_src
 
 ** Add the build scripts
