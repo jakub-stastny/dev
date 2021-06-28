@@ -139,11 +139,10 @@ https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#529
   (defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
 
   (defn format-duration [duration lambda]
-    (when (> duration 3) (lambda)))
-    ;;   (ignore-if-too-small duration
-    ;;     (lambda (cond
-    ;;       (> duration 60) (str duration "s")
-    ;;       (< duration 60) (str (/ duration 60) (mod duration 60))))))
+    (if (< duration 3) (println)
+      (cond
+        (> duration 60) (lambda (str duration "s"))
+        (< duration 60) (lambda (str (/ duration 60) (mod duration 60))))))
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
