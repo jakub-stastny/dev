@@ -258,7 +258,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
           (ensure-success (run "./autogen.sh"))
           (ensure-success (run "./configure --with-native-compilation"))
           (ensure-success (run "make"))
-          (ensure-success (run "make install"))))))
+          (ensure-success (run "make install")))))
     (ensure-success (run "rm -rf emacs")))
 
   ;; export LOG_PATH=/root/.emacs.d/configure.log
