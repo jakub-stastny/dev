@@ -28,26 +28,34 @@ Silence =tput= warnings and show colours instead.
 
 ** Set up =$PATH=
 
-Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from ~/.script/dotfiles.
+Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from =~/.script/dotfiles=.
+
+This has less importance now, since we switched to connecting to the image directly over SSH, which doesn't respect ENV variables, but it's still useful, for instance so we can do =dotfiles pull -r= in our project =Dockerfile=.
 
 #+begin_src dockerfile
   ENV PATH="/root/.scripts:${PATH}"
 #+end_src
 
+** Update APT
+
++begin_src dockerfile
+  RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y > /dev/null
++end_src
+
 ** Fix locale
 
-- Ubuntu has broken locale. We need to set the variables here, in order for them to be available both to the install script and to the final environment.
-- Locale is generated in the install script.
-- There's a Perl locale error when setting up locales. Ignore.
+Ubuntu has broken locale. We need to set the variables here, in order for them to be available both to the install script and to the final environment. Locale is generated in the install script.
+
+There's a Perl locale error when setting up locales. Ignore.
 
 #+begin_src dockerfile
-  RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y > /dev/null
-
   ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
   RUN apt-get install -y locales > /dev/null && locale-gen $LC_ALL
 #+end_src
 
-** Install apt-utils in order to avoid annoying warnings every time I try to install anything
+** Install apt-utils
+
+Installing =apt-utils= will stop annoying warning every time I try to install something.
 
 #+begin_src dockerfile
   RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils > /dev/null
@@ -62,18 +70,9 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 
 ** Add the build scripts
 
-- Let's not delete the build scripts afterwards, they might come in handy for future inspection.
+I purposedly want to leave the scripts in the build, as they might come in handy for future inspection.
 
-- Whatever runs inside the script don't get cached,
-- not suited for compilations.
-
-- With that said this should be environment agnostic,
-- it should provide sources to install commonly used
-- utilities, not necessary include them.
-
-Since the =mtime= will change every time we tangle this file.
-
-BROKEN into several scripts, that way we get caching.
+I don't do =ADD /build=, since any change in any of the files invalidates Docker cache.
 
 #+begin_src dockerfile
   ADD scripts/unminimise-system /build/unminimise-system
@@ -100,6 +99,9 @@ BROKEN into several scripts, that way we get caching.
   ADD scripts/install-clojure-cli /build/install-clojure-cli
   RUN /build/install-clojure-cli
 
+  ADD scripts/install-gh-cli /build/install-gh-cli
+  RUN /build/install-gh-cli
+
   ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
   RUN /build/make-zsh-the-default-shell
 
@@ -107,7 +109,7 @@ BROKEN into several scripts, that way we get caching.
   RUN /build/secure-installation
 #+end_src
 
-** Save build metadata and log
+** Save build metadata
 
 We are passing these build args to =docker build= in [[./bin/build]].
 
@@ -117,10 +119,6 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
   ENV DOCKER_IMAGE_GIT_SHA=$DOCKER_IMAGE_GIT_SHA
   ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
-
-  # TODO: Move to the very end
-  # TODO: Add every command's STDOUT/STDERR (redirect STDERR to STDOUT) log. I. e. /tmp/var/log/build/<command-name>.log.
-  ADD build.log /
 #+end_src
 
 ** Run OpenSSH server
@@ -132,23 +130,27 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 * The build scripts
   :PROPERTIES:
-  :header-args: :shebang #!/usr/bin/env bb :mkdirp yes :noweb yes
+  :header-args: :noweb yes :shebang #!/usr/bin/env bb :mkdirp yes
   :END:
 
 ** Helpers
 
-The helpers are good, but the downside is that changing anything in them will change all the build scripts, which then invalidates Docker cache.
+Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
 
-Maybe rather than going noweb, I should make it a separate file and include it? But I'd have to ADD it first, and that'd invalidate the cache anyway.
+*** TODO Refactor to group side-effects in one place
+
+Since this is just the first working version, I didn't bother with the design, but now it should be refactored to behave more declaratively: to generate a representation of the commands, rather than executing them directly.
+
+Only after we get to the end of the =block=, the commands in it should execute and that's when all the side-effects should happen.
 
 *** TODO Show current duration of execution
 
-https://book.babashka.org/#core_async
-https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#5291396 \r to return and overwrite the line
+- [[https://book.babashka.org/#core_async][Babashka async]]
+- [[https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#5291396][ASCII escape sequence \r]]
 
 #+name: bb-helpers
 #+begin_src clojure
-  (require '[clojure.java.shell :refer [sh with-sh-dir with-sh-env]])
+  (require '[clojure.java.shell :refer [sh with-sh-dir]])
 
   (defn zsh
     ([command] (sh "zsh" "-c" command))
@@ -254,19 +256,11 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   (block "building Emacs 28 with native compilation and fast JSON"
     (with-sh-dir "emacs"
       (let [path (System/getenv "PATH") cc "gcc-10"]
-        (with-sh-env {:PATH path :CC cc}
-          (ensure-success (run "./autogen.sh"))
-          (ensure-success (run "./configure --with-native-compilation"))
-          (ensure-success (run "make"))
-          (ensure-success (run "make install")))))
+        (ensure-success (run "./autogen.sh" :env "PATH" path))
+        (ensure-success (run "./configure --with-native-compilation" :env "PATH" path "CC" cc))
+        (ensure-success (run "make -j$(nproc)" :env "PATH" path "CC" cc))
+        (ensure-success (run "make install" :env "PATH" path))))
     (ensure-success (run "rm -rf emacs")))
-
-  ;; export LOG_PATH=/root/.emacs.d/configure.log
-  ;; export CC="gcc-10" # TODO: inline it to make or configure or where is this supposed to go.
-  ;; run-hide-stdout ./autogen.sh
-  ;; run-verbosely ./configure --with-native-compilation # TODO: log into LOG_PATH, so I have it for a reference
-  ;; run-hide-stdout make -j$(nproc)
-  ;; run-hide-stdout make install
 #+end_src
 
 ** Install basic tools
@@ -277,13 +271,10 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   <<bb-helpers>>
 
   (block "installing basic tools"
-    (package "locales automake htop curl wget git silversearcher-ag neovim docker.io tmux tree expect-dev"))
+    (package "locales" "automake" "htop" "curl" "wget" "git" "silversearcher-ag" "neovim" "docker.io" "tmux" "tree" "expect-dev"))
 #+end_src
 
 ** Node.js & Yarn sources
-   :PROPERTIES:
-   :header-args: :tangle scripts/add-node-sources :noweb yes :shebang #!/usr/bin/env bb
-   :END:
 
 Add Yarn sources (without installing it).
 https://yarnpkg.com/lang/en/docs/install/#debian-stable
@@ -291,7 +282,7 @@ https://github.com/nodesource/distributions
 
 # curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/add-node-sources
   <<bb-helpers>>
 
   (block "adding apt sources for Node.js"
@@ -300,11 +291,8 @@ https://github.com/nodesource/distributions
 #+end_src
 
 ** Time zone
-   :PROPERTIES:
-   :header-args: :tangle scripts/set-up-time-zone :noweb yes :shebang #!/usr/bin/env bb
-   :END:
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/set-up-time-zone
   <<bb-helpers>>
 
   (block "setting up time zone"
@@ -314,17 +302,12 @@ https://github.com/nodesource/distributions
 #+end_src
 
 ** Dotfiles
-   :PROPERTIES:
-   :header-args: :tangle scripts/install-dotfiles :noweb yes :shebang #!/usr/bin/env bb
-   :END:
-
-**** TODO Tangle (in script/hooks/install)
 
 Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 
 *** Install traditional dotfiles
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/install-dotfiles
   <<bb-helpers>>
 
   (block "installing dotfiles"
@@ -338,7 +321,7 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
   (progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
 #+end_src
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/install-dotfiles
   (block "tangling literate dotfiles"
     (with-sh-dir "/root/org"
       (ensure-success (run "emacs -Q --batch --eval '<<tangle>>' **/*.org"))))
@@ -346,7 +329,7 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 
 ** Clojure CLI
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/install-clojure-cli
   (block "installing Clojure CLI"
     (let [script-name "linux-install.sh"]
       (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o " script-name)))
@@ -354,11 +337,8 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 #+end_src
 
 ** GH CLI
-   :PROPERTIES:
-   :header-args: :tangle scripts/install-clojure-cli :noweb yes :shebang #!/usr/bin/env bb
-   :END:
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/install-gh-cli
   <<bb-helpers>>
 
   (block "installing GitHub CLI"
@@ -369,11 +349,8 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 #+end_src
 
 ** Make ZSH the default shell
-   :PROPERTIES:
-   :header-args: :tangle scripts/make-zsh-the-default-shell :noweb yes :shebang #!/usr/bin/env bb
-   :END:
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/make-zsh-the-default-shell
   <<bb-helpers>>
 
   (block "making ZSH the default shell"
@@ -381,11 +358,8 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 #+end_src
 
 ** Set up SSH and change root password
-   :PROPERTIES:
-   :header-args: :tangle scripts/secure-installation :noweb yes :shebang #!/usr/bin/env bb
-   :END:
 
-#+begin_src clojure
+#+begin_src clojure :tangle scripts/secure-installation
   <<bb-helpers>>
 
   (block "setting up OpenSSH server and securing the installation"
