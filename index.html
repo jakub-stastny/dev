@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-06-30 Wed 14:39 -->
+<!-- 2021-06-30 Wed 14:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>My development environment image</title>
@@ -243,13 +243,13 @@
 <div id="content">
 <h1 class="title">My development environment image</h1>
 
-<div id="outline-container-org921cff6" class="outline-2">
-<h2 id="org921cff6"><span class="section-number-2">1</span> Dockerfile</h2>
+<div id="outline-container-org89c6fab" class="outline-2">
+<h2 id="org89c6fab"><span class="section-number-2">1</span> Dockerfile</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 
-<div id="outline-container-org0ba15d0" class="outline-3">
-<h3 id="org0ba15d0"><span class="section-number-3">1.1</span> Use the latest Ubuntu</h3>
+<div id="outline-container-orgac4929c" class="outline-3">
+<h3 id="orgac4929c"><span class="section-number-3">1.1</span> Use the latest Ubuntu</h3>
 <div class="outline-text-3" id="text-1-1">
 <div class="org-src-container">
 <pre class="src src-dockerfile">FROM ubuntu:latest
@@ -258,8 +258,8 @@
 </div>
 </div>
 
-<div id="outline-container-org0558135" class="outline-3">
-<h3 id="org0558135"><span class="section-number-3">1.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
+<div id="outline-container-orgfe724c7" class="outline-3">
+<h3 id="orgfe724c7"><span class="section-number-3">1.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="org-src-container">
 <pre class="src src-dockerfile">WORKDIR /root
@@ -268,8 +268,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgd972734" class="outline-3">
-<h3 id="orgd972734"><span class="section-number-3">1.3</span> Set <code>TERM to =xterm-256color</code></h3>
+<div id="outline-container-org794aba4" class="outline-3">
+<h3 id="org794aba4"><span class="section-number-3">1.3</span> Set <code>TERM</code> to <code>xterm-256color</code></h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Silence <code>tput</code> warnings and show colours instead.
@@ -282,8 +282,8 @@ Silence <code>tput</code> warnings and show colours instead.
 </div>
 </div>
 
-<div id="outline-container-org80c7fa9" class="outline-3">
-<h3 id="org80c7fa9"><span class="section-number-3">1.4</span> Set up <code>$PATH</code></h3>
+<div id="outline-container-org94e660d" class="outline-3">
+<h3 id="org94e660d"><span class="section-number-3">1.4</span> Set up <code>$PATH</code></h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from <code>~/.script/dotfiles</code>.
@@ -300,8 +300,8 @@ This has less importance now, since we switched to connecting to the image direc
 </div>
 </div>
 
-<div id="outline-container-org47b0dde" class="outline-3">
-<h3 id="org47b0dde"><span class="section-number-3">1.5</span> Update APT cache and upgrade packages</h3>
+<div id="outline-container-org80dedd2" class="outline-3">
+<h3 id="org80dedd2"><span class="section-number-3">1.5</span> Update APT cache and upgrade packages</h3>
 <div class="outline-text-3" id="text-1-5">
 <div class="org-src-container">
 <pre class="src src-dockerfile">RUN apt-get update &gt; /dev/null &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get upgrade -y &gt; /dev/null
@@ -310,8 +310,8 @@ This has less importance now, since we switched to connecting to the image direc
 </div>
 </div>
 
-<div id="outline-container-org25b0962" class="outline-3">
-<h3 id="org25b0962"><span class="section-number-3">1.6</span> Fix locale</h3>
+<div id="outline-container-org913315b" class="outline-3">
+<h3 id="org913315b"><span class="section-number-3">1.6</span> Fix locale</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 Ubuntu has broken locale. We need to set the variables here, in order for them to be available both to the install script and to the final environment. Locale is generated in the install script.
@@ -329,8 +329,8 @@ RUN apt-get install -y locales &gt; /dev/null &amp;&amp; locale-gen $LC_ALL
 </div>
 </div>
 
-<div id="outline-container-org4044b39" class="outline-3">
-<h3 id="org4044b39"><span class="section-number-3">1.7</span> Install apt-utils</h3>
+<div id="outline-container-orgfc69a5b" class="outline-3">
+<h3 id="orgfc69a5b"><span class="section-number-3">1.7</span> Install apt-utils</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 Installing <code>apt-utils</code> will stop annoying warning every time I try to install something.
@@ -343,8 +343,8 @@ Installing <code>apt-utils</code> will stop annoying warning every time I try to
 </div>
 </div>
 
-<div id="outline-container-org41ad1d2" class="outline-3">
-<h3 id="org41ad1d2"><span class="section-number-3">1.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
+<div id="outline-container-org20666a1" class="outline-3">
+<h3 id="org20666a1"><span class="section-number-3">1.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
 <div class="outline-text-3" id="text-1-8">
 <div class="org-src-container">
 <pre class="src src-dockerfile">RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh curl &gt; /dev/null
@@ -354,8 +354,8 @@ RUN curl https://raw.githubusercontent.com/babashka/babashka/master/install | ba
 </div>
 </div>
 
-<div id="outline-container-org1584519" class="outline-3">
-<h3 id="org1584519"><span class="section-number-3">1.9</span> Add the build scripts</h3>
+<div id="outline-container-org6f0cb3f" class="outline-3">
+<h3 id="org6f0cb3f"><span class="section-number-3">1.9</span> Add the build scripts</h3>
 <div class="outline-text-3" id="text-1-9">
 <p>
 I purposedly want to leave the scripts in the build, as they might come in handy for future inspection.
@@ -403,11 +403,15 @@ RUN /build/secure-installation
 </div>
 </div>
 
-<div id="outline-container-org271fcaf" class="outline-3">
-<h3 id="org271fcaf"><span class="section-number-3">1.10</span> Save build metadata</h3>
+<div id="outline-container-org4bd6aa4" class="outline-3">
+<h3 id="org4bd6aa4"><span class="section-number-3">1.10</span> Save build metadata</h3>
 <div class="outline-text-3" id="text-1-10">
 <p>
 We are passing these build args to <code>docker build</code> in <a href="./bin/build">./bin/build</a>.
+</p>
+
+<p>
+Previously we have been saving these into a file, but really, an ENV variable is better suited for this.
 </p>
 
 <div class="org-src-container">
@@ -421,9 +425,21 @@ ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
 </div>
 </div>
 
-<div id="outline-container-orge69ad6b" class="outline-3">
-<h3 id="orge69ad6b"><span class="section-number-3">1.11</span> Run OpenSSH server</h3>
+<div id="outline-container-org7a8bb8b" class="outline-3">
+<h3 id="org7a8bb8b"><span class="section-number-3">1.11</span> Run OpenSSH server</h3>
 <div class="outline-text-3" id="text-1-11">
+<p>
+This allows us to connect directly, rather than having to go through the host machine.
+</p>
+
+<p>
+On the flip side, it render many declarations made in the project <code>Dockerfile</code> useless: namely <code>ENV</code> and <code>WORKDIR</code> declarations.
+</p>
+
+<p>
+Just redefine <code>SSHD_PORT</code> for each of the project images, so that they don't clash and you'll be able to connect straight to the running image from your SSH terminal.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-dockerfile">ENV SSHD_PORT=2222
 CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
@@ -433,21 +449,21 @@ CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 </div>
 </div>
 
-<div id="outline-container-org4dbfb8b" class="outline-2">
-<h2 id="org4dbfb8b"><span class="section-number-2">2</span> The build scripts</h2>
+<div id="outline-container-org8c55423" class="outline-2">
+<h2 id="org8c55423"><span class="section-number-2">2</span> The build scripts</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 
-<div id="outline-container-orgf7c9bf7" class="outline-3">
-<h3 id="orgf7c9bf7"><span class="section-number-3">2.1</span> Helpers</h3>
+<div id="outline-container-org59299e4" class="outline-3">
+<h3 id="org59299e4"><span class="section-number-3">2.1</span> Helpers</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
 </p>
 </div>
 
-<div id="outline-container-org7de67ec" class="outline-4">
-<h4 id="org7de67ec"><span class="section-number-4">2.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
+<div id="outline-container-org158df91" class="outline-4">
+<h4 id="org158df91"><span class="section-number-4">2.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 Since this is just the first working version, I didn't bother with the design, but now it should be refactored to behave more declaratively: to generate a representation of the commands, rather than executing them directly.
@@ -459,8 +475,8 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </div>
 </div>
 
-<div id="outline-container-org4b82c15" class="outline-4">
-<h4 id="org4b82c15"><span class="section-number-4">2.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
+<div id="outline-container-org38b396c" class="outline-4">
+<h4 id="org38b396c"><span class="section-number-4">2.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <ul class="org-ul">
 <li><a href="https://book.babashka.org/#core_async">Babashka async</a></li>
@@ -468,7 +484,7 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-clojure" id="org842e7ff">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
+<pre class="src src-clojure" id="orgd2dd631">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
 
 (<span style="color: #b4fa70;">defn</span> <span style="color: #fce94f;">zsh</span>
   ([command] (sh <span style="color: #e9b96e;">"zsh"</span> <span style="color: #e9b96e;">"-c"</span> command))
@@ -536,8 +552,8 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </div>
 </div>
 
-<div id="outline-container-org18de6af" class="outline-3">
-<h3 id="org18de6af"><span class="section-number-3">2.2</span> Unminimise the system</h3>
+<div id="outline-container-org3af2d6a" class="outline-3">
+<h3 id="org3af2d6a"><span class="section-number-3">2.2</span> Unminimise the system</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 This makes man pages available.
@@ -619,8 +635,8 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 </div>
 
-<div id="outline-container-org0895941" class="outline-3">
-<h3 id="org0895941"><span class="section-number-3">2.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
+<div id="outline-container-orga74ef8b" class="outline-3">
+<h3 id="orga74ef8b"><span class="section-number-3">2.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
@@ -781,8 +797,8 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 </div>
 
-<div id="outline-container-orge7a12c1" class="outline-3">
-<h3 id="orge7a12c1"><span class="section-number-3">2.4</span> Install basic tools</h3>
+<div id="outline-container-orga722b42" class="outline-3">
+<h3 id="orga722b42"><span class="section-number-3">2.4</span> Install basic tools</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 <code>expect-dev</code> is for autologin scripts.
@@ -859,8 +875,8 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 </div>
 
-<div id="outline-container-org52d47af" class="outline-3">
-<h3 id="org52d47af"><span class="section-number-3">2.5</span> Node.js &amp; Yarn sources</h3>
+<div id="outline-container-org79e6cbb" class="outline-3">
+<h3 id="org79e6cbb"><span class="section-number-3">2.5</span> Node.js &amp; Yarn sources</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Add Yarn sources (without installing it).
@@ -940,8 +956,8 @@ Add Yarn sources (without installing it).
 </div>
 </div>
 
-<div id="outline-container-orga3cf320" class="outline-3">
-<h3 id="orga3cf320"><span class="section-number-3">2.6</span> Time zone</h3>
+<div id="outline-container-orgad7e039" class="outline-3">
+<h3 id="orgad7e039"><span class="section-number-3">2.6</span> Time zone</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
@@ -1016,16 +1032,16 @@ Add Yarn sources (without installing it).
 </div>
 </div>
 
-<div id="outline-container-org30f316e" class="outline-3">
-<h3 id="org30f316e"><span class="section-number-3">2.7</span> Dotfiles</h3>
+<div id="outline-container-orged88f73" class="outline-3">
+<h3 id="orged88f73"><span class="section-number-3">2.7</span> Dotfiles</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</code> anywhere.
 </p>
 </div>
 
-<div id="outline-container-orgcaf0778" class="outline-4">
-<h4 id="orgcaf0778"><span class="section-number-4">2.7.1</span> Install traditional dotfiles</h4>
+<div id="outline-container-org2a11945" class="outline-4">
+<h4 id="org2a11945"><span class="section-number-4">2.7.1</span> Install traditional dotfiles</h4>
 <div class="outline-text-4" id="text-2-7-1">
 <div class="org-src-container">
 <pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
@@ -1098,11 +1114,11 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-orga00a27b" class="outline-4">
-<h4 id="orga00a27b"><span class="section-number-4">2.7.2</span> Install literate dotfiles</h4>
+<div id="outline-container-orgb786d03" class="outline-4">
+<h4 id="orgb786d03"><span class="section-number-4">2.7.2</span> Install literate dotfiles</h4>
 <div class="outline-text-4" id="text-2-7-2">
 <div class="org-src-container">
-<pre class="src src-elisp" id="org9e203b7">(<span style="color: #b4fa70;">progn</span> (<span style="color: #b4fa70;">dolist</span> (file command-line-args-left) (<span style="color: #b4fa70;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
+<pre class="src src-elisp" id="org2fc1c94">(<span style="color: #b4fa70;">progn</span> (<span style="color: #b4fa70;">dolist</span> (file command-line-args-left) (<span style="color: #b4fa70;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
 </pre>
 </div>
 
@@ -1116,8 +1132,8 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-org36bf554" class="outline-3">
-<h3 id="org36bf554"><span class="section-number-3">2.8</span> Clojure CLI</h3>
+<div id="outline-container-org3211572" class="outline-3">
+<h3 id="org3211572"><span class="section-number-3">2.8</span> Clojure CLI</h3>
 <div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-clojure">(block <span style="color: #e9b96e;">"installing Clojure CLI"</span>
@@ -1129,8 +1145,8 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-org36ea6ec" class="outline-3">
-<h3 id="org36ea6ec"><span class="section-number-3">2.9</span> GH CLI</h3>
+<div id="outline-container-orgd8bcc35" class="outline-3">
+<h3 id="orgd8bcc35"><span class="section-number-3">2.9</span> GH CLI</h3>
 <div class="outline-text-3" id="text-2-9">
 <div class="org-src-container">
 <pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
@@ -1206,8 +1222,8 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-orgd4b2846" class="outline-3">
-<h3 id="orgd4b2846"><span class="section-number-3">2.10</span> Make ZSH the default shell</h3>
+<div id="outline-container-org14aff1b" class="outline-3">
+<h3 id="org14aff1b"><span class="section-number-3">2.10</span> Make ZSH the default shell</h3>
 <div class="outline-text-3" id="text-2-10">
 <div class="org-src-container">
 <pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
@@ -1280,8 +1296,8 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-org2959d48" class="outline-3">
-<h3 id="org2959d48"><span class="section-number-3">2.11</span> Set up SSH and change root password</h3>
+<div id="outline-container-orgf55da1f" class="outline-3">
+<h3 id="orgf55da1f"><span class="section-number-3">2.11</span> Set up SSH and change root password</h3>
 <div class="outline-text-3" id="text-2-11">
 <div class="org-src-container">
 <pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #e9b2e3;">:refer</span> [sh with-sh-dir]])
@@ -1360,7 +1376,7 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jakub Šťastný</p>
-<p class="date">Created: 2021-06-30 Wed 14:39</p>
+<p class="date">Created: 2021-06-30 Wed 14:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
