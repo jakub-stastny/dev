@@ -38,9 +38,9 @@ This has less importance now, since we switched to connecting to the image direc
 
 ** Update APT cache and upgrade packages
 
-+begin_src dockerfile
+#+begin_src dockerfile
   RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y > /dev/null
-+end_src
+#+end_src
 
 ** Fix locale
 
