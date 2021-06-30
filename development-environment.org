@@ -48,8 +48,10 @@ Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environme
 
 #+begin_src shell
   load ~/.zsh/environments/helpers.zsh && save-function-list
-  load ~/.zsh/environments/basic.zsh
   load ~/.zsh/environments/emacs.zsh
+  load ~/.zsh/environments/basic.zsh
+  load ~/.zsh/environments/git.zsh
+  load ~/.zsh/environments/docker.zsh
 #+end_src
 
 *** Tangling
