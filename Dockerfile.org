@@ -1,10 +1,11 @@
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil html-postamble:nil tex:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/dev/styles.css"/>
 #+TITLE: My development environment image
 #+AUTHOR: Jakub Šťastný
 
 * About
 
+#+ATTR_HTML: :fallback https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg
 [[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
 
 My development environment with my favourite tools and dotfiles.
