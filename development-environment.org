@@ -30,11 +30,13 @@ We want to keep environment-specific configuration out of our =~/.emacs=.
 
 Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/elisp/literate-programming.el][~/zsh/environments/elisp/literate-programming.el]]
 
+Dichromacy doesn't look great in Emacs, but it exports well.
+
 #+begin_src emacs-lisp :tangle .env/emacs.el :mkdirp yes
   (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp"))
 
   (load "literate-programming")
-  (load-theme 'tango-dark)
+  (load-theme 'dichromacy)
 #+end_src
 
 ** ZSH per-project configuration
