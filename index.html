@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-06-30 Wed 19:00 -->
+<!-- 2021-06-30 Wed 19:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>My development environment image</title>
@@ -221,11 +221,11 @@
 <div id="content">
 <h1 class="title">My development environment image</h1>
 
-<div id="outline-container-org71d8d45" class="outline-2">
-<h2 id="org71d8d45"><span class="section-number-2">1</span> About</h2>
+<div id="outline-container-org259f89d" class="outline-2">
+<h2 id="org259f89d"><span class="section-number-2">1</span> About</h2>
 <div class="outline-text-2" id="text-1">
 
-<div id="org02a8736" class="figure">
+<div id="org9db8f3d" class="figure">
 <p><a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml" fallback="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg"><object type="image/svg+xml" data="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" class="org-svg">
 <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" class="org-svg" /></object></a>
 </p>
@@ -241,13 +241,13 @@ I use it with <a href="https://github.com/jakub-stastny/docker-project-manager">
 </div>
 </div>
 
-<div id="outline-container-org5466f9b" class="outline-2">
-<h2 id="org5466f9b"><span class="section-number-2">2</span> Dockerfile</h2>
+<div id="outline-container-orgde88216" class="outline-2">
+<h2 id="orgde88216"><span class="section-number-2">2</span> Dockerfile</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 
-<div id="outline-container-orge3bc682" class="outline-3">
-<h3 id="orge3bc682"><span class="section-number-3">2.1</span> Use the latest Ubuntu</h3>
+<div id="outline-container-org11d0f27" class="outline-3">
+<h3 id="org11d0f27"><span class="section-number-3">2.1</span> Use the latest Ubuntu</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-dockerfile"><span style="color: #56b4e9; font-weight: bold;">FROM</span> <span style="color: #0072b2; font-weight: bold;">ubuntu:latest</span>
@@ -256,8 +256,8 @@ I use it with <a href="https://github.com/jakub-stastny/docker-project-manager">
 </div>
 </div>
 
-<div id="outline-container-org1ceb6c8" class="outline-3">
-<h3 id="org1ceb6c8"><span class="section-number-3">2.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
+<div id="outline-container-org9323227" class="outline-3">
+<h3 id="org9323227"><span class="section-number-3">2.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-dockerfile"><span style="color: #56b4e9; font-weight: bold;">WORKDIR</span> /root
@@ -266,8 +266,8 @@ I use it with <a href="https://github.com/jakub-stastny/docker-project-manager">
 </div>
 </div>
 
-<div id="outline-container-org0dd4f77" class="outline-3">
-<h3 id="org0dd4f77"><span class="section-number-3">2.3</span> Set <code>TERM</code> to <code>xterm-256color</code></h3>
+<div id="outline-container-orgbb6f455" class="outline-3">
+<h3 id="orgbb6f455"><span class="section-number-3">2.3</span> Set <code>TERM</code> to <code>xterm-256color</code></h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Silence <code>tput</code> warnings and show colours instead.
@@ -280,8 +280,8 @@ Silence <code>tput</code> warnings and show colours instead.
 </div>
 </div>
 
-<div id="outline-container-org29ddd7c" class="outline-3">
-<h3 id="org29ddd7c"><span class="section-number-3">2.4</span> Set up <code>$PATH</code></h3>
+<div id="outline-container-org4678859" class="outline-3">
+<h3 id="org4678859"><span class="section-number-3">2.4</span> Set up <code>$PATH</code></h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from <code>~/.script/dotfiles</code>.
@@ -298,8 +298,8 @@ This has less importance now, since we switched to connecting to the image direc
 </div>
 </div>
 
-<div id="outline-container-org111abd2" class="outline-3">
-<h3 id="org111abd2"><span class="section-number-3">2.5</span> Update APT cache and upgrade packages</h3>
+<div id="outline-container-org5e1491d" class="outline-3">
+<h3 id="org5e1491d"><span class="section-number-3">2.5</span> Update APT cache and upgrade packages</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-dockerfile"><span style="color: #56b4e9; font-weight: bold;">RUN</span> apt-get update &gt; /dev/null &amp;&amp; <span style="color: #e69f00; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive apt-get upgrade -y &gt; /dev/null
@@ -308,8 +308,8 @@ This has less importance now, since we switched to connecting to the image direc
 </div>
 </div>
 
-<div id="outline-container-orgfdc9f16" class="outline-3">
-<h3 id="orgfdc9f16"><span class="section-number-3">2.6</span> Fix locale</h3>
+<div id="outline-container-orge212c44" class="outline-3">
+<h3 id="orge212c44"><span class="section-number-3">2.6</span> Fix locale</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 Ubuntu has broken locale. We need to set the variables here, in order for them to be available both to the install script and to the final environment. Locale is generated in the install script.
@@ -327,8 +327,8 @@ There's a Perl locale error when setting up locales. Ignore.
 </div>
 </div>
 
-<div id="outline-container-org14e1f24" class="outline-3">
-<h3 id="org14e1f24"><span class="section-number-3">2.7</span> Install apt-utils</h3>
+<div id="outline-container-orgbcffe09" class="outline-3">
+<h3 id="orgbcffe09"><span class="section-number-3">2.7</span> Install apt-utils</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 Installing <code>apt-utils</code> will stop annoying warning every time I try to install something.
@@ -341,8 +341,8 @@ Installing <code>apt-utils</code> will stop annoying warning every time I try to
 </div>
 </div>
 
-<div id="outline-container-org0996d69" class="outline-3">
-<h3 id="org0996d69"><span class="section-number-3">2.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
+<div id="outline-container-orgdfbea35" class="outline-3">
+<h3 id="orgdfbea35"><span class="section-number-3">2.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
 <div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-dockerfile"><span style="color: #56b4e9; font-weight: bold;">RUN</span> <span style="color: #e69f00; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive apt-get install -y zsh curl &gt; /dev/null
@@ -352,8 +352,8 @@ Installing <code>apt-utils</code> will stop annoying warning every time I try to
 </div>
 </div>
 
-<div id="outline-container-org9628105" class="outline-3">
-<h3 id="org9628105"><span class="section-number-3">2.9</span> Add the build scripts</h3>
+<div id="outline-container-org56ebf07" class="outline-3">
+<h3 id="org56ebf07"><span class="section-number-3">2.9</span> Add the build scripts</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 I purposedly want to leave the scripts in the build, as they might come in handy for future inspection.
@@ -401,8 +401,8 @@ I don't do <code>ADD /build</code>, since any change in any of the files invalid
 </div>
 </div>
 
-<div id="outline-container-org9ef42ba" class="outline-3">
-<h3 id="org9ef42ba"><span class="section-number-3">2.10</span> Save build metadata</h3>
+<div id="outline-container-org6b0616d" class="outline-3">
+<h3 id="org6b0616d"><span class="section-number-3">2.10</span> Save build metadata</h3>
 <div class="outline-text-3" id="text-2-10">
 <p>
 We are passing these build args to <code>docker build</code> in <a href="./bin/build">./bin/build</a>.
@@ -423,8 +423,8 @@ Previously we have been saving these into a file, but really, an ENV variable is
 </div>
 </div>
 
-<div id="outline-container-orgd5e0ada" class="outline-3">
-<h3 id="orgd5e0ada"><span class="section-number-3">2.11</span> Run OpenSSH server</h3>
+<div id="outline-container-org58c69c0" class="outline-3">
+<h3 id="org58c69c0"><span class="section-number-3">2.11</span> Run OpenSSH server</h3>
 <div class="outline-text-3" id="text-2-11">
 <p>
 This allows us to connect directly, rather than having to go through the host machine.
@@ -447,21 +447,21 @@ Just redefine <code>SSHD_PORT</code> for each of the project images, so that the
 </div>
 </div>
 
-<div id="outline-container-orgbe5ed07" class="outline-2">
-<h2 id="orgbe5ed07"><span class="section-number-2">3</span> The build scripts</h2>
+<div id="outline-container-org05913fd" class="outline-2">
+<h2 id="org05913fd"><span class="section-number-2">3</span> The build scripts</h2>
 <div class="outline-text-2" id="text-3">
 </div>
 
-<div id="outline-container-org1f0f6b8" class="outline-3">
-<h3 id="org1f0f6b8"><span class="section-number-3">3.1</span> Helpers</h3>
+<div id="outline-container-org2b8bd2f" class="outline-3">
+<h3 id="org2b8bd2f"><span class="section-number-3">3.1</span> Helpers</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
 </p>
 </div>
 
-<div id="outline-container-org8cf2793" class="outline-4">
-<h4 id="org8cf2793"><span class="section-number-4">3.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
+<div id="outline-container-orgecb861b" class="outline-4">
+<h4 id="orgecb861b"><span class="section-number-4">3.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Since this is just the first working version, I didn't bother with the design, but now it should be refactored to behave more declaratively: to generate a representation of the commands, rather than executing them directly.
@@ -473,8 +473,8 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </div>
 </div>
 
-<div id="outline-container-orge1baefa" class="outline-4">
-<h4 id="orge1baefa"><span class="section-number-4">3.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
+<div id="outline-container-orgb9a70c7" class="outline-4">
+<h4 id="orgb9a70c7"><span class="section-number-4">3.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <ul class="org-ul">
 <li><a href="https://book.babashka.org/#core_async">Babashka async</a></li>
@@ -482,7 +482,7 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-clojure" id="org8971cfd">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
+<pre class="src src-clojure" id="org6015a06">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
 
 (<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
   ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
@@ -550,8 +550,8 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </div>
 </div>
 
-<div id="outline-container-org1699073" class="outline-3">
-<h3 id="org1699073"><span class="section-number-3">3.2</span> Unminimise the system</h3>
+<div id="outline-container-orgf1d9b21" class="outline-3">
+<h3 id="orgf1d9b21"><span class="section-number-3">3.2</span> Unminimise the system</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 This makes man pages available.
@@ -562,68 +562,7 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"unminimising the system"</span>
   (package <span style="color: #848ea9;">"man"</span>)
@@ -633,72 +572,11 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 </div>
 
-<div id="outline-container-org023bf6e" class="outline-3">
-<h3 id="org023bf6e"><span class="section-number-3">3.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
+<div id="outline-container-org825668d" class="outline-3">
+<h3 id="org825668d"><span class="section-number-3">3.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"installing Emacs dependencies"</span>
   (package <span style="color: #848ea9;">"git"</span>)
@@ -719,68 +597,7 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"building Emacs 28 with native compilation and fast JSON"</span>
   (with-sh-dir <span style="color: #848ea9;">"emacs"</span>
@@ -795,76 +612,15 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 </div>
 
-<div id="outline-container-org9337abd" class="outline-3">
-<h3 id="org9337abd"><span class="section-number-3">3.4</span> Install basic tools</h3>
+<div id="outline-container-orgb68007d" class="outline-3">
+<h3 id="orgb68007d"><span class="section-number-3">3.4</span> Install basic tools</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <code>expect-dev</code> is for autologin scripts.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"installing basic tools"</span>
   (package <span style="color: #848ea9;">"locales"</span> <span style="color: #848ea9;">"automake"</span> <span style="color: #848ea9;">"htop"</span> <span style="color: #848ea9;">"curl"</span> <span style="color: #848ea9;">"wget"</span> <span style="color: #848ea9;">"git"</span> <span style="color: #848ea9;">"silversearcher-ag"</span> <span style="color: #848ea9;">"neovim"</span> <span style="color: #848ea9;">"docker.io"</span> <span style="color: #848ea9;">"tmux"</span> <span style="color: #848ea9;">"tree"</span> <span style="color: #848ea9;">"expect-dev"</span> <span style="color: #848ea9;">"rlwrap"</span>))
@@ -873,8 +629,8 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 </div>
 </div>
 
-<div id="outline-container-orgdc43828" class="outline-3">
-<h3 id="orgdc43828"><span class="section-number-3">3.5</span> Node.js &amp; Yarn sources</h3>
+<div id="outline-container-org5d0a4c2" class="outline-3">
+<h3 id="org5d0a4c2"><span class="section-number-3">3.5</span> Node.js &amp; Yarn sources</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 Add Yarn sources (without installing it).
@@ -883,68 +639,7 @@ Add Yarn sources (without installing it).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"adding apt sources for Node.js"</span>
   (package <span style="color: #848ea9;">"gnupg"</span>)
@@ -954,72 +649,11 @@ Add Yarn sources (without installing it).
 </div>
 </div>
 
-<div id="outline-container-org860162f" class="outline-3">
-<h3 id="org860162f"><span class="section-number-3">3.6</span> Time zone</h3>
+<div id="outline-container-org8da61e7" class="outline-3">
+<h3 id="org8da61e7"><span class="section-number-3">3.6</span> Time zone</h3>
 <div class="outline-text-3" id="text-3-6">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"setting up time zone"</span>
   (package <span style="color: #848ea9;">"tzdata"</span>)
@@ -1030,80 +664,19 @@ Add Yarn sources (without installing it).
 </div>
 </div>
 
-<div id="outline-container-orgb26d858" class="outline-3">
-<h3 id="orgb26d858"><span class="section-number-3">3.7</span> Dotfiles</h3>
+<div id="outline-container-orge5505d3" class="outline-3">
+<h3 id="orge5505d3"><span class="section-number-3">3.7</span> Dotfiles</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</code> anywhere.
 </p>
 </div>
 
-<div id="outline-container-orge97c13d" class="outline-4">
-<h4 id="orge97c13d"><span class="section-number-4">3.7.1</span> Install traditional dotfiles</h4>
+<div id="outline-container-orge100a3a" class="outline-4">
+<h4 id="orge100a3a"><span class="section-number-4">3.7.1</span> Install traditional dotfiles</h4>
 <div class="outline-text-4" id="text-3-7-1">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"installing dotfiles"</span>
   (ensure-success (run <span style="color: #848ea9;">"mkdir .ssh &amp;&amp; chmod 700 .ssh &amp;&amp; git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare &amp;&amp; git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' &amp;&amp; git --git-dir=/root/.dotfiles.git fetch &amp;&amp; git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master &amp;&amp; git --git-dir=/root/.dotfiles.git --work-tree=/root checkout &amp;&amp; ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts &amp;&amp; zsh ~/.scripts/hooks/dotfiles.install &amp;&amp; git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git &amp;&amp; rm -rf ~/.ssh"</span>)))
@@ -1112,90 +685,29 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-org634b1c1" class="outline-4">
-<h4 id="org634b1c1"><span class="section-number-4">3.7.2</span> Install literate dotfiles</h4>
+<div id="outline-container-orgc5e3678" class="outline-4">
+<h4 id="orgc5e3678"><span class="section-number-4">3.7.2</span> Install literate dotfiles</h4>
 <div class="outline-text-4" id="text-3-7-2">
 <div class="org-src-container">
-<pre class="src src-elisp" id="orgf734f33">(<span style="color: #56b4e9; font-weight: bold;">progn</span> (<span style="color: #56b4e9; font-weight: bold;">dolist</span> (file command-line-args-left) (<span style="color: #56b4e9; font-weight: bold;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
+<pre class="src src-elisp" id="orgfa4186f">(<span style="color: #56b4e9; font-weight: bold;">progn</span> (<span style="color: #56b4e9; font-weight: bold;">dolist</span> (file command-line-args-left) (<span style="color: #56b4e9; font-weight: bold;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
 </pre>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-clojure">(block <span style="color: #848ea9;">"tangling literate dotfiles"</span>
   (with-sh-dir <span style="color: #848ea9;">"/root/org"</span>
-    (ensure-success (run <span style="color: #848ea9;">"emacs -Q --batch --eval '(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))' **/*.org"</span>))))
+    (ensure-success (run <span style="color: #848ea9;">"emacs -Q --batch --eval '&lt;&lt;tangle&gt;&gt;' **/*.org"</span>))))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfae3d11" class="outline-3">
-<h3 id="orgfae3d11"><span class="section-number-3">3.8</span> Clojure CLI</h3>
+<div id="outline-container-org9051f87" class="outline-3">
+<h3 id="org9051f87"><span class="section-number-3">3.8</span> Clojure CLI</h3>
 <div class="outline-text-3" id="text-3-8">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"installing Clojure CLI"</span>
   (<span style="color: #56b4e9; font-weight: bold;">let</span> [script-name <span style="color: #848ea9;">"linux-install.sh"</span>]
@@ -1207,72 +719,11 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-org8c4a553" class="outline-3">
-<h3 id="org8c4a553"><span class="section-number-3">3.9</span> GH CLI</h3>
+<div id="outline-container-orga9a997d" class="outline-3">
+<h3 id="orga9a997d"><span class="section-number-3">3.9</span> GH CLI</h3>
 <div class="outline-text-3" id="text-3-9">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"installing GitHub CLI"</span>
   (ensure-success (run <span style="color: #848ea9;">"curl curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg"</span>))
@@ -1284,72 +735,11 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-orgff44668" class="outline-3">
-<h3 id="orgff44668"><span class="section-number-3">3.10</span> Make ZSH the default shell</h3>
+<div id="outline-container-orgba4564d" class="outline-3">
+<h3 id="orgba4564d"><span class="section-number-3">3.10</span> Make ZSH the default shell</h3>
 <div class="outline-text-3" id="text-3-10">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"making ZSH the default shell"</span>
   (ensure-success (run <span style="color: #848ea9;">"chsh -s $(which zsh)"</span>)))
@@ -1358,72 +748,11 @@ Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</co
 </div>
 </div>
 
-<div id="outline-container-org3f650bd" class="outline-3">
-<h3 id="org3f650bd"><span class="section-number-3">3.11</span> Set up SSH and change root password</h3>
+<div id="outline-container-org59ad313" class="outline-3">
+<h3 id="org59ad313"><span class="section-number-3">3.11</span> Set up SSH and change root password</h3>
 <div class="outline-text-3" id="text-3-11">
 <div class="org-src-container">
-<pre class="src src-clojure">(require '[clojure.java.shell <span style="color: #d55e00; font-weight: bold;">:refer</span> [sh with-sh-dir]])
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">zsh</span>
-  ([command] (sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #848ea9;">"zsh"</span> <span style="color: #848ea9;">"-c"</span> command env)))
-
-(<span style="color: #56b4e9; font-weight: bold;">def</span> <span style="color: #e69f00; font-weight: bold;">colours</span> {
-  <span style="color: #d55e00; font-weight: bold;">:red</span> 31 <span style="color: #d55e00; font-weight: bold;">:green</span> 32 <span style="color: #d55e00; font-weight: bold;">:yellow</span> 33
-  <span style="color: #d55e00; font-weight: bold;">:blue</span> 34 <span style="color: #d55e00; font-weight: bold;">:purple</span> 35 <span style="color: #d55e00; font-weight: bold;">:cyan</span> 36
-  <span style="color: #d55e00; font-weight: bold;">:grey</span> 37})
-
-<span style="color: #7f7f7f;">; </span><span style="color: #009e73; font-style: italic;">\033[fg;bgm</span>
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">colour</span> [colour text]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33["</span> colour-code <span style="color: #848ea9;">"m"</span> text <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\0</span><span style="color: #848ea9;">33[0m"</span>)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">current-unix-time</span> [] (quot (<span style="color: #0072b2; font-weight: bold;">System</span>/currentTimeMillis) 1000))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration</span> [duration]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [colour-name (<span style="color: #56b4e9; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #d55e00; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #d55e00; font-weight: bold;">:yellow</span> <span style="color: #d55e00; font-weight: bold;">:else</span> <span style="color: #d55e00; font-weight: bold;">:red</span>)]
-   (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #848ea9;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #848ea9;">":"</span> (format <span style="color: #848ea9;">"%02d"</span> (mod duration 60)) <span style="color: #848ea9;">"m"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (str <span style="color: #848ea9;">"took "</span> (format-duration duration) <span style="color: #848ea9;">"."</span>)))
-  ([duration lambda] (<span style="color: #56b4e9; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #848ea9;">""</span> (lambda (format-duration-wrapper duration)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">run</span> [command &amp; rest]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #848ea9;">"  "</span> (colour <span style="color: #d55e00; font-weight: bold;">:green</span> <span style="color: #848ea9;">"&#955; "</span>) (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> command)) <span style="color: #848ea9;">""</span>)
-    (flush)
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [result (zsh command rest)]
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #56b4e9; font-weight: bold;">let</span> [format-fn (<span style="color: #56b4e9; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #848ea9;">"... "</span> formatted-duration-string))]
-          (println (format-duration-wrapper duration format-fn)))
-        result))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">fail</span> [result]
-  (println (str (colour <span style="color: #d55e00; font-weight: bold;">:red</span> <span style="color: #848ea9;">"    Error "</span>) (<span style="color: #d55e00; font-weight: bold;">:exit</span> result)))
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [out (<span style="color: #d55e00; font-weight: bold;">:out</span> result) err (<span style="color: #d55e00; font-weight: bold;">:err</span> result)]
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? out) (println out))
-    (<span style="color: #56b4e9; font-weight: bold;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #0072b2; font-weight: bold;">System</span>/exit 1))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">ensure-success</span> [result]
-  (<span style="color: #56b4e9; font-weight: bold;">if</span> (= (<span style="color: #d55e00; font-weight: bold;">:exit</span> result) 0) result (fail result)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">label</span> [text]
-  (println (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> text)))
-
-(<span style="color: #56b4e9; font-weight: bold;">defmacro</span> <span style="color: #d55e00; font-weight: bold;">block</span> [name &amp; sexps]
-  `(<span style="color: #56b4e9; font-weight: bold;">do</span>
-    (println <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">Running block"</span> (str (colour <span style="color: #d55e00; font-weight: bold;">:purple</span> ~name) <span style="color: #848ea9;">".</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>))
-    (<span style="color: #56b4e9; font-weight: bold;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #56b4e9; font-weight: bold;">do</span> ~@sexps)
-      (<span style="color: #56b4e9; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #d55e00; font-weight: bold;">:cyan</span> <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">  ~"</span>) <span style="color: #848ea9;">"Block"</span> (colour <span style="color: #d55e00; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #848ea9;">"</span><span style="color: #848ea9; font-weight: bold;">\n</span><span style="color: #848ea9;">"</span>)))))
-
-(<span style="color: #56b4e9; font-weight: bold;">defn</span> <span style="color: #d55e00; font-weight: bold;">package</span> [&amp; names]
-  (<span style="color: #56b4e9; font-weight: bold;">let</span> [command (str <span style="color: #848ea9;">"apt-get install -y "</span> (<span style="color: #0072b2; font-weight: bold;">clojure.string</span>/join <span style="color: #848ea9;">" "</span> names))]
-    (ensure-success (run command <span style="color: #d55e00; font-weight: bold;">:env</span> {<span style="color: #848ea9;">"DEBIAN_FRONTEND"</span> <span style="color: #848ea9;">"noninteractive"</span>}))))
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
 (block <span style="color: #848ea9;">"setting up OpenSSH server and securing the installation"</span>
   (package <span style="color: #848ea9;">"openssh-server"</span> <span style="color: #848ea9;">"mosh"</span>)
