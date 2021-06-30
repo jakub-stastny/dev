@@ -11,13 +11,13 @@
 ** Use the latest Ubuntu
 
 #+begin_src dockerfile
-  FROM ubuntu:latest
+FROM ubuntu:latest
 #+end_src
 
 ** Set =WORKDIR= to =/root=
 
 #+begin_src dockerfile
-  WORKDIR /root
+WORKDIR /root
 #+end_src
 
 ** Set =TERM= to =xterm-256color=
@@ -25,7 +25,7 @@
 Silence =tput= warnings and show colours instead.
 
 #+begin_src dockerfile
-  ENV TERM=xterm-256color
+ENV TERM=xterm-256color
 #+end_src
 
 ** Set up =$PATH=
@@ -35,13 +35,13 @@ Even though we do this in dotfiles, having it exported means we can use these cu
 This has less importance now, since we switched to connecting to the image directly over SSH, which doesn't respect ENV variables, but it's still useful, for instance so we can do =dotfiles pull -r= in our project =Dockerfile=.
 
 #+begin_src dockerfile
-  ENV PATH="/root/.scripts:${PATH}"
+ENV PATH="/root/.scripts:${PATH}"
 #+end_src
 
 ** Update APT cache and upgrade packages
 
 #+begin_src dockerfile
-  RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y > /dev/null
+RUN apt-get update > /dev/null && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y > /dev/null
 #+end_src
 
 ** Fix locale
@@ -51,8 +51,8 @@ Ubuntu has broken locale. We need to set the variables here, in order for them t
 There's a Perl locale error when setting up locales. Ignore.
 
 #+begin_src dockerfile
-  ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
-  RUN apt-get install -y locales > /dev/null && locale-gen $LC_ALL
+ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
+RUN apt-get install -y locales > /dev/null && locale-gen $LC_ALL
 #+end_src
 
 ** Install apt-utils
@@ -60,14 +60,14 @@ There's a Perl locale error when setting up locales. Ignore.
 Installing =apt-utils= will stop annoying warning every time I try to install something.
 
 #+begin_src dockerfile
-  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils > /dev/null
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils > /dev/null
 #+end_src
 
 ** Install ZSH and babashka as a prerequisite for the build scripts
 
 #+begin_src dockerfile
-  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh curl > /dev/null
-  RUN curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh curl > /dev/null
+RUN curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
 #+end_src
 
 ** Add the build scripts
@@ -77,38 +77,38 @@ I purposedly want to leave the scripts in the build, as they might come in handy
 I don't do =ADD /build=, since any change in any of the files invalidates Docker cache.
 
 #+begin_src dockerfile
-  ADD scripts/unminimise-system /build/unminimise-system
-  RUN /build/unminimise-system
+ADD scripts/unminimise-system /build/unminimise-system
+RUN /build/unminimise-system
 
-  ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
-  RUN /build/install-emacs-dependencies
+ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
+RUN /build/install-emacs-dependencies
 
-  ADD scripts/build-emacs /build/build-emacs
-  RUN /build/build-emacs
+ADD scripts/build-emacs /build/build-emacs
+RUN /build/build-emacs
 
-  ADD scripts/install-basic-tools /build/install-basic-tools
-  RUN /build/install-basic-tools
+ADD scripts/install-basic-tools /build/install-basic-tools
+RUN /build/install-basic-tools
 
-  ADD scripts/add-node-sources /build/add-node-sources
-  RUN /build/add-node-sources
+ADD scripts/add-node-sources /build/add-node-sources
+RUN /build/add-node-sources
 
-  ADD scripts/set-up-time-zone /build/set-up-time-zone
-  RUN /build/set-up-time-zone
+ADD scripts/set-up-time-zone /build/set-up-time-zone
+RUN /build/set-up-time-zone
 
-  ADD scripts/install-dotfiles /build/install-dotfiles
-  RUN /build/install-dotfiles
+ADD scripts/install-dotfiles /build/install-dotfiles
+RUN /build/install-dotfiles
 
-  ADD scripts/install-clojure-cli /build/install-clojure-cli
-  RUN /build/install-clojure-cli
+ADD scripts/install-clojure-cli /build/install-clojure-cli
+RUN /build/install-clojure-cli
 
-  ADD scripts/install-gh-cli /build/install-gh-cli
-  RUN /build/install-gh-cli
+ADD scripts/install-gh-cli /build/install-gh-cli
+RUN /build/install-gh-cli
 
-  ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
-  RUN /build/make-zsh-the-default-shell
+ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
+RUN /build/make-zsh-the-default-shell
 
-  ADD scripts/secure-installation /build/secure-installation
-  RUN /build/secure-installation
+ADD scripts/secure-installation /build/secure-installation
+RUN /build/secure-installation
 #+end_src
 
 ** Save build metadata
@@ -118,11 +118,11 @@ We are passing these build args to =docker build= in [[./bin/build]].
 Previously we have been saving these into a file, but really, an ENV variable is better suited for this.
 
 #+begin_src dockerfile
-  ARG DOCKER_IMAGE_GIT_SHA
-  ARG DOCKER_IMAGE_BUILD_DATE
+ARG DOCKER_IMAGE_GIT_SHA
+ARG DOCKER_IMAGE_BUILD_DATE
 
-  ENV DOCKER_IMAGE_GIT_SHA=$DOCKER_IMAGE_GIT_SHA
-  ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
+ENV DOCKER_IMAGE_GIT_SHA=$DOCKER_IMAGE_GIT_SHA
+ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
 #+end_src
 
 ** Run OpenSSH server
@@ -134,8 +134,8 @@ On the flip side, it render many declarations made in the project =Dockerfile= u
 Just redefine =SSHD_PORT= for each of the project images, so that they don't clash and you'll be able to connect straight to the running image from your SSH terminal.
 
 #+begin_src dockerfile
-  ENV SSHD_PORT=2222
-  CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
+ENV SSHD_PORT=2222
+CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 #+end_src
 
 * The build scripts
