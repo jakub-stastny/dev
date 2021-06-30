@@ -75,9 +75,20 @@ https://orgmode.org/manual/Batch-Execution.html#Batch-Execution
   }
 #+end_src
 
+*** Push to DockerHub
+
+#+begin_src shell
+  push() {
+    docker push jakubstastny/dev
+  }
+#+end_src
+
 *** Main
 
 #+begin_src shell
+  docker-login
+  start-emacs-session
   rename-first-tab
+
   report-custom-functions
 #+end_src
