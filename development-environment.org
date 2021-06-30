@@ -1,0 +1,81 @@
+#+TITLE: Development environment
+#+SETUPFILE: ../setupfile.org
+
+* Installation
+
+In Emacs press =C-c C-c= to evaluate each code block in this section.
+
+** Emacs packages
+
+#+begin_src elisp :results silent
+  (dolist (package '(dockerfile-mode))
+    (unless (package-installed-p package)
+      (message "~ Installing %s." package)
+      (package-install package)))
+#+end_src
+
+
+* Configuration
+  :PROPERTIES:
+  :project-root: ~/dev
+  :END:
+
+In Emacs press =C-c C-v t= to tangle all the code blocks in this file.
+
+** Emacs per-project configuration
+
+We want to keep environment-specific configuration out of our =~/.emacs=.
+
+Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/elisp/literate-programming.el][~/zsh/environments/elisp/literate-programming.el]]
+
+#+begin_src emacs-lisp .env/emacs.el :mkdirp yes
+  (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp"))
+
+  (load "literate-programming")
+  (load-theme 'tango-dark)
+#+end_src
+
+** ZSH per-project configuration
+   :PROPERTIES:
+   :header-args: :tangle .env/zsh.zsh :mkdirp yes :noweb yes
+   :END:
+
+*** Dependencies
+
+- Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/helpers.zsh][~/zsh/environments/helpers.zsh]]
+- Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/basic.zsh][~/zsh/environments/basic.zsh]]
+- Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/emacs.zsh][~/zsh/environments/emacs.zsh]]
+
+#+begin_src shell
+  load ~/.zsh/environments/helpers.zsh && save-function-list
+  load ~/.zsh/environments/basic.zsh
+  load ~/.zsh/environments/emacs.zsh
+#+end_src
+
+*** Tangling
+
+We compile on save, but for the first-time compilation, we want to be able to do it from the shell, rather than having to go and save manually each file from Emacs.
+
+https://orgmode.org/manual/Batch-Execution.html#Batch-Execution
+
+#+name: tangle-files
+#+begin_src emacs-lisp
+  (progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
+#+end_src
+
+#+begin_src shell
+  tangle() {
+    if [ $# -eq 0 ];
+      emacs -Q --batch --eval "<<tangle-files>>" *.org
+    else
+      emacs -Q --batch --eval "<<tangle-files>>" "$@"
+    fi
+  }
+#+end_src
+
+*** Main
+
+#+begin_src shell
+  rename-first-tab
+  report-custom-functions
+#+end_src
