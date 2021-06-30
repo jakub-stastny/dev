@@ -1,0 +1,12 @@
+* Publishing
+
+Since there's only one page, we just need =C-c C-e= (=org-export-dispatch=) and then rename =Dockerfile.html= to =index.html=. Commit on =generated-documentation= branch.
+
+** Stylesheets
+
+#+begin_src css :tangle styles.css
+  html {
+    font-family: Helvetica;
+    background-color: lavender;
+  }
+#+end_src
