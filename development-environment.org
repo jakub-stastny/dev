@@ -7,8 +7,10 @@ In Emacs press =C-c C-c= to evaluate each code block in this section.
 
 ** Emacs packages
 
+Note that we need major modes for all the languages of the code blocks in our code, otherwise Emacs will export them without highlighted syntax.
+
 #+begin_src elisp :results silent
-  (dolist (package '(dockerfile-mode htmlize))
+  (dolist (package '(dockerfile-mode clojure-mode htmlize))
     (unless (package-installed-p package)
       (message "~ Installing %s." package)
       (package-install package)))
