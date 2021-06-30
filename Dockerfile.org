@@ -340,6 +340,8 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 ** Clojure CLI
 
 #+begin_src clojure :tangle scripts/install-clojure-cli
+  <<bb-helpers>>
+
   (block "installing Clojure CLI"
     (let [script-name "linux-install.sh"]
       (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o " script-name)))
