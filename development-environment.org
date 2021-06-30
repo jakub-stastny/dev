@@ -8,7 +8,7 @@ In Emacs press =C-c C-c= to evaluate each code block in this section.
 ** Emacs packages
 
 #+begin_src elisp :results silent
-  (dolist (package '(dockerfile-mode))
+  (dolist (package '(dockerfile-mode htmlize))
     (unless (package-installed-p package)
       (message "~ Installing %s." package)
       (package-install package)))
@@ -28,7 +28,7 @@ We want to keep environment-specific configuration out of our =~/.emacs=.
 
 Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/elisp/literate-programming.el][~/zsh/environments/elisp/literate-programming.el]]
 
-#+begin_src emacs-lisp .env/emacs.el :mkdirp yes
+#+begin_src emacs-lisp :tangle .env/emacs.el :mkdirp yes
   (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp"))
 
   (load "literate-programming")
@@ -61,13 +61,13 @@ We compile on save, but for the first-time compilation, we want to be able to do
 https://orgmode.org/manual/Batch-Execution.html#Batch-Execution
 
 #+name: tangle-files
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
 #+end_src
 
 #+begin_src shell
   tangle() {
-    if [ $# -eq 0 ];
+    if [ $# -eq 0 ]; then
       emacs -Q --batch --eval "<<tangle-files>>" *.org
     else
       emacs -Q --batch --eval "<<tangle-files>>" "$@"
