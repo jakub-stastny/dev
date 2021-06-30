@@ -256,7 +256,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   (block "building Emacs 28 with native compilation and fast JSON"
     (with-sh-dir "emacs"
       (let [path (System/getenv "PATH") cc "gcc-10"]
-        (ensure-success (run "./autogen.sh" :env "PATH" path))
+        (ensure-success (run "./autogen.sh" :env :PATH path))
         (ensure-success (run "./configure --with-native-compilation" :env "PATH" path "CC" cc))
         (ensure-success (run "make -j$(nproc)" :env "PATH" path "CC" cc))
         (ensure-success (run "make install" :env "PATH" path))))
