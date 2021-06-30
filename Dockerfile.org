@@ -1,3 +1,5 @@
+#+OPTIONS: toc:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/dev/styles.css"/>
 #+TITLE: My development environment image
 #+AUTHOR: Jakub Šťastný
 
@@ -18,7 +20,7 @@
   WORKDIR /root
 #+end_src
 
-** Set =TERM to =xterm-256color=
+** Set =TERM= to =xterm-256color=
 
 Silence =tput= warnings and show colours instead.
 
@@ -113,6 +115,8 @@ I don't do =ADD /build=, since any change in any of the files invalidates Docker
 
 We are passing these build args to =docker build= in [[./bin/build]].
 
+Previously we have been saving these into a file, but really, an ENV variable is better suited for this.
+
 #+begin_src dockerfile
   ARG DOCKER_IMAGE_GIT_SHA
   ARG DOCKER_IMAGE_BUILD_DATE
@@ -122,6 +126,12 @@ We are passing these build args to =docker build= in [[./bin/build]].
 #+end_src
 
 ** Run OpenSSH server
+
+This allows us to connect directly, rather than having to go through the host machine.
+
+On the flip side, it render many declarations made in the project =Dockerfile= useless: namely =ENV= and =WORKDIR= declarations.
+
+Just redefine =SSHD_PORT= for each of the project images, so that they don't clash and you'll be able to connect straight to the running image from your SSH terminal.
 
 #+begin_src dockerfile
   ENV SSHD_PORT=2222
