@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-06-30 Wed 14:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My development environment image</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Jakub Šťastný" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">My development environment image</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgebab11d">1. Dockerfile</a>
+<ul>
+<li><a href="#orgefc7042">1.1. Use the latest Ubuntu</a></li>
+<li><a href="#org5c7ffdd">1.2. Set <code>WORKDIR</code> to <code>/root</code></a></li>
+<li><a href="#org8c0233c">1.3. Set <code>TERM to =xterm-256color</code></a></li>
+<li><a href="#org5d3d2eb">1.4. Set up <code>$PATH</code></a></li>
+<li><a href="#orgdf26d31">1.5. Update APT cache and upgrade packages</a></li>
+<li><a href="#orgb8c34a1">1.6. Fix locale</a></li>
+<li><a href="#org22d649e">1.7. Install apt-utils</a></li>
+<li><a href="#org0cd21e4">1.8. Install ZSH and babashka as a prerequisite for the build scripts</a></li>
+<li><a href="#org7133aab">1.9. Add the build scripts</a></li>
+<li><a href="#orgad5a94b">1.10. Save build metadata</a></li>
+<li><a href="#org263e288">1.11. Run OpenSSH server</a></li>
+</ul>
+</li>
+<li><a href="#org76fc93c">2. The build scripts</a>
+<ul>
+<li><a href="#org165f0e6">2.1. Helpers</a>
+<ul>
+<li><a href="#org0e3da49">2.1.1. <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</a></li>
+<li><a href="#orga702036">2.1.2. <span class="todo TODO">TODO</span> Show current duration of execution</a></li>
+</ul>
+</li>
+<li><a href="#orgae9f0d8">2.2. Unminimise the system</a></li>
+<li><a href="#org22def59">2.3. Install Emacs 28 with native compilation, fast JSON parser and better redo</a></li>
+<li><a href="#org19cac1e">2.4. Install basic tools</a></li>
+<li><a href="#org1e47981">2.5. Node.js &amp; Yarn sources</a></li>
+<li><a href="#org4a34f09">2.6. Time zone</a></li>
+<li><a href="#org49a6f8f">2.7. Dotfiles</a>
+<ul>
+<li><a href="#org0321a7c">2.7.1. Install traditional dotfiles</a></li>
+<li><a href="#org4b038f1">2.7.2. Install literate dotfiles</a></li>
+</ul>
+</li>
+<li><a href="#org9d534df">2.8. Clojure CLI</a></li>
+<li><a href="#org10c8224">2.9. GH CLI</a></li>
+<li><a href="#org542ce73">2.10. Make ZSH the default shell</a></li>
+<li><a href="#org777b622">2.11. Set up SSH and change root password</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgebab11d" class="outline-2">
+<h2 id="orgebab11d"><span class="section-number-2">1</span> Dockerfile</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+
+<div id="outline-container-orgefc7042" class="outline-3">
+<h3 id="orgefc7042"><span class="section-number-3">1.1</span> Use the latest Ubuntu</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+<pre class="src src-dockerfile">FROM ubuntu:latest
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5c7ffdd" class="outline-3">
+<h3 id="org5c7ffdd"><span class="section-number-3">1.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<pre class="src src-dockerfile">WORKDIR /root
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8c0233c" class="outline-3">
+<h3 id="org8c0233c"><span class="section-number-3">1.3</span> Set <code>TERM to =xterm-256color</code></h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Silence <code>tput</code> warnings and show colours instead.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile">ENV TERM=xterm-256color
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5d3d2eb" class="outline-3">
+<h3 id="org5d3d2eb"><span class="section-number-3">1.4</span> Set up <code>$PATH</code></h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from <code>~/.script/dotfiles</code>.
+</p>
+
+<p>
+This has less importance now, since we switched to connecting to the image directly over SSH, which doesn't respect ENV variables, but it's still useful, for instance so we can do <code>dotfiles pull -r</code> in our project <code>Dockerfile</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile">ENV PATH="/root/.scripts:${PATH}"
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf26d31" class="outline-3">
+<h3 id="orgdf26d31"><span class="section-number-3">1.5</span> Update APT cache and upgrade packages</h3>
+<div class="outline-text-3" id="text-1-5">
+<div class="org-src-container">
+<pre class="src src-dockerfile">RUN apt-get update &gt; /dev/null &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get upgrade -y &gt; /dev/null
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb8c34a1" class="outline-3">
+<h3 id="orgb8c34a1"><span class="section-number-3">1.6</span> Fix locale</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Ubuntu has broken locale. We need to set the variables here, in order for them to be available both to the install script and to the final environment. Locale is generated in the install script.
+</p>
+
+<p>
+There's a Perl locale error when setting up locales. Ignore.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile">ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
+RUN apt-get install -y locales &gt; /dev/null &amp;&amp; locale-gen $LC_ALL
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org22d649e" class="outline-3">
+<h3 id="org22d649e"><span class="section-number-3">1.7</span> Install apt-utils</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Installing <code>apt-utils</code> will stop annoying warning every time I try to install something.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile">RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils &gt; /dev/null
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cd21e4" class="outline-3">
+<h3 id="org0cd21e4"><span class="section-number-3">1.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
+<div class="outline-text-3" id="text-1-8">
+<div class="org-src-container">
+<pre class="src src-dockerfile">RUN DEBIAN_FRONTEND=noninteractive apt-get install -y zsh curl &gt; /dev/null
+RUN curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7133aab" class="outline-3">
+<h3 id="org7133aab"><span class="section-number-3">1.9</span> Add the build scripts</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+I purposedly want to leave the scripts in the build, as they might come in handy for future inspection.
+</p>
+
+<p>
+I don't do <code>ADD /build</code>, since any change in any of the files invalidates Docker cache.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile">ADD scripts/unminimise-system /build/unminimise-system
+RUN /build/unminimise-system
+
+ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
+RUN /build/install-emacs-dependencies
+
+ADD scripts/build-emacs /build/build-emacs
+RUN /build/build-emacs
+
+ADD scripts/install-basic-tools /build/install-basic-tools
+RUN /build/install-basic-tools
+
+ADD scripts/add-node-sources /build/add-node-sources
+RUN /build/add-node-sources
+
+ADD scripts/set-up-time-zone /build/set-up-time-zone
+RUN /build/set-up-time-zone
+
+ADD scripts/install-dotfiles /build/install-dotfiles
+RUN /build/install-dotfiles
+
+ADD scripts/install-clojure-cli /build/install-clojure-cli
+RUN /build/install-clojure-cli
+
+ADD scripts/install-gh-cli /build/install-gh-cli
+RUN /build/install-gh-cli
+
+ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
+RUN /build/make-zsh-the-default-shell
+
+ADD scripts/secure-installation /build/secure-installation
+RUN /build/secure-installation
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgad5a94b" class="outline-3">
+<h3 id="orgad5a94b"><span class="section-number-3">1.10</span> Save build metadata</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+We are passing these build args to <code>docker build</code> in <a href="./bin/build">./bin/build</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile">ARG DOCKER_IMAGE_GIT_SHA
+ARG DOCKER_IMAGE_BUILD_DATE
+
+ENV DOCKER_IMAGE_GIT_SHA=$DOCKER_IMAGE_GIT_SHA
+ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org263e288" class="outline-3">
+<h3 id="org263e288"><span class="section-number-3">1.11</span> Run OpenSSH server</h3>
+<div class="outline-text-3" id="text-1-11">
+<div class="org-src-container">
+<pre class="src src-dockerfile">ENV SSHD_PORT=2222
+CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org76fc93c" class="outline-2">
+<h2 id="org76fc93c"><span class="section-number-2">2</span> The build scripts</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+
+<div id="outline-container-org165f0e6" class="outline-3">
+<h3 id="org165f0e6"><span class="section-number-3">2.1</span> Helpers</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
+</p>
+</div>
+
+<div id="outline-container-org0e3da49" class="outline-4">
+<h4 id="org0e3da49"><span class="section-number-4">2.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Since this is just the first working version, I didn't bother with the design, but now it should be refactored to behave more declaratively: to generate a representation of the commands, rather than executing them directly.
+</p>
+
+<p>
+Only after we get to the end of the <code>block</code>, the commands in it should execute and that's when all the side-effects should happen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga702036" class="outline-4">
+<h4 id="orga702036"><span class="section-number-4">2.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<ul class="org-ul">
+<li><a href="https://book.babashka.org/#core_async">Babashka async</a></li>
+<li><a href="https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#5291396">ASCII escape sequence \r</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-clojure" id="orgfe51d3f">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgae9f0d8" class="outline-3">
+<h3 id="orgae9f0d8"><span class="section-number-3">2.2</span> Unminimise the system</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+This makes man pages available.
+</p>
+
+<p>
+Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code>, so GH CLI has to be installed after.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "unminimising the system"
+  (package "man")
+  (ensure-success (run "yes | unminimize")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org22def59" class="outline-3">
+<h3 id="org22def59"><span class="section-number-3">2.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "installing Emacs dependencies"
+  (package "git")
+  (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
+
+  ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)
+  (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g" "libncurses-dev")
+
+  ; Dependencies for building Emacs.
+  (package "build-essential" "texinfo" "autoconf" "pkg-config")
+
+  ; Needed for fast JSON
+  (package "libjansson4" "libjansson-dev")
+
+  ; Dependencies for native compilation
+  (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "building Emacs 28 with native compilation and fast JSON"
+  (with-sh-dir "emacs"
+    (let [path (System/getenv "PATH") cc "gcc-10"]
+      (ensure-success (run "./autogen.sh" :env "PATH" path))
+      (ensure-success (run "./configure --with-native-compilation" :env "PATH" path "CC" cc))
+      (ensure-success (run "make -j$(nproc)" :env "PATH" path "CC" cc))
+      (ensure-success (run "make install" :env "PATH" path))))
+  (ensure-success (run "rm -rf emacs")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org19cac1e" class="outline-3">
+<h3 id="org19cac1e"><span class="section-number-3">2.4</span> Install basic tools</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+<code>expect-dev</code> is for autologin scripts.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "installing basic tools"
+  (package "locales" "automake" "htop" "curl" "wget" "git" "silversearcher-ag" "neovim" "docker.io" "tmux" "tree" "expect-dev"))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1e47981" class="outline-3">
+<h3 id="org1e47981"><span class="section-number-3">2.5</span> Node.js &amp; Yarn sources</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Add Yarn sources (without installing it).
+<a href="https://yarnpkg.com/lang/en/docs/install/#debian-stable">https://yarnpkg.com/lang/en/docs/install/#debian-stable</a>
+<a href="https://github.com/nodesource/distributions">https://github.com/nodesource/distributions</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "adding apt sources for Node.js"
+  (package "gnupg")
+  (ensure-success (run "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &amp;&amp; echo deb https://dl.yarnpkg.com/debian/ stable main | tee /etc/apt/sources.list.d/yarn.list")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a34f09" class="outline-3">
+<h3 id="org4a34f09"><span class="section-number-3">2.6</span> Time zone</h3>
+<div class="outline-text-3" id="text-2-6">
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "setting up time zone"
+  (package "tzdata")
+  (ensure-success (run "echo America/New_York &gt; /etc/timezone"))
+  (ensure-success (run "dpkg-reconfigure -f noninteractive tzdata")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org49a6f8f" class="outline-3">
+<h3 id="org49a6f8f"><span class="section-number-3">2.7</span> Dotfiles</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</code> anywhere.
+</p>
+</div>
+
+<div id="outline-container-org0321a7c" class="outline-4">
+<h4 id="org0321a7c"><span class="section-number-4">2.7.1</span> Install traditional dotfiles</h4>
+<div class="outline-text-4" id="text-2-7-1">
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "installing dotfiles"
+  (ensure-success (run "mkdir .ssh &amp;&amp; chmod 700 .ssh &amp;&amp; git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare &amp;&amp; git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' &amp;&amp; git --git-dir=/root/.dotfiles.git fetch &amp;&amp; git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master &amp;&amp; git --git-dir=/root/.dotfiles.git --work-tree=/root checkout &amp;&amp; ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts &amp;&amp; zsh ~/.scripts/hooks/dotfiles.install &amp;&amp; git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git &amp;&amp; rm -rf ~/.ssh")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b038f1" class="outline-4">
+<h4 id="org4b038f1"><span class="section-number-4">2.7.2</span> Install literate dotfiles</h4>
+<div class="outline-text-4" id="text-2-7-2">
+<div class="org-src-container">
+<pre class="src src-elisp" id="org81bea0c">(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(block "tangling literate dotfiles"
+  (with-sh-dir "/root/org"
+    (ensure-success (run "emacs -Q --batch --eval '(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))' **/*.org"))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d534df" class="outline-3">
+<h3 id="org9d534df"><span class="section-number-3">2.8</span> Clojure CLI</h3>
+<div class="outline-text-3" id="text-2-8">
+<div class="org-src-container">
+<pre class="src src-clojure">(block "installing Clojure CLI"
+  (let [script-name "linux-install.sh"]
+    (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o " script-name)))
+    (ensure-success (run (str "./" script-name)))))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org10c8224" class="outline-3">
+<h3 id="org10c8224"><span class="section-number-3">2.9</span> GH CLI</h3>
+<div class="outline-text-3" id="text-2-9">
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "installing GitHub CLI"
+  (ensure-success (run "curl curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg"))
+  (ensure-success (run "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\" | tee /etc/apt/sources.list.d/github-cli.list"))
+  (ensure-success (run "apt-get update"))
+  (package "gh"))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org542ce73" class="outline-3">
+<h3 id="org542ce73"><span class="section-number-3">2.10</span> Make ZSH the default shell</h3>
+<div class="outline-text-3" id="text-2-10">
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "making ZSH the default shell"
+  (ensure-success (run "chsh -s $(which zsh)")))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org777b622" class="outline-3">
+<h3 id="org777b622"><span class="section-number-3">2.11</span> Set up SSH and change root password</h3>
+<div class="outline-text-3" id="text-2-11">
+<div class="org-src-container">
+<pre class="src src-clojure">(require '[clojure.java.shell :refer [sh with-sh-dir]])
+
+(defn zsh
+  ([command] (sh "zsh" "-c" command))
+  ([command env] (apply sh "zsh" "-c" command env)))
+
+(def colours {
+  :red 31 :green 32 :yellow 33
+  :blue 34 :purple 35 :cyan 36
+  :grey 37})
+
+; \033[fg;bgm
+(defn colour [colour text]
+  (let [colour-code (colour colours)]
+    (str "\033[" colour-code "m" text "\033[0m")))
+
+(defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+(defn format-duration [duration]
+  (let [colour-name (cond (&lt; duration 35) :green (&lt; duration 90) :yellow :else :red)]
+   (cond
+     (&lt; duration 60) (colour colour-name (str duration "s"))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m")))))
+
+(defn format-duration-wrapper
+  ([duration] (if (&lt;= duration 3) "" (str "took " (format-duration duration) ".")))
+  ([duration lambda] (if (&lt;= duration 3) "" (lambda (format-duration-wrapper duration)))))
+
+(defn run [command &amp; rest]
+  (let [start-time (current-unix-time)]
+    (print (str "  " (colour :green "λ ") (colour :grey command)) "")
+    (flush)
+    (let [result (zsh command rest)]
+      (let [duration (- (current-unix-time) start-time)]
+        (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
+          (println (format-duration-wrapper duration format-fn)))
+        result))))
+
+(defn fail [result]
+  (println (str (colour :red "    Error ") (:exit result)))
+  (let [out (:out result) err (:err result)]
+    (when-not (empty? out) (println out))
+    (when-not (empty? err) (println err)))
+  (System/exit 1))
+
+(defn ensure-success [result]
+  (if (= (:exit result) 0) result (fail result)))
+
+(defn label [text]
+  (println (colour :purple text)))
+
+(defmacro block [name &amp; sexps]
+  `(do
+    (println "\nRunning block" (str (colour :purple ~name) ".\n"))
+    (let [start-time (current-unix-time)]
+      (do ~@sexps)
+      (let [duration (- (current-unix-time) start-time)]
+        (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+
+(defn package [&amp; names]
+  (let [command (str "apt-get install -y " (clojure.string/join " " names))]
+    (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+
+(block "setting up OpenSSH server and securing the installation"
+  (package "openssh-server" "mosh")
+  (ensure-success (run "mkdir /run/sshd"))
+  (ensure-success (run "echo 'PasswordAuthentication no' &gt;&gt; /etc/ssh/sshd_config"))
+  (ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 &lt;/dev/urandom | head -c 32)\" | chpasswd")))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Jakub Šťastný</p>
+<p class="date">Created: 2021-06-30 Wed 14:01</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
