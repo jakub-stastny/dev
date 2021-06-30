@@ -9,6 +9,6 @@ Since there's only one page, we just need =C-c C-e= (=org-export-dispatch=) and 
     font-family: Helvetica;
   }
 
-  .outline-text-3 {
-    background-color: lavender;
+  .src {
+    background-color: gray;
 #+end_src

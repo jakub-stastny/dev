@@ -154,7 +154,7 @@ CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 
 * The build scripts
   :PROPERTIES:
-  :header-args: :noweb yes :shebang #!/usr/bin/env bb :mkdirp yes
+  :header-args: :noweb no-export :shebang #!/usr/bin/env bb :mkdirp yes
   :END:
 
 ** Helpers
@@ -340,7 +340,9 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 
 *** Install literate dotfiles
 
-#+name: tangle
+This has to be on one line, otherwise it gets exported with =emacs -Q --batch --eval= and =**/*.org= repeated for each line of the Emacs lisp code here.
+
+#+name: tangle-files
 #+begin_src elisp :tangle no
   (progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
 #+end_src
@@ -348,7 +350,7 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 #+begin_src clojure :tangle scripts/install-dotfiles
   (block "tangling literate dotfiles"
     (with-sh-dir "/root/org"
-      (ensure-success (run "emacs -Q --batch --eval '<<tangle>>' **/*.org"))))
+      (ensure-success (run "emacs -Q --batch --eval '<<tangle-files>>' **/*.org"))))
 #+end_src
 
 ** Clojure CLI
