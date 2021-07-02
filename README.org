@@ -99,7 +99,7 @@ It's not the most secure way, probably using =--privileged= flag would be better
 
 Also note that I've been using this approach for many years: I've seen there are better ways of doing DinD these days, but I haven't had the need to review them so far.
 
-*** Proxy shell history
+*** Proxying shell history
 
 Unlike the SSH keys, which we simply =COPY= to the image, shell history keeps changing and we don't want to loose the changes when we rebuild the image.
 
@@ -109,11 +109,13 @@ That's why we proxy it from the host machine as a volume using =-v $PWD/.history
 
 Host networking means that we can forget about exposing ports manually: if you start a server on port =8000= in your development environment, it will be available on port =8000= on the host machine automatically. This is what =--network host= is for.
 
+** Starting the image
+
 #+begin_src shell
   docker start rpm-dev-env
 #+end_src
 
-** Connecting
+** Connecting to the container via SSH
 
 Now you're good to go. Assuming that you have the container on a VPS like I do, you can connect directly to it by SSH without having to go through the host machine first:
 
@@ -121,4 +123,8 @@ Now you're good to go. Assuming that you have the container on a VPS like I do, 
   ssh root@ip:2222
 #+end_src
 
-And that's about it. There is [[https://jakub-stastny.github.io/dev/][development documentation]] in case you want to fork and tweak for yourself and also the [[https://jakub-stastny.github.io/dev/host-setup][host setup]]. Enjoy!
+As a side note, I highly recommend using [[https://mosh.org][Mosh]] instead of SSH. You won't even notice you're working on a remote machine, that's how fast it is. And it always reconnects, even if you switch network.
+
+And that's about it. There is [[https://jakub-stastny.github.io/dev/][development documentation]] in case you want to fork and tweak for yourself and also the [[https://jakub-stastny.github.io/dev/host-setup][host setup]]. Also connection over SSH is only one option. Read the [[https://jakub-stastny.github.io/dev/design-decisions][design decisions]] chapter if you're interested in knowing more.
+
+Enjoy!
