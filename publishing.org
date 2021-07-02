@@ -13,6 +13,10 @@ So assuming you've already cloned the repo and you are in its directory, you nee
 #+end_src
 
 *** Orgmode publishing
+   :PROPERTIES:
+   :CUSTOM_ID: publishing-script
+   :END:
+
 #+begin_src emacs-lisp :tangle .env/elisp/autoload/publish.el :mkdirp yes :results silent
   (require 'ox-publish)
 
