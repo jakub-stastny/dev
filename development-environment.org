@@ -31,15 +31,10 @@ Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environme
 Dichromacy doesn't look great in Emacs, but it exports well.
 
 #+begin_src emacs-lisp
-  (message "X")
-  (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp/autoload"))
+  (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp"))
 
   (load "literate-programming")
   (load-theme 'dichromacy)
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ditaa . t)))
 #+end_src
 
 *** Autoloaded files
@@ -49,13 +44,23 @@ https://www.emacswiki.org/emacs/LoadingLispFiles
 This allows us to decouple for instance the [[./publishing.org::#publishing-script][publishing helper]] from the development setup file.
 
 #+begin_src emacs-lisp
-  (message "X")
-  (setq elisp-autoload-dir (concat (file-name-directory (buffer-file-name)) "elisp/autoload"))
-  (message "X")
-  (require 'load-directory)
-  (message "Y")
+  (defun load-directory (directory)
+    "Load recursively all `.el' files in DIRECTORY."
+    (dolist (element (directory-files-and-attributes directory nil nil nil))
+      (let* ((path (car element))
+             (fullpath (concat directory "/" path))
+             (isdir (car (cdr element)))
+             (ignore-dir (or (string= path ".") (string= path ".."))))
+        (cond
+         ((and (eq isdir t) (not ignore-dir))
+          (load-directory fullpath))
+         ((and (eq isdir nil) (string= (substring path -3) ".el"))
+          (load (file-name-sans-extension fullpath)))))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq elisp-autoload-dir (concat (getenv "PROJECT_ROOT") "/.env/elisp/autoload"))
   (load-directory elisp-autoload-dir)
-  (message "Y")
 #+end_src
 
 ** ZSH per-project configuration
@@ -103,6 +108,17 @@ https://orgmode.org/manual/Batch-Execution.html#Batch-Execution
 #+begin_src shell
   push() {
     docker push jakubstastny/dev
+  }
+#+end_src
+
+*** Export to HTML
+
+#+begin_src shell :tangle no
+  export-to-html() {
+    for file in *.org; do emacs $file --batch --eval '(org-html-export-to-html)' &> /dev/null; done
+    rm -rf ../dev.doc/*
+    mv README.html index.html
+    mv *.{html,css,png} ../dev.doc
   }
 #+end_src
 

@@ -1,0 +1,134 @@
+# GH doesn't handle the following link well, but it works in Emacs using C-c C-o.
+See [[VPS setup]] for setting up the host machine.
+
+* Dependencies
+
+- Ruby is require by the =bin/build= script.
+- My dotfiles automatically source =.profile.zsh=, in case anyone ever forks this, you will need to source the file manually.
+- The =push= command requires Docker authentication (=docker login=).
+
+* Usage
+
+#+BEGIN_SRC shell
+build && verify && push
+#+END_SRC
+
+* VPS setup
+
+** Set up for literate DevOps
+*** Install Emacs
+
+#+BEGIN_SRC shell
+apt update && apt upgrade -y && apt install emacs-nox
+#+END_SRC
+
+*** Install Dotfiles
+
+#+BEGIN_SRC shell
+git clone --bare https://github.com/jakub-stastny/dotfiles.git ~/.dotfiles.git
+
+git --git-dir=$HOME/.dotfiles.git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git --git-dir=$HOME/.dotfiles.git fetch
+git --git-dir=$HOME/.dotfiles.git branch --set-upstream-to=origin/master master
+git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME checkout
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+~/.scripts/hooks/dotfiles.install
+git --git-dir=$HOME/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
+#+END_SRC
+
+*** Download this README
+
+#+BEGIN_SRC shell
+wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -O install.org
+emacs install.org
+#+END_SRC
+
+** Set up AWS EC2
+
+[[https://blink.sh/docs/cloud-providers/aws]]
+
+** Set up using literate DevOps
+
+From here on you can run blocks of code from this very README using [[http://howardism.org/Technical/Emacs/literate-devops.html][Literate DevOps]].
+
+Eval code using =C-c C-c=.
+
+*** Troubleshooting: =No org-babel-execute function for sh!=
+
+Eval this in =*scratch*=:
+
+#+BEGIN_SRC elisp
+(org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
+#+END_SRC
+
+*** Swap
+
+As DigitalOcean runs SSD's, there's no swap file enabled by default. [[https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-–-making-the-swap-file-permanent][DigitalOcean community post]].
+
+#+BEGIN_SRC shell
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export DEBIAN_FRONTEND=noninteractive
+
+# Swap
+fallocate -l 2.5G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show # Make sure it reports swap.
+free -m # Make sure it reports swap.
+
+# Persistent swap
+echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+#+END_SRC
+
+*** Install
+
+Already installed: git tmux htop
+
+**** Basic tools
+
+#+BEGIN_SRC shell
+apt install -y mosh zsh neovim build-essential silversearcher-ag
+apt remove -y vim nano
+apt autoremove --yes
+
+chsh -s $(which zsh)
+
+cp /usr/share/zoneinfo/America/New_York /etc/localtime
+cat /dev/zero | ssh-keygen -q -N ""
+#+END_SRC
+
+
+**** Docker
+
+[[https://docs.docker.com/engine/install/ubuntu][Docker Ubuntu installation guide]].
+
+#+BEGIN_SRC shell
+apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt-get update && apt upgrade -y
+apt-get install -y docker-ce docker-ce-cli containerd.io
+#+END_SRC
+
+** DPM
+
+#+BEGIN_SRC shell
+docker install jakubstastny/docker-project-manager
+mkdir projects
+docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager # Dry run only to download it.
+
+echo "  Add your new key to https://github.com/settings/keys and reboot\n\n"
+cat ~/.ssh/id_rsa.pub
+#+END_SRC
+
+* Links
+** [[https://nixos.org][Nix]]
+
+Nix is a tool that takes a unique approach to package management and system configuration. Learn how to make reproducible, declarative and reliable systems.
+
+It looks very interesting. I don't need it at this moment, but let's keep it here as a reference.
