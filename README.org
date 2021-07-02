@@ -15,22 +15,9 @@ Although containers are ephemeral, we can keep our SSH keys, shell history and o
 
 We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created specifically for this purpose.
 
-#+begin_src ditaa :file graph.png :cmdline --round-corners
-  +---------+
-  | cBLU    |
-  |         |
-  |    +----+
-  |    |cPNK|
-  |    |    |
-  +----+----+
-#+end_src
-
-#+RESULTS:
-[[file:graph.png]]
-
 * Usage
 
-First, let's create a new directory for our project. Let's call the project =rental-property-management=:
+First, let's create a new directory for our project. For instance:
 
 #+begin_src shell
   mkdir rental-property-management && cd rental-property-management
