@@ -12,17 +12,7 @@
 #+end_export
 
 
-#+begin_src ditaa :file graph.png :cmdline --round-corners
-  +---------+
-  | cBLU    |
-  |         |
-  |    +----+
-  |    |cPNK|
-  |    |    |
-  +----+----+
-#+end_src
-
-My development environment with my favourite tools and dotfiles.
+My development environment with my favourite tools and dotfiles. For usage, please check out the [[https://github.com/jakub-stastny/dev][README]]. This is the developer documentation.
 
 * Dockerfile
   :PROPERTIES:
