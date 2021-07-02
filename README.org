@@ -13,7 +13,7 @@ This way I can use it as a base for per-project image and spin containers off of
 
 Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
 
-/We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created specifically for this purpose./
+We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created *specifically for this purpose*.
 
 * My specific use-case
 
@@ -26,6 +26,8 @@ However would you be using this locally, you're better of /not using SSH/, but r
 Why? Because this way your =ENV=, =WORKDIR= and possibly other settings from your =Dockerfile= will be respected.
 
 By that I mean that if I put =ENV AWS_DEV_SECRET=1234567890= into my =Dockerfile=, if I connect with =docker exec=, the variable =AWS_DEV_SECRET= will be defined. However if I connect with the OpenSSH server, the variable is not going to be defined.
+
+/The rest of the documentation assumes your workflow is similar. Given how simple this is, I'm sure you can figure out for yourself which way is best for your usecase and adjust the [[https://jakub-stastny.github.io/dev/][build scripts]] appropriately./
 
 * Usage
 
