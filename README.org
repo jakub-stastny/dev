@@ -3,12 +3,9 @@
 
 * About
 
-#+name: badge
-#+begin_export html
-  <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
-    <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
-  </a>
-#+end_export
+# We show this file only on GH. GH happens to show the SVG correctly,
+# so there's no need for the export block we use for the Orgmode export.
+[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
 
 My development environment with my favourite tools and dotfiles packed as a Docker image.
 
