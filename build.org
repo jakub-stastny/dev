@@ -1,12 +1,16 @@
-#+OPTIONS: toc:nil html-postamble:nil tex:nil
+#+OPTIONS: html-postamble:nil tex:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
 #+TITLE: My development environment image
-#+AUTHOR: Jakub Šťastný
 
 * About
 
-#+ATTR_HTML: :fallback https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg
-[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
+#+name: badge
+#+begin_export html
+  <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
+    <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
+  </a>
+#+end_export
+
 
 My development environment with my favourite tools and dotfiles.
 

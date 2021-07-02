@@ -1,17 +1,22 @@
 * Publishing
-** Setup
 ** Project layout
-Because switching between two totaly different branches is very cumbersome, it's easier to clone the repo twice:
+
+Because of how GitHub pages work, we have two totally unrelated branches: =master= and =generated-documentation=.
+
+Since switching between them is cumbersome, it's easier to clone the repo twice:
 
 - With the =dev= directory pointing to the =master= branch.
 - And the =dev.doc= directory pointing to the =generated-documentation= branch.
 
-So assuming you've already cloned the repo and you are in its directory, you need to run the following command:
+So assuming you've already cloned the repo and you are in its directory, run the following command:
 
 #+begin_src shell
   git clone -b generated-documentation git@github.com:jakub-stastny/dev.git ../dev.doc
 #+end_src
 
+That's it! Now let's set up the publisher.
+
+** Setup
 *** Orgmode publishing
    :PROPERTIES:
    :CUSTOM_ID: publishing-script
@@ -42,9 +47,11 @@ So assuming you've already cloned the repo and you are in its directory, you nee
 #+end_src
 
 ** Exporting
+
 Since there's only one page, we just need =C-c C-e= (=org-export-dispatch=) and then rename =Dockerfile.html= to =index.html=. Commit on =generated-documentation= branch.
 
 ** Stylesheets
+
 #+begin_src css :tangle ../dev.doc/styles.css
   html {
     font-family: Helvetica;

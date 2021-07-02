@@ -1,63 +1,22 @@
+#+OPTIONS: toc:nil html-postamble:nil tex:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
+
 * About
 
-[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
+#+name: badge
+#+begin_export html
+  <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
+    <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
+  </a>
+#+end_export
 
-My development environment with my favourite tools and dotfiles.
+My development environment with my favourite tools and dotfiles packed as a Docker image.
 
-I use it with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which automates the usual project workflow: creating a project, spinning off a Docker image with that environment, creating a new pair of SSH keys and setting up port sharing. The resulting container runs OpenSSH server and can be SSH'd into directly, without the need to connect to the host machine first.
+This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
 
-GitHub doesn't parse Orgmode files properly. Read the [[https://jakub-stastny.github.io/dev/][exported documentation]].
+Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
 
-* Usage
-
-** Manual
-
-For each of my projects I create a new directory
-
-*** Dockerfile
-
-Obviously we use the dev image as our base:
-
-#+begin_src dockerfile
-FROM jakubstastny/dev:latest
-
-COPY .env /root/.env
-
-RUN ssh-keyscan -H github.com >> ~/.ssh/known_hosts && dotfiles pull -r && git clone git@github.com:jakub-stastny/dev.git
-#+end_src
-
-*** SSH keys
-
-It's a good idea to generate a pair of SSH keys for the project:
-
-#+begin_src shell
-  mkdir .ssh
-  ssh-keygen -t rsa -f .ssh/id_rsa
-#+end_src
-
-Now let's copy the key pair to the image:
-
-#+begin_src dockerfile
-COPY .ssh /root/.ssh
-#+end_src
-
-*** SSHD port
-
-For your first image, you don't have to worry about this. The default =SSHD_PORT= is =2222=.
-
-However if you want to run multiple of these images in paralel, you'll need to override the =SSHD_PORT=, so that it's unique like so:
-
-#+begin_src dockerfile
-ENV SSHD_PORT=2223
-#+end_src
-
-** With [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]]
-
-Please note, that this workflow can be automated using [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I developed specifically for this purpose.
-
-
-
-I use it with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which automates the usual project workflow: creating a project, spinning off a Docker image with that environment, creating a new pair of SSH keys and setting up port sharing. The resulting container runs OpenSSH server and can be SSH'd into directly, without the need to connect to the host machine first.
+We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created specifically for this purpose.
 
 #+begin_src ditaa :file graph.png :cmdline --round-corners
   +---------+
@@ -71,3 +30,69 @@ I use it with [[https://github.com/jakub-stastny/docker-project-manager][docker-
 
 #+RESULTS:
 [[file:graph.png]]
+
+* Usage
+
+First, let's create a new directory for our project. Let's call the project =rental-property-management=:
+
+#+begin_src shell
+  mkdir rental-property-management && cd rental-property-management
+#+end_src
+
+** Dockerfile
+
+Next, let's start with the =Dockerfile=. Obviously we use the =dev= image as our base:
+
+#+begin_src dockerfile
+FROM jakubstastny/dev:latest
+#+end_src
+
+*** SSH keys
+
+First, we need to copy our public SSH key into =.ssh/authorized_keys=:
+
+#+begin_src shell
+  mkdir .ssh && echo "<your-public-ssh-key>" > .ssh/authorized_keys
+#+end_src
+
+This is important, so you can SSH into the running container.
+
+Next, let's generate a new pair of SSH keys for the project:
+
+#+begin_src shell
+  mkdir .ssh && ssh-keygen -t rsa -f .ssh/id_rsa
+#+end_src
+
+You will need to add the generated /public/ SSH key into your GitHub settings, in order to be able to push to your repositories (and clone any private repository that you might need).
+
+Now let's copy the key pair to the image:
+
+#+begin_src dockerfile
+COPY .ssh /root/.ssh
+#+end_src
+
+** Clone your repo and set up your projects
+
+This is really up to you. You might use something like this:
+
+#+begin_src dockerfile
+RUN ssh-keyscan -H github.com >> ~/.ssh/known_hosts && dotfiles pull -r && git clone git@github.com:jakub-stastny/dev.git
+#+end_src
+
+** SSHD port
+
+For your first image, you don't have to worry about this. The default =SSHD_PORT= is =2222=.
+
+However if you want to run multiple of these images in paralel, you'll need to override the =SSHD_PORT=, so that it's unique like so:
+
+#+begin_src dockerfile
+ENV SSHD_PORT=2223
+#+end_src
+
+Now you're good to go. Assuming that you have the container on a VPS like I do, you can connect directly to it by SSH without having to go through the host machine first:
+
+#+begin_src shell
+  ssh root@ip:2222
+#+end_src
+
+And that's about it. There is [[https://jakub-stastny.github.io/dev/][development documentation]] in case you want to fork and tweak for yourself. Enjoy!
