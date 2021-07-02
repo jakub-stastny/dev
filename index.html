@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-02 Fri 18:00 -->
+<!-- 2021-07-02 Fri 23:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>My development environment image</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Jakub Šťastný" />
+<meta name="author" content="root" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -220,14 +220,66 @@
 <body>
 <div id="content">
 <h1 class="title">My development environment image</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org066d9ef">1. About</a></li>
+<li><a href="#orga5c9d90">2. Dockerfile</a>
+<ul>
+<li><a href="#orga093be4">2.1. Use the latest Ubuntu</a></li>
+<li><a href="#org6fddb47">2.2. Set <code>WORKDIR</code> to <code>/root</code></a></li>
+<li><a href="#orgae1a440">2.3. Set <code>TERM</code> to <code>xterm-256color</code></a></li>
+<li><a href="#org719a812">2.4. Set up <code>$PATH</code></a></li>
+<li><a href="#orgb56bad4">2.5. Update APT cache and upgrade packages</a></li>
+<li><a href="#org039d007">2.6. Fix locale</a></li>
+<li><a href="#orga6889bc">2.7. Install apt-utils</a></li>
+<li><a href="#org6fa8d10">2.8. Install ZSH and babashka as a prerequisite for the build scripts</a></li>
+<li><a href="#orgc222877">2.9. Add the build scripts</a></li>
+<li><a href="#orgbb57129">2.10. Save build metadata</a></li>
+<li><a href="#org526282b">2.11. Run OpenSSH server</a></li>
+</ul>
+</li>
+<li><a href="#orgccd5731">3. The build scripts</a>
+<ul>
+<li><a href="#orgfd46318">3.1. Helpers</a>
+<ul>
+<li><a href="#orga1fb18c">3.1.1. <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</a></li>
+<li><a href="#org4af6b3a">3.1.2. <span class="todo TODO">TODO</span> Show current duration of execution</a></li>
+</ul>
+</li>
+<li><a href="#orga6f24f8">3.2. Unminimise the system</a></li>
+<li><a href="#orgc1a7b50">3.3. Install Emacs 28 with native compilation, fast JSON parser and better redo</a></li>
+<li><a href="#orgcfddb8f">3.4. Install basic tools</a></li>
+<li><a href="#org0878e25">3.5. Node.js &amp; Yarn sources</a></li>
+<li><a href="#org00dca7f">3.6. Time zone</a></li>
+<li><a href="#orgdd62dda">3.7. Dotfiles</a>
+<ul>
+<li><a href="#orge010f06">3.7.1. Install traditional dotfiles</a></li>
+<li><a href="#orgcf818d4">3.7.2. Install literate dotfiles</a></li>
+</ul>
+</li>
+<li><a href="#org8b7f861">3.8. Clojure CLI</a></li>
+<li><a href="#org0bc8fde">3.9. GH CLI</a></li>
+<li><a href="#orgff6f3ba">3.10. Make ZSH the default shell</a></li>
+<li><a href="#org09f0009">3.11. Set up SSH and change root password</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 
-<div id="outline-container-orgcca8e3f" class="outline-2">
-<h2 id="orgcca8e3f"><span class="section-number-2">1</span> About</h2>
+<div id="outline-container-org066d9ef" class="outline-2">
+<h2 id="org066d9ef"><span class="section-number-2">1</span> About</h2>
 <div class="outline-text-2" id="text-1">
+<a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
+  <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
+</a>
 
-<div id="orga852646" class="figure">
-<p><a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml" fallback="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg"><object type="image/svg+xml" data="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" class="org-svg">
-<img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" class="org-svg" /></object></a>
+
+
+<div id="org5e906b0" class="figure">
+<p><img src="graph.png" alt="graph.png" />
 </p>
 </div>
 
@@ -237,143 +289,48 @@ My development environment with my favourite tools and dotfiles.
 </div>
 </div>
 
-<div id="outline-container-org82b5254" class="outline-2">
-<h2 id="org82b5254"><span class="section-number-2">2</span> Usage</h2>
+<div id="outline-container-orga5c9d90" class="outline-2">
+<h2 id="orga5c9d90"><span class="section-number-2">2</span> Dockerfile</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga314f65" class="outline-3">
-<h3 id="orga314f65"><span class="section-number-3">2.1</span> Manual</h3>
+
+<div id="outline-container-orga093be4" class="outline-3">
+<h3 id="orga093be4"><span class="section-number-3">2.1</span> Use the latest Ubuntu</h3>
 <div class="outline-text-3" id="text-2-1">
-<p>
-For each of my projects I create a new directory
-</p>
-</div>
-
-<div id="outline-container-orgbd561c7" class="outline-4">
-<h4 id="orgbd561c7"><span class="section-number-4">2.1.1</span> Dockerfile</h4>
-<div class="outline-text-4" id="text-2-1-1">
-<p>
-Obviously we use the dev image as our base:
-</p>
-
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">FROM</span> <span style="color: #228b22; font-weight: bold;">jakubstastny/dev:latest</span>
-
-<span style="color: #a020f0;">COPY</span> .env /root/.env
-
-<span style="color: #a020f0;">RUN</span> ssh-keyscan -H github.com &gt;&gt; ~/.ssh/known_hosts &amp;&amp; dotfiles pull -r &amp;&amp; git clone git@github.com:jakub-stastny/dev.git
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">FROM</span> <span style="color: #6ae4b9; font-weight: bold;">ubuntu:latest</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3a0c546" class="outline-4">
-<h4 id="org3a0c546"><span class="section-number-4">2.1.2</span> SSH keys</h4>
-<div class="outline-text-4" id="text-2-1-2">
-<p>
-It's a good idea to generate a pair of SSH keys for the project:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">mkdir .ssh
-ssh-keygen -t rsa -f .ssh/id_rsa
-</pre>
-</div>
-
-<p>
-Now let's copy the key pair to the image:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">COPY</span> .ssh /root/.ssh
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org6443572" class="outline-4">
-<h4 id="org6443572"><span class="section-number-4">2.1.3</span> SSHD port</h4>
-<div class="outline-text-4" id="text-2-1-3">
-<p>
-For your first image, you don't have to worry about this. The default <code>SSHD_PORT</code> is <code>2222</code>.
-</p>
-
-<p>
-However if you want to run multiple of these images in paralel, you'll need to override the <code>SSHD_PORT</code>, so that it's unique like so:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">SSHD_PORT</span>=2223
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgc730754" class="outline-3">
-<h3 id="orgc730754"><span class="section-number-3">2.2</span> With <a href="https://github.com/jakub-stastny/docker-project-manager">docker-project-manager</a></h3>
+<div id="outline-container-org6fddb47" class="outline-3">
+<h3 id="org6fddb47"><span class="section-number-3">2.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
 <div class="outline-text-3" id="text-2-2">
-<p>
-Please note, that this workflow can be automated using <a href="https://github.com/jakub-stastny/docker-project-manager">docker-project-manager</a>, which I developed specifically for this purpose.
-</p>
-
-
-
-<p>
-I use it with <a href="https://github.com/jakub-stastny/docker-project-manager">docker-project-manager</a>, which automates the usual project workflow: creating a project, spinning off a Docker image with that environment, creating a new pair of SSH keys and setting up port sharing. The resulting container runs OpenSSH server and can be SSH'd into directly, without the need to connect to the host machine first.
-</p>
-
-
-<div id="org16af1e2" class="figure">
-<p><img src="img/graph.png" alt="graph.png" />
-</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga24c352" class="outline-2">
-<h2 id="orga24c352"><span class="section-number-2">3</span> Dockerfile</h2>
-<div class="outline-text-2" id="text-3">
-</div>
-
-<div id="outline-container-orgff933ae" class="outline-3">
-<h3 id="orgff933ae"><span class="section-number-3">3.1</span> Use the latest Ubuntu</h3>
-<div class="outline-text-3" id="text-3-1">
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">FROM</span> <span style="color: #228b22; font-weight: bold;">ubuntu:latest</span>
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">WORKDIR</span> /root
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd01a871" class="outline-3">
-<h3 id="orgd01a871"><span class="section-number-3">3.2</span> Set <code>WORKDIR</code> to <code>/root</code></h3>
-<div class="outline-text-3" id="text-3-2">
-<div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">WORKDIR</span> /root
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org24d41dd" class="outline-3">
-<h3 id="org24d41dd"><span class="section-number-3">3.3</span> Set <code>TERM</code> to <code>xterm-256color</code></h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-orgae1a440" class="outline-3">
+<h3 id="orgae1a440"><span class="section-number-3">2.3</span> Set <code>TERM</code> to <code>xterm-256color</code></h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
 Silence <code>tput</code> warnings and show colours instead.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">TERM</span>=xterm-256color
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">TERM</span>=xterm-256color
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org212c0dc" class="outline-3">
-<h3 id="org212c0dc"><span class="section-number-3">3.4</span> Set up <code>$PATH</code></h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-org719a812" class="outline-3">
+<h3 id="org719a812"><span class="section-number-3">2.4</span> Set up <code>$PATH</code></h3>
+<div class="outline-text-3" id="text-2-4">
 <p>
 Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from <code>~/.script/dotfiles</code>.
 </p>
@@ -383,25 +340,25 @@ This has less importance now, since we switched to connecting to the image direc
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">PATH</span>=<span style="color: #8b2252;">"/root/.scripts:${PATH}"</span>
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">PATH</span>=<span style="color: #79a8ff;">"/root/.scripts:${PATH}"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga434bbd" class="outline-3">
-<h3 id="orga434bbd"><span class="section-number-3">3.5</span> Update APT cache and upgrade packages</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-orgb56bad4" class="outline-3">
+<h3 id="orgb56bad4"><span class="section-number-3">2.5</span> Update APT cache and upgrade packages</h3>
+<div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">RUN</span> apt-get update &gt; /dev/null &amp;&amp; <span style="color: #a0522d;">DEBIAN_FRONTEND</span>=noninteractive apt-get upgrade -y &gt; /dev/null
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">RUN</span> apt-get update &gt; /dev/null &amp;&amp; <span style="color: #00d3d0; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive apt-get upgrade -y &gt; /dev/null
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org97ec091" class="outline-3">
-<h3 id="org97ec091"><span class="section-number-3">3.6</span> Fix locale</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-org039d007" class="outline-3">
+<h3 id="org039d007"><span class="section-number-3">2.6</span> Fix locale</h3>
+<div class="outline-text-3" id="text-2-6">
 <p>
 Ubuntu has broken locale. We need to set the variables here, in order for them to be available both to the install script and to the final environment. Locale is generated in the install script.
 </p>
@@ -411,41 +368,41 @@ There's a Perl locale error when setting up locales. Ignore.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">LC_ALL</span>=en_US.UTF-8 <span style="color: #a0522d;">LANG</span>=en_US.UTF-8 <span style="color: #a0522d;">LANGUAGE</span>=en_US.UTF-8
-<span style="color: #a020f0;">RUN</span> apt-get install -y locales &gt; /dev/null &amp;&amp; locale-gen $<span style="color: #a0522d;">LC_ALL</span>
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">LC_ALL</span>=en_US.UTF-8 <span style="color: #00d3d0; font-weight: bold;">LANG</span>=en_US.UTF-8 <span style="color: #00d3d0; font-weight: bold;">LANGUAGE</span>=en_US.UTF-8
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> apt-get install -y locales &gt; /dev/null &amp;&amp; locale-gen $<span style="color: #00d3d0; font-weight: bold;">LC_ALL</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga55ed4a" class="outline-3">
-<h3 id="orga55ed4a"><span class="section-number-3">3.7</span> Install apt-utils</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-orga6889bc" class="outline-3">
+<h3 id="orga6889bc"><span class="section-number-3">2.7</span> Install apt-utils</h3>
+<div class="outline-text-3" id="text-2-7">
 <p>
 Installing <code>apt-utils</code> will stop annoying warning every time I try to install something.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">RUN</span> <span style="color: #a0522d;">DEBIAN_FRONTEND</span>=noninteractive apt-get install -y apt-utils &gt; /dev/null
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">RUN</span> <span style="color: #00d3d0; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive apt-get install -y apt-utils &gt; /dev/null
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org47c1953" class="outline-3">
-<h3 id="org47c1953"><span class="section-number-3">3.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
-<div class="outline-text-3" id="text-3-8">
+<div id="outline-container-org6fa8d10" class="outline-3">
+<h3 id="org6fa8d10"><span class="section-number-3">2.8</span> Install ZSH and babashka as a prerequisite for the build scripts</h3>
+<div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">RUN</span> <span style="color: #a0522d;">DEBIAN_FRONTEND</span>=noninteractive apt-get install -y zsh curl &gt; /dev/null
-<span style="color: #a020f0;">RUN</span> curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">RUN</span> <span style="color: #00d3d0; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive apt-get install -y zsh curl &gt; /dev/null
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> curl https://raw.githubusercontent.com/babashka/babashka/master/install | bash
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgaa17ec4" class="outline-3">
-<h3 id="orgaa17ec4"><span class="section-number-3">3.9</span> Add the build scripts</h3>
-<div class="outline-text-3" id="text-3-9">
+<div id="outline-container-orgc222877" class="outline-3">
+<h3 id="orgc222877"><span class="section-number-3">2.9</span> Add the build scripts</h3>
+<div class="outline-text-3" id="text-2-9">
 <p>
 I purposedly want to leave the scripts in the build, as they might come in handy for future inspection.
 </p>
@@ -455,46 +412,46 @@ I don't do <code>ADD /build</code>, since any change in any of the files invalid
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ADD</span> scripts/unminimise-system /build/unminimise-system
-<span style="color: #a020f0;">RUN</span> /build/unminimise-system
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/unminimise-system /build/unminimise-system
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/unminimise-system
 
-<span style="color: #a020f0;">ADD</span> scripts/install-emacs-dependencies /build/install-emacs-dependencies
-<span style="color: #a020f0;">RUN</span> /build/install-emacs-dependencies
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/install-emacs-dependencies /build/install-emacs-dependencies
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/install-emacs-dependencies
 
-<span style="color: #a020f0;">ADD</span> scripts/build-emacs /build/build-emacs
-<span style="color: #a020f0;">RUN</span> /build/build-emacs
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/build-emacs /build/build-emacs
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/build-emacs
 
-<span style="color: #a020f0;">ADD</span> scripts/install-basic-tools /build/install-basic-tools
-<span style="color: #a020f0;">RUN</span> /build/install-basic-tools
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/install-basic-tools /build/install-basic-tools
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/install-basic-tools
 
-<span style="color: #a020f0;">ADD</span> scripts/add-node-sources /build/add-node-sources
-<span style="color: #a020f0;">RUN</span> /build/add-node-sources
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/add-node-sources /build/add-node-sources
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/add-node-sources
 
-<span style="color: #a020f0;">ADD</span> scripts/set-up-time-zone /build/set-up-time-zone
-<span style="color: #a020f0;">RUN</span> /build/set-up-time-zone
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/set-up-time-zone /build/set-up-time-zone
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/set-up-time-zone
 
-<span style="color: #a020f0;">ADD</span> scripts/install-dotfiles /build/install-dotfiles
-<span style="color: #a020f0;">RUN</span> /build/install-dotfiles
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/install-dotfiles /build/install-dotfiles
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/install-dotfiles
 
-<span style="color: #a020f0;">ADD</span> scripts/install-clojure-cli /build/install-clojure-cli
-<span style="color: #a020f0;">RUN</span> /build/install-clojure-cli
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/install-clojure-cli /build/install-clojure-cli
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/install-clojure-cli
 
-<span style="color: #a020f0;">ADD</span> scripts/install-gh-cli /build/install-gh-cli
-<span style="color: #a020f0;">RUN</span> /build/install-gh-cli
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/install-gh-cli /build/install-gh-cli
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/install-gh-cli
 
-<span style="color: #a020f0;">ADD</span> scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
-<span style="color: #a020f0;">RUN</span> /build/make-zsh-the-default-shell
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/make-zsh-the-default-shell
 
-<span style="color: #a020f0;">ADD</span> scripts/secure-installation /build/secure-installation
-<span style="color: #a020f0;">RUN</span> /build/secure-installation
+<span style="color: #b6a0ff; font-weight: bold;">ADD</span> scripts/secure-installation /build/secure-installation
+<span style="color: #b6a0ff; font-weight: bold;">RUN</span> /build/secure-installation
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8a588cd" class="outline-3">
-<h3 id="org8a588cd"><span class="section-number-3">3.10</span> Save build metadata</h3>
-<div class="outline-text-3" id="text-3-10">
+<div id="outline-container-orgbb57129" class="outline-3">
+<h3 id="orgbb57129"><span class="section-number-3">2.10</span> Save build metadata</h3>
+<div class="outline-text-3" id="text-2-10">
 <p>
 We are passing these build args to <code>docker build</code> in <a href="./bin/build">./bin/build</a>.
 </p>
@@ -504,19 +461,19 @@ Previously we have been saving these into a file, but really, an ENV variable is
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ARG</span> DOCKER_IMAGE_GIT_SHA
-<span style="color: #a020f0;">ARG</span> DOCKER_IMAGE_BUILD_DATE
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ARG</span> DOCKER_IMAGE_GIT_SHA
+<span style="color: #b6a0ff; font-weight: bold;">ARG</span> DOCKER_IMAGE_BUILD_DATE
 
-<span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">DOCKER_IMAGE_GIT_SHA</span>=$<span style="color: #a0522d;">DOCKER_IMAGE_GIT_SHA</span>
-<span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">DOCKER_IMAGE_BUILD_DATE</span>=$<span style="color: #a0522d;">DOCKER_IMAGE_BUILD_DATE</span>
+<span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">DOCKER_IMAGE_GIT_SHA</span>=$<span style="color: #00d3d0; font-weight: bold;">DOCKER_IMAGE_GIT_SHA</span>
+<span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">DOCKER_IMAGE_BUILD_DATE</span>=$<span style="color: #00d3d0; font-weight: bold;">DOCKER_IMAGE_BUILD_DATE</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4af74db" class="outline-3">
-<h3 id="org4af74db"><span class="section-number-3">3.11</span> Run OpenSSH server</h3>
-<div class="outline-text-3" id="text-3-11">
+<div id="outline-container-org526282b" class="outline-3">
+<h3 id="org526282b"><span class="section-number-3">2.11</span> Run OpenSSH server</h3>
+<div class="outline-text-3" id="text-2-11">
 <p>
 This allows us to connect directly, rather than having to go through the host machine.
 </p>
@@ -530,30 +487,30 @@ Just redefine <code>SSHD_PORT</code> for each of the project images, so that the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-dockerfile"><span style="color: #a020f0;">ENV</span> <span style="color: #a0522d;">SSHD_PORT</span>=2222
-<span style="color: #a020f0;">CMD</span> /usr/sbin/sshd -p $<span style="color: #a0522d;">SSHD_PORT</span> -D -e
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">SSHD_PORT</span>=2222
+<span style="color: #b6a0ff; font-weight: bold;">CMD</span> /usr/sbin/sshd -p $<span style="color: #00d3d0; font-weight: bold;">SSHD_PORT</span> -D -e
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org14a858c" class="outline-2">
-<h2 id="org14a858c"><span class="section-number-2">4</span> The build scripts</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgccd5731" class="outline-2">
+<h2 id="orgccd5731"><span class="section-number-2">3</span> The build scripts</h2>
+<div class="outline-text-2" id="text-3">
 </div>
 
-<div id="outline-container-org47543ec" class="outline-3">
-<h3 id="org47543ec"><span class="section-number-3">4.1</span> Helpers</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-orgfd46318" class="outline-3">
+<h3 id="orgfd46318"><span class="section-number-3">3.1</span> Helpers</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
 </p>
 </div>
 
-<div id="outline-container-org68400a3" class="outline-4">
-<h4 id="org68400a3"><span class="section-number-4">4.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
-<div class="outline-text-4" id="text-4-1-1">
+<div id="outline-container-orga1fb18c" class="outline-4">
+<h4 id="orga1fb18c"><span class="section-number-4">3.1.1</span> <span class="todo TODO">TODO</span> Refactor to group side-effects in one place</h4>
+<div class="outline-text-4" id="text-3-1-1">
 <p>
 Since this is just the first working version, I didn't bother with the design, but now it should be refactored to behave more declaratively: to generate a representation of the commands, rather than executing them directly.
 </p>
@@ -564,86 +521,86 @@ Only after we get to the end of the <code>block</code>, the commands in it shoul
 </div>
 </div>
 
-<div id="outline-container-orgae7aab7" class="outline-4">
-<h4 id="orgae7aab7"><span class="section-number-4">4.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
-<div class="outline-text-4" id="text-4-1-2">
+<div id="outline-container-org4af6b3a" class="outline-4">
+<h4 id="org4af6b3a"><span class="section-number-4">3.1.2</span> <span class="todo TODO">TODO</span> Show current duration of execution</h4>
+<div class="outline-text-4" id="text-3-1-2">
 <ul class="org-ul">
 <li><a href="https://book.babashka.org/#core_async">Babashka async</a></li>
 <li><a href="https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#5291396">ASCII escape sequence </a></li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-clojure" id="org0ef2f88">(require '[clojure.java.shell <span style="color: #008b8b;">:refer</span> [sh with-sh-dir]])
+<pre class="src src-clojure" id="org3912e1a">(require '[clojure.java.shell <span style="color: #00bcff; font-weight: bold;">:refer</span> [sh with-sh-dir]])
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">zsh</span>
-  ([command] (sh <span style="color: #8b2252;">"zsh"</span> <span style="color: #8b2252;">"-c"</span> command))
-  ([command env] (apply sh <span style="color: #8b2252;">"zsh"</span> <span style="color: #8b2252;">"-c"</span> command env)))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">zsh</span>
+  ([command] (sh <span style="color: #79a8ff;">"zsh"</span> <span style="color: #79a8ff;">"-c"</span> command))
+  ([command env] (apply sh <span style="color: #79a8ff;">"zsh"</span> <span style="color: #79a8ff;">"-c"</span> command env)))
 
-(<span style="color: #a020f0;">def</span> <span style="color: #a0522d;">colours</span> {
-  <span style="color: #008b8b;">:red</span> 31 <span style="color: #008b8b;">:green</span> 32 <span style="color: #008b8b;">:yellow</span> 33
-  <span style="color: #008b8b;">:blue</span> 34 <span style="color: #008b8b;">:purple</span> 35 <span style="color: #008b8b;">:cyan</span> 36
-  <span style="color: #008b8b;">:grey</span> 37})
+(<span style="color: #b6a0ff; font-weight: bold;">def</span> <span style="color: #00d3d0; font-weight: bold;">colours</span> {
+  <span style="color: #00bcff; font-weight: bold;">:red</span> 31 <span style="color: #00bcff; font-weight: bold;">:green</span> 32 <span style="color: #00bcff; font-weight: bold;">:yellow</span> 33
+  <span style="color: #00bcff; font-weight: bold;">:blue</span> 34 <span style="color: #00bcff; font-weight: bold;">:purple</span> 35 <span style="color: #00bcff; font-weight: bold;">:cyan</span> 36
+  <span style="color: #00bcff; font-weight: bold;">:grey</span> 37})
 
-<span style="color: #b22222;">; </span><span style="color: #b22222;">\033[fg;bgm</span>
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">colour</span> [colour text]
-  (<span style="color: #a020f0;">let</span> [colour-code (colour colours)]
-    (str <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\0</span><span style="color: #8b2252;">33["</span> colour-code <span style="color: #8b2252;">"m"</span> text <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\0</span><span style="color: #8b2252;">33[0m"</span>)))
+<span style="color: #a8a8a8; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">\033[fg;bgm</span>
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">colour</span> [colour text]
+  (<span style="color: #b6a0ff; font-weight: bold;">let</span> [colour-code (colour colours)]
+    (str <span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-weight: bold;">\0</span><span style="color: #79a8ff;">33["</span> colour-code <span style="color: #79a8ff;">"m"</span> text <span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-weight: bold;">\0</span><span style="color: #79a8ff;">33[0m"</span>)))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">current-unix-time</span> [] (quot (<span style="color: #228b22;">System</span>/currentTimeMillis) 1000))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">current-unix-time</span> [] (quot (<span style="color: #6ae4b9; font-weight: bold;">System</span>/currentTimeMillis) 1000))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">format-duration</span> [duration]
-  (<span style="color: #a020f0;">let</span> [colour-name (<span style="color: #a020f0;">cond</span> (&lt; duration 35) <span style="color: #008b8b;">:green</span> (&lt; duration 90) <span style="color: #008b8b;">:yellow</span> <span style="color: #008b8b;">:else</span> <span style="color: #008b8b;">:red</span>)]
-   (<span style="color: #a020f0;">cond</span>
-     (&lt; duration 60) (colour colour-name (str duration <span style="color: #8b2252;">"s"</span>))
-     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #8b2252;">":"</span> (format <span style="color: #8b2252;">"%02d"</span> (mod duration 60)) <span style="color: #8b2252;">"m"</span>)))))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">format-duration</span> [duration]
+  (<span style="color: #b6a0ff; font-weight: bold;">let</span> [colour-name (<span style="color: #b6a0ff; font-weight: bold;">cond</span> (&lt; duration 35) <span style="color: #00bcff; font-weight: bold;">:green</span> (&lt; duration 90) <span style="color: #00bcff; font-weight: bold;">:yellow</span> <span style="color: #00bcff; font-weight: bold;">:else</span> <span style="color: #00bcff; font-weight: bold;">:red</span>)]
+   (<span style="color: #b6a0ff; font-weight: bold;">cond</span>
+     (&lt; duration 60) (colour colour-name (str duration <span style="color: #79a8ff;">"s"</span>))
+     (&gt; duration 60) (colour colour-name (str (int (/ duration 60.0)) <span style="color: #79a8ff;">":"</span> (format <span style="color: #79a8ff;">"%02d"</span> (mod duration 60)) <span style="color: #79a8ff;">"m"</span>)))))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">format-duration-wrapper</span>
-  ([duration] (<span style="color: #a020f0;">if</span> (&lt;= duration 3) <span style="color: #8b2252;">""</span> (str <span style="color: #8b2252;">"took "</span> (format-duration duration) <span style="color: #8b2252;">"."</span>)))
-  ([duration lambda] (<span style="color: #a020f0;">if</span> (&lt;= duration 3) <span style="color: #8b2252;">""</span> (lambda (format-duration-wrapper duration)))))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">format-duration-wrapper</span>
+  ([duration] (<span style="color: #b6a0ff; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #79a8ff;">""</span> (str <span style="color: #79a8ff;">"took "</span> (format-duration duration) <span style="color: #79a8ff;">"."</span>)))
+  ([duration lambda] (<span style="color: #b6a0ff; font-weight: bold;">if</span> (&lt;= duration 3) <span style="color: #79a8ff;">""</span> (lambda (format-duration-wrapper duration)))))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">run</span> [command &amp; rest]
-  (<span style="color: #a020f0;">let</span> [start-time (current-unix-time)]
-    (print (str <span style="color: #8b2252;">"  "</span> (colour <span style="color: #008b8b;">:green</span> <span style="color: #8b2252;">"&#955; "</span>) (colour <span style="color: #008b8b;">:grey</span> command)) <span style="color: #8b2252;">""</span>)
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">run</span> [command &amp; rest]
+  (<span style="color: #b6a0ff; font-weight: bold;">let</span> [start-time (current-unix-time)]
+    (print (str <span style="color: #79a8ff;">"  "</span> (colour <span style="color: #00bcff; font-weight: bold;">:green</span> <span style="color: #79a8ff;">"&#955; "</span>) (colour <span style="color: #00bcff; font-weight: bold;">:grey</span> command)) <span style="color: #79a8ff;">""</span>)
     (flush)
-    (<span style="color: #a020f0;">let</span> [result (zsh command rest)]
-      (<span style="color: #a020f0;">let</span> [duration (- (current-unix-time) start-time)]
-        (<span style="color: #a020f0;">let</span> [format-fn (<span style="color: #a020f0;">fn</span> [formatted-duration-string] (str <span style="color: #8b2252;">"... "</span> formatted-duration-string))]
+    (<span style="color: #b6a0ff; font-weight: bold;">let</span> [result (zsh command rest)]
+      (<span style="color: #b6a0ff; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
+        (<span style="color: #b6a0ff; font-weight: bold;">let</span> [format-fn (<span style="color: #b6a0ff; font-weight: bold;">fn</span> [formatted-duration-string] (str <span style="color: #79a8ff;">"... "</span> formatted-duration-string))]
           (println (format-duration-wrapper duration format-fn)))
         result))))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">fail</span> [result]
-  (println (str (colour <span style="color: #008b8b;">:red</span> <span style="color: #8b2252;">"    Error "</span>) (<span style="color: #008b8b;">:exit</span> result)))
-  (<span style="color: #a020f0;">let</span> [out (<span style="color: #008b8b;">:out</span> result) err (<span style="color: #008b8b;">:err</span> result)]
-    (<span style="color: #a020f0;">when-not</span> (empty? out) (println out))
-    (<span style="color: #a020f0;">when-not</span> (empty? err) (println err)))
-  (<span style="color: #228b22;">System</span>/exit 1))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">fail</span> [result]
+  (println (str (colour <span style="color: #00bcff; font-weight: bold;">:red</span> <span style="color: #79a8ff;">"    Error "</span>) (<span style="color: #00bcff; font-weight: bold;">:exit</span> result)))
+  (<span style="color: #b6a0ff; font-weight: bold;">let</span> [out (<span style="color: #00bcff; font-weight: bold;">:out</span> result) err (<span style="color: #00bcff; font-weight: bold;">:err</span> result)]
+    (<span style="color: #b6a0ff; font-weight: bold;">when-not</span> (empty? out) (println out))
+    (<span style="color: #b6a0ff; font-weight: bold;">when-not</span> (empty? err) (println err)))
+  (<span style="color: #6ae4b9; font-weight: bold;">System</span>/exit 1))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">ensure-success</span> [result]
-  (<span style="color: #a020f0;">if</span> (= (<span style="color: #008b8b;">:exit</span> result) 0) result (fail result)))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">ensure-success</span> [result]
+  (<span style="color: #b6a0ff; font-weight: bold;">if</span> (= (<span style="color: #00bcff; font-weight: bold;">:exit</span> result) 0) result (fail result)))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">label</span> [text]
-  (println (colour <span style="color: #008b8b;">:purple</span> text)))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">label</span> [text]
+  (println (colour <span style="color: #00bcff; font-weight: bold;">:purple</span> text)))
 
-(<span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">block</span> [name &amp; sexps]
-  `(<span style="color: #a020f0;">do</span>
-    (println <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\n</span><span style="color: #8b2252;">Running block"</span> (str (colour <span style="color: #008b8b;">:purple</span> ~name) <span style="color: #8b2252;">".</span><span style="color: #8b2252; font-weight: bold;">\n</span><span style="color: #8b2252;">"</span>))
-    (<span style="color: #a020f0;">let</span> [start-time (current-unix-time)]
-      (<span style="color: #a020f0;">do</span> ~@sexps)
-      (<span style="color: #a020f0;">let</span> [duration (- (current-unix-time) start-time)]
-        (println (colour <span style="color: #008b8b;">:cyan</span> <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\n</span><span style="color: #8b2252;">  ~"</span>) <span style="color: #8b2252;">"Block"</span> (colour <span style="color: #008b8b;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\n</span><span style="color: #8b2252;">"</span>)))))
+(<span style="color: #b6a0ff; font-weight: bold;">defmacro</span> <span style="color: #feacd0;">block</span> [name &amp; sexps]
+  `(<span style="color: #b6a0ff; font-weight: bold;">do</span>
+    (println <span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-weight: bold;">\n</span><span style="color: #79a8ff;">Running block"</span> (str (colour <span style="color: #00bcff; font-weight: bold;">:purple</span> ~name) <span style="color: #79a8ff;">".</span><span style="color: #79a8ff; font-weight: bold;">\n</span><span style="color: #79a8ff;">"</span>))
+    (<span style="color: #b6a0ff; font-weight: bold;">let</span> [start-time (current-unix-time)]
+      (<span style="color: #b6a0ff; font-weight: bold;">do</span> ~@sexps)
+      (<span style="color: #b6a0ff; font-weight: bold;">let</span> [duration (- (current-unix-time) start-time)]
+        (println (colour <span style="color: #00bcff; font-weight: bold;">:cyan</span> <span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-weight: bold;">\n</span><span style="color: #79a8ff;">  ~"</span>) <span style="color: #79a8ff;">"Block"</span> (colour <span style="color: #00bcff; font-weight: bold;">:grey</span> ~name) (format-duration-wrapper duration) <span style="color: #79a8ff;">"</span><span style="color: #79a8ff; font-weight: bold;">\n</span><span style="color: #79a8ff;">"</span>)))))
 
-(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">package</span> [&amp; names]
-  (<span style="color: #a020f0;">let</span> [command (str <span style="color: #8b2252;">"apt-get install -y "</span> (<span style="color: #228b22;">clojure.string</span>/join <span style="color: #8b2252;">" "</span> names))]
-    (ensure-success (run command <span style="color: #008b8b;">:env</span> {<span style="color: #8b2252;">"DEBIAN_FRONTEND"</span> <span style="color: #8b2252;">"noninteractive"</span>}))))
+(<span style="color: #b6a0ff; font-weight: bold;">defn</span> <span style="color: #feacd0;">package</span> [&amp; names]
+  (<span style="color: #b6a0ff; font-weight: bold;">let</span> [command (str <span style="color: #79a8ff;">"apt-get install -y "</span> (<span style="color: #6ae4b9; font-weight: bold;">clojure.string</span>/join <span style="color: #79a8ff;">" "</span> names))]
+    (ensure-success (run command <span style="color: #00bcff; font-weight: bold;">:env</span> {<span style="color: #79a8ff;">"DEBIAN_FRONTEND"</span> <span style="color: #79a8ff;">"noninteractive"</span>}))))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1a11805" class="outline-3">
-<h3 id="org1a11805"><span class="section-number-3">4.2</span> Unminimise the system</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-orga6f24f8" class="outline-3">
+<h3 id="orga6f24f8"><span class="section-number-3">3.2</span> Unminimise the system</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 This makes man pages available.
 </p>
@@ -655,57 +612,57 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"unminimising the system"</span>
-  (package <span style="color: #8b2252;">"man"</span>)
-  (ensure-success (run <span style="color: #8b2252;">"yes | unminimize"</span>)))
+(block <span style="color: #79a8ff;">"unminimising the system"</span>
+  (package <span style="color: #79a8ff;">"man"</span>)
+  (ensure-success (run <span style="color: #79a8ff;">"yes | unminimize"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org518b373" class="outline-3">
-<h3 id="org518b373"><span class="section-number-3">4.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-orgc1a7b50" class="outline-3">
+<h3 id="orgc1a7b50"><span class="section-number-3">3.3</span> Install Emacs 28 with native compilation, fast JSON parser and better redo</h3>
+<div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"installing Emacs dependencies"</span>
-  (package <span style="color: #8b2252;">"git"</span>)
-  (ensure-success (run <span style="color: #8b2252;">"git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"</span>))
+(block <span style="color: #79a8ff;">"installing Emacs dependencies"</span>
+  (package <span style="color: #79a8ff;">"git"</span>)
+  (ensure-success (run <span style="color: #79a8ff;">"git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"</span>))
 
-  <span style="color: #b22222;">; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)</span>
-  (package <span style="color: #8b2252;">"libacl1"</span> <span style="color: #8b2252;">"libasound2"</span> <span style="color: #8b2252;">"libc6"</span> <span style="color: #8b2252;">"libdbus-1-3"</span> <span style="color: #8b2252;">"libgmp10"</span> <span style="color: #8b2252;">"libgnutls28-dev"</span> <span style="color: #8b2252;">"libgpm2"</span> <span style="color: #8b2252;">"libjansson4"</span> <span style="color: #8b2252;">"liblcms2-2"</span> <span style="color: #8b2252;">"libselinux1"</span> <span style="color: #8b2252;">"libsystemd0"</span> <span style="color: #8b2252;">"libtinfo6"</span> <span style="color: #8b2252;">"libxml2"</span> <span style="color: #8b2252;">"zlib1g"</span> <span style="color: #8b2252;">"libncurses-dev"</span>)
+  <span style="color: #a8a8a8; font-style: italic;">; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)</span>
+  (package <span style="color: #79a8ff;">"libacl1"</span> <span style="color: #79a8ff;">"libasound2"</span> <span style="color: #79a8ff;">"libc6"</span> <span style="color: #79a8ff;">"libdbus-1-3"</span> <span style="color: #79a8ff;">"libgmp10"</span> <span style="color: #79a8ff;">"libgnutls28-dev"</span> <span style="color: #79a8ff;">"libgpm2"</span> <span style="color: #79a8ff;">"libjansson4"</span> <span style="color: #79a8ff;">"liblcms2-2"</span> <span style="color: #79a8ff;">"libselinux1"</span> <span style="color: #79a8ff;">"libsystemd0"</span> <span style="color: #79a8ff;">"libtinfo6"</span> <span style="color: #79a8ff;">"libxml2"</span> <span style="color: #79a8ff;">"zlib1g"</span> <span style="color: #79a8ff;">"libncurses-dev"</span>)
 
-  <span style="color: #b22222;">; Dependencies for building Emacs.</span>
-  (package <span style="color: #8b2252;">"build-essential"</span> <span style="color: #8b2252;">"texinfo"</span> <span style="color: #8b2252;">"autoconf"</span> <span style="color: #8b2252;">"pkg-config"</span>)
+  <span style="color: #a8a8a8; font-style: italic;">; Dependencies for building Emacs.</span>
+  (package <span style="color: #79a8ff;">"build-essential"</span> <span style="color: #79a8ff;">"texinfo"</span> <span style="color: #79a8ff;">"autoconf"</span> <span style="color: #79a8ff;">"pkg-config"</span>)
 
-  <span style="color: #b22222;">; Needed for fast JSON</span>
-  (package <span style="color: #8b2252;">"libjansson4"</span> <span style="color: #8b2252;">"libjansson-dev"</span>)
+  <span style="color: #a8a8a8; font-style: italic;">; Needed for fast JSON</span>
+  (package <span style="color: #79a8ff;">"libjansson4"</span> <span style="color: #79a8ff;">"libjansson-dev"</span>)
 
-  <span style="color: #b22222;">; Dependencies for native compilation</span>
-  (package <span style="color: #8b2252;">"zlib1g-dev"</span> <span style="color: #8b2252;">"libgccjit0"</span> <span style="color: #8b2252;">"libgccjit-10-dev"</span> <span style="color: #8b2252;">"gcc-10"</span>))
+  <span style="color: #a8a8a8; font-style: italic;">; Dependencies for native compilation</span>
+  (package <span style="color: #79a8ff;">"zlib1g-dev"</span> <span style="color: #79a8ff;">"libgccjit0"</span> <span style="color: #79a8ff;">"libgccjit-10-dev"</span> <span style="color: #79a8ff;">"gcc-10"</span>))
 </pre>
 </div>
 
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"building Emacs 28 with native compilation and fast JSON"</span>
-  (with-sh-dir <span style="color: #8b2252;">"emacs"</span>
-    (<span style="color: #a020f0;">let</span> [path (<span style="color: #228b22;">System</span>/getenv <span style="color: #8b2252;">"PATH"</span>) cc <span style="color: #8b2252;">"gcc-10"</span>]
-      (ensure-success (run <span style="color: #8b2252;">"./autogen.sh"</span>))
-      (ensure-success (run <span style="color: #8b2252;">"./configure --with-native-compilation"</span> <span style="color: #008b8b;">:env</span> {<span style="color: #8b2252;">"PATH"</span> path <span style="color: #8b2252;">"CC"</span> cc}))
-      (ensure-success (run <span style="color: #8b2252;">"make -j$(nproc)"</span>))
-      (ensure-success (run <span style="color: #8b2252;">"make install"</span> ))))
-  (ensure-success (run <span style="color: #8b2252;">"rm -rf emacs"</span>)))
+(block <span style="color: #79a8ff;">"building Emacs 28 with native compilation and fast JSON"</span>
+  (with-sh-dir <span style="color: #79a8ff;">"emacs"</span>
+    (<span style="color: #b6a0ff; font-weight: bold;">let</span> [path (<span style="color: #6ae4b9; font-weight: bold;">System</span>/getenv <span style="color: #79a8ff;">"PATH"</span>) cc <span style="color: #79a8ff;">"gcc-10"</span>]
+      (ensure-success (run <span style="color: #79a8ff;">"./autogen.sh"</span>))
+      (ensure-success (run <span style="color: #79a8ff;">"./configure --with-native-compilation"</span> <span style="color: #00bcff; font-weight: bold;">:env</span> {<span style="color: #79a8ff;">"PATH"</span> path <span style="color: #79a8ff;">"CC"</span> cc}))
+      (ensure-success (run <span style="color: #79a8ff;">"make -j$(nproc)"</span>))
+      (ensure-success (run <span style="color: #79a8ff;">"make install"</span> ))))
+  (ensure-success (run <span style="color: #79a8ff;">"rm -rf emacs"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org35b68a6" class="outline-3">
-<h3 id="org35b68a6"><span class="section-number-3">4.4</span> Install basic tools</h3>
-<div class="outline-text-3" id="text-4-4">
+<div id="outline-container-orgcfddb8f" class="outline-3">
+<h3 id="orgcfddb8f"><span class="section-number-3">3.4</span> Install basic tools</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 <code>expect-dev</code> is for autologin scripts.
 </p>
@@ -713,16 +670,16 @@ Gives <code>Reinstallation of gh is not possible, it cannot be downloaded.</code
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"installing basic tools"</span>
-  (package <span style="color: #8b2252;">"locales"</span> <span style="color: #8b2252;">"automake"</span> <span style="color: #8b2252;">"htop"</span> <span style="color: #8b2252;">"curl"</span> <span style="color: #8b2252;">"wget"</span> <span style="color: #8b2252;">"git"</span> <span style="color: #8b2252;">"silversearcher-ag"</span> <span style="color: #8b2252;">"neovim"</span> <span style="color: #8b2252;">"docker.io"</span> <span style="color: #8b2252;">"tmux"</span> <span style="color: #8b2252;">"tree"</span> <span style="color: #8b2252;">"expect-dev"</span> <span style="color: #8b2252;">"rlwrap"</span>))
+(block <span style="color: #79a8ff;">"installing basic tools"</span>
+  (package <span style="color: #79a8ff;">"locales"</span> <span style="color: #79a8ff;">"automake"</span> <span style="color: #79a8ff;">"htop"</span> <span style="color: #79a8ff;">"curl"</span> <span style="color: #79a8ff;">"wget"</span> <span style="color: #79a8ff;">"git"</span> <span style="color: #79a8ff;">"silversearcher-ag"</span> <span style="color: #79a8ff;">"neovim"</span> <span style="color: #79a8ff;">"docker.io"</span> <span style="color: #79a8ff;">"tmux"</span> <span style="color: #79a8ff;">"tree"</span> <span style="color: #79a8ff;">"expect-dev"</span> <span style="color: #79a8ff;">"rlwrap"</span>))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orged78b46" class="outline-3">
-<h3 id="orged78b46"><span class="section-number-3">4.5</span> Node.js &amp; Yarn sources</h3>
-<div class="outline-text-3" id="text-4-5">
+<div id="outline-container-org0878e25" class="outline-3">
+<h3 id="org0878e25"><span class="section-number-3">3.5</span> Node.js &amp; Yarn sources</h3>
+<div class="outline-text-3" id="text-3-5">
 <p>
 Add Yarn sources (without installing it).
 <a href="https://yarnpkg.com/lang/en/docs/install/#debian-stable">https://yarnpkg.com/lang/en/docs/install/#debian-stable</a>
@@ -732,128 +689,128 @@ Add Yarn sources (without installing it).
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"adding apt sources for Node.js"</span>
-  (package <span style="color: #8b2252;">"gnupg"</span>)
-  (ensure-success (run <span style="color: #8b2252;">"curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &amp;&amp; echo deb https://dl.yarnpkg.com/debian/ stable main | tee /etc/apt/sources.list.d/yarn.list"</span>)))
+(block <span style="color: #79a8ff;">"adding apt sources for Node.js"</span>
+  (package <span style="color: #79a8ff;">"gnupg"</span>)
+  (ensure-success (run <span style="color: #79a8ff;">"curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &amp;&amp; echo deb https://dl.yarnpkg.com/debian/ stable main | tee /etc/apt/sources.list.d/yarn.list"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org24ee5c7" class="outline-3">
-<h3 id="org24ee5c7"><span class="section-number-3">4.6</span> Time zone</h3>
-<div class="outline-text-3" id="text-4-6">
+<div id="outline-container-org00dca7f" class="outline-3">
+<h3 id="org00dca7f"><span class="section-number-3">3.6</span> Time zone</h3>
+<div class="outline-text-3" id="text-3-6">
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"setting up time zone"</span>
-  (package <span style="color: #8b2252;">"tzdata"</span>)
-  (ensure-success (run <span style="color: #8b2252;">"echo America/New_York &gt; /etc/timezone"</span>))
-  (ensure-success (run <span style="color: #8b2252;">"dpkg-reconfigure -f noninteractive tzdata"</span>)))
+(block <span style="color: #79a8ff;">"setting up time zone"</span>
+  (package <span style="color: #79a8ff;">"tzdata"</span>)
+  (ensure-success (run <span style="color: #79a8ff;">"echo America/New_York &gt; /etc/timezone"</span>))
+  (ensure-success (run <span style="color: #79a8ff;">"dpkg-reconfigure -f noninteractive tzdata"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf28fb95" class="outline-3">
-<h3 id="orgf28fb95"><span class="section-number-3">4.7</span> Dotfiles</h3>
-<div class="outline-text-3" id="text-4-7">
+<div id="outline-container-orgdd62dda" class="outline-3">
+<h3 id="orgdd62dda"><span class="section-number-3">3.7</span> Dotfiles</h3>
+<div class="outline-text-3" id="text-3-7">
 <p>
 Our <code>WORKDIR</code> is <code>/root</code>, so we don't have to <code>cd</code> anywhere.
 </p>
 </div>
 
-<div id="outline-container-org42f2553" class="outline-4">
-<h4 id="org42f2553"><span class="section-number-4">4.7.1</span> Install traditional dotfiles</h4>
-<div class="outline-text-4" id="text-4-7-1">
+<div id="outline-container-orge010f06" class="outline-4">
+<h4 id="orge010f06"><span class="section-number-4">3.7.1</span> Install traditional dotfiles</h4>
+<div class="outline-text-4" id="text-3-7-1">
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"installing dotfiles"</span>
-  (ensure-success (run <span style="color: #8b2252;">"mkdir .ssh &amp;&amp; chmod 700 .ssh &amp;&amp; git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare &amp;&amp; git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' &amp;&amp; git --git-dir=/root/.dotfiles.git fetch &amp;&amp; git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master &amp;&amp; git --git-dir=/root/.dotfiles.git --work-tree=/root checkout &amp;&amp; ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts &amp;&amp; zsh ~/.scripts/hooks/dotfiles.install &amp;&amp; git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git &amp;&amp; rm -rf ~/.ssh"</span>)))
+(block <span style="color: #79a8ff;">"installing dotfiles"</span>
+  (ensure-success (run <span style="color: #79a8ff;">"mkdir .ssh &amp;&amp; chmod 700 .ssh &amp;&amp; git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare &amp;&amp; git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' &amp;&amp; git --git-dir=/root/.dotfiles.git fetch &amp;&amp; git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master &amp;&amp; git --git-dir=/root/.dotfiles.git --work-tree=/root checkout &amp;&amp; ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts &amp;&amp; zsh ~/.scripts/hooks/dotfiles.install &amp;&amp; git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git &amp;&amp; rm -rf ~/.ssh"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8b97e9e" class="outline-4">
-<h4 id="org8b97e9e"><span class="section-number-4">4.7.2</span> Install literate dotfiles</h4>
-<div class="outline-text-4" id="text-4-7-2">
+<div id="outline-container-orgcf818d4" class="outline-4">
+<h4 id="orgcf818d4"><span class="section-number-4">3.7.2</span> Install literate dotfiles</h4>
+<div class="outline-text-4" id="text-3-7-2">
 <p>
 This has to be on one line, otherwise it gets exported with <code>emacs -Q --batch --eval</code> and <code>**/*.org</code> repeated for each line of the Emacs lisp code here.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp" id="orgc5fc94a">(<span style="color: #a020f0;">progn</span> (<span style="color: #a020f0;">dolist</span> (file command-line-args-left) (<span style="color: #a020f0;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
+<pre class="src src-elisp" id="org1c85e08">(<span style="color: #b6a0ff; font-weight: bold;">progn</span> (<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (file command-line-args-left) (<span style="color: #b6a0ff; font-weight: bold;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(block <span style="color: #8b2252;">"tangling literate dotfiles"</span>
-  (with-sh-dir <span style="color: #8b2252;">"/root/org"</span>
-    (ensure-success (run <span style="color: #8b2252;">"emacs -Q --batch --eval '&lt;&lt;tangle-files&gt;&gt;' **/*.org"</span>))))
+<pre class="src src-clojure">(block <span style="color: #79a8ff;">"tangling literate dotfiles"</span>
+  (with-sh-dir <span style="color: #79a8ff;">"/root/org"</span>
+    (ensure-success (run <span style="color: #79a8ff;">"emacs -Q --batch --eval '&lt;&lt;tangle-files&gt;&gt;' **/*.org"</span>))))
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4052791" class="outline-3">
-<h3 id="org4052791"><span class="section-number-3">4.8</span> Clojure CLI</h3>
-<div class="outline-text-3" id="text-4-8">
-<div class="org-src-container">
-<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
-
-(block <span style="color: #8b2252;">"installing Clojure CLI"</span>
-  (<span style="color: #a020f0;">let</span> [script-name <span style="color: #8b2252;">"linux-install.sh"</span>]
-    (ensure-success (run (str <span style="color: #8b2252;">"curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o "</span> script-name)))
-    (ensure-success (run (str <span style="color: #8b2252;">"chmod +x "</span> script-name)))
-    (ensure-success (run (str <span style="color: #8b2252;">"./"</span> script-name)))))
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgf0c1775" class="outline-3">
-<h3 id="orgf0c1775"><span class="section-number-3">4.9</span> GH CLI</h3>
-<div class="outline-text-3" id="text-4-9">
+<div id="outline-container-org8b7f861" class="outline-3">
+<h3 id="org8b7f861"><span class="section-number-3">3.8</span> Clojure CLI</h3>
+<div class="outline-text-3" id="text-3-8">
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"installing GitHub CLI"</span>
-  (ensure-success (run <span style="color: #8b2252;">"curl curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg"</span>))
-  (ensure-success (run <span style="color: #8b2252;">"echo </span><span style="color: #8b2252; font-weight: bold;">\"</span><span style="color: #8b2252;">deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main</span><span style="color: #8b2252; font-weight: bold;">\"</span><span style="color: #8b2252;"> | tee /etc/apt/sources.list.d/github-cli.list"</span>))
-  (ensure-success (run <span style="color: #8b2252;">"apt-get update"</span>))
-  (package <span style="color: #8b2252;">"gh"</span>))
+(block <span style="color: #79a8ff;">"installing Clojure CLI"</span>
+  (<span style="color: #b6a0ff; font-weight: bold;">let</span> [script-name <span style="color: #79a8ff;">"linux-install.sh"</span>]
+    (ensure-success (run (str <span style="color: #79a8ff;">"curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o "</span> script-name)))
+    (ensure-success (run (str <span style="color: #79a8ff;">"chmod +x "</span> script-name)))
+    (ensure-success (run (str <span style="color: #79a8ff;">"./"</span> script-name)))))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgca693c6" class="outline-3">
-<h3 id="orgca693c6"><span class="section-number-3">4.10</span> Make ZSH the default shell</h3>
-<div class="outline-text-3" id="text-4-10">
+<div id="outline-container-org0bc8fde" class="outline-3">
+<h3 id="org0bc8fde"><span class="section-number-3">3.9</span> GH CLI</h3>
+<div class="outline-text-3" id="text-3-9">
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"making ZSH the default shell"</span>
-  (ensure-success (run <span style="color: #8b2252;">"chsh -s $(which zsh)"</span>)))
+(block <span style="color: #79a8ff;">"installing GitHub CLI"</span>
+  (ensure-success (run <span style="color: #79a8ff;">"curl curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg"</span>))
+  (ensure-success (run <span style="color: #79a8ff;">"echo </span><span style="color: #79a8ff; font-weight: bold;">\"</span><span style="color: #79a8ff;">deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main</span><span style="color: #79a8ff; font-weight: bold;">\"</span><span style="color: #79a8ff;"> | tee /etc/apt/sources.list.d/github-cli.list"</span>))
+  (ensure-success (run <span style="color: #79a8ff;">"apt-get update"</span>))
+  (package <span style="color: #79a8ff;">"gh"</span>))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org09e127d" class="outline-3">
-<h3 id="org09e127d"><span class="section-number-3">4.11</span> Set up SSH and change root password</h3>
-<div class="outline-text-3" id="text-4-11">
+<div id="outline-container-orgff6f3ba" class="outline-3">
+<h3 id="orgff6f3ba"><span class="section-number-3">3.10</span> Make ZSH the default shell</h3>
+<div class="outline-text-3" id="text-3-10">
 <div class="org-src-container">
 <pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
 
-(block <span style="color: #8b2252;">"setting up OpenSSH server and securing the installation"</span>
-  (package <span style="color: #8b2252;">"openssh-server"</span> <span style="color: #8b2252;">"mosh"</span>)
-  (ensure-success (run <span style="color: #8b2252;">"mkdir /run/sshd"</span>))
-  (ensure-success (run <span style="color: #8b2252;">"echo 'PasswordAuthentication no' &gt;&gt; /etc/ssh/sshd_config"</span>))
-  (ensure-success (run <span style="color: #8b2252;">"echo </span><span style="color: #8b2252; font-weight: bold;">\"</span><span style="color: #8b2252;">root:$(tr -dc A-Za-z0-9 &lt;/dev/urandom | head -c 32)</span><span style="color: #8b2252; font-weight: bold;">\"</span><span style="color: #8b2252;"> | chpasswd"</span>)))
+(block <span style="color: #79a8ff;">"making ZSH the default shell"</span>
+  (ensure-success (run <span style="color: #79a8ff;">"chsh -s $(which zsh)"</span>)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org09f0009" class="outline-3">
+<h3 id="org09f0009"><span class="section-number-3">3.11</span> Set up SSH and change root password</h3>
+<div class="outline-text-3" id="text-3-11">
+<div class="org-src-container">
+<pre class="src src-clojure">&lt;&lt;bb-helpers&gt;&gt;
+
+(block <span style="color: #79a8ff;">"setting up OpenSSH server and securing the installation"</span>
+  (package <span style="color: #79a8ff;">"openssh-server"</span> <span style="color: #79a8ff;">"mosh"</span>)
+  (ensure-success (run <span style="color: #79a8ff;">"mkdir /run/sshd"</span>))
+  (ensure-success (run <span style="color: #79a8ff;">"echo 'PasswordAuthentication no' &gt;&gt; /etc/ssh/sshd_config"</span>))
+  (ensure-success (run <span style="color: #79a8ff;">"echo </span><span style="color: #79a8ff; font-weight: bold;">\"</span><span style="color: #79a8ff;">root:$(tr -dc A-Za-z0-9 &lt;/dev/urandom | head -c 32)</span><span style="color: #79a8ff; font-weight: bold;">\"</span><span style="color: #79a8ff;"> | chpasswd"</span>)))
 </pre>
 </div>
 </div>

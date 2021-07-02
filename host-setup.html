@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-07-02 Fri 20:50 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="root" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org84a1869">1. Dependencies</a></li>
+<li><a href="#orgd23f646">2. Usage</a></li>
+<li><a href="#org01ece66">3. VPS setup</a>
+<ul>
+<li><a href="#org3cfefca">3.1. Set up for literate DevOps</a>
+<ul>
+<li><a href="#org3be3359">3.1.1. Install Emacs</a></li>
+<li><a href="#org1040f8a">3.1.2. Install Dotfiles</a></li>
+<li><a href="#org9024284">3.1.3. Download this README</a></li>
+</ul>
+</li>
+<li><a href="#org572fd27">3.2. Set up AWS EC2</a></li>
+<li><a href="#orgb120233">3.3. Set up using literate DevOps</a>
+<ul>
+<li><a href="#org39ed20f">3.3.1. Troubleshooting: <code>No org-babel-execute function for sh!</code></a></li>
+<li><a href="#orgcad789c">3.3.2. Swap</a></li>
+<li><a href="#org0771c4e">3.3.3. Install</a>
+<ul>
+<li><a href="#org4711592">3.3.3.1. Basic tools</a></li>
+<li><a href="#orgbf93820">3.3.3.2. Docker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgadd08a1">3.4. DPM</a></li>
+</ul>
+</li>
+<li><a href="#orgefc5473">4. Links</a>
+<ul>
+<li><a href="#org9c367a6">4.1. Nix</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+See <a href="#org01ece66">3</a> for setting up the host machine.
+</p>
+
+<div id="outline-container-org84a1869" class="outline-2">
+<h2 id="org84a1869"><span class="section-number-2">1</span> Dependencies</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Ruby is require by the <code>bin/build</code> script.</li>
+<li>My dotfiles automatically source <code>.profile.zsh</code>, in case anyone ever forks this, you will need to source the file manually.</li>
+<li>The <code>push</code> command requires Docker authentication (<code>docker login</code>).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd23f646" class="outline-2">
+<h2 id="orgd23f646"><span class="section-number-2">2</span> Usage</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-shell">build &amp;&amp; verify &amp;&amp; push
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org01ece66" class="outline-2">
+<h2 id="org01ece66"><span class="section-number-2">3</span> VPS setup</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org3cfefca" class="outline-3">
+<h3 id="org3cfefca"><span class="section-number-3">3.1</span> Set up for literate DevOps</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-org3be3359" class="outline-4">
+<h4 id="org3be3359"><span class="section-number-4">3.1.1</span> Install Emacs</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-shell">apt update &amp;&amp; apt upgrade -y &amp;&amp; apt install emacs-nox
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1040f8a" class="outline-4">
+<h4 id="org1040f8a"><span class="section-number-4">3.1.2</span> Install Dotfiles</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<div class="org-src-container">
+<pre class="src src-shell">git clone --bare https://github.com/jakub-stastny/dotfiles.git ~/.dotfiles.git
+
+git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git config remote.origin.fetch <span style="color: #848ea9;">"+refs/heads/*:refs/remotes/origin/*"</span>
+git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git fetch
+git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git branch --set-upstream-to=origin/master master
+git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git --work-tree=$<span style="color: #e69f00; font-weight: bold;">HOME</span> checkout
+ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
+
+~/.scripts/hooks/dotfiles.install
+git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9024284" class="outline-4">
+<h4 id="org9024284"><span class="section-number-4">3.1.3</span> Download this README</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<div class="org-src-container">
+<pre class="src src-shell">wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -O install.org
+emacs install.org
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org572fd27" class="outline-3">
+<h3 id="org572fd27"><span class="section-number-3">3.2</span> Set up AWS EC2</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<a href="https://blink.sh/docs/cloud-providers/aws">https://blink.sh/docs/cloud-providers/aws</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb120233" class="outline-3">
+<h3 id="orgb120233"><span class="section-number-3">3.3</span> Set up using literate DevOps</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+From here on you can run blocks of code from this very README using <a href="http://howardism.org/Technical/Emacs/literate-devops.html">Literate DevOps</a>.
+</p>
+
+<p>
+Eval code using <code>C-c C-c</code>.
+</p>
+</div>
+
+<div id="outline-container-org39ed20f" class="outline-4">
+<h4 id="org39ed20f"><span class="section-number-4">3.3.1</span> Troubleshooting: <code>No org-babel-execute function for sh!</code></h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+Eval this in <code>*scratch*</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcad789c" class="outline-4">
+<h4 id="orgcad789c"><span class="section-number-4">3.3.2</span> Swap</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+As DigitalOcean runs SSD's, there's no swap file enabled by default. <a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-%E2%80%93-making-the-swap-file-permanent">DigitalOcean community post</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #0072b2;">export</span> <span style="color: #e69f00; font-weight: bold;">LC_ALL</span>=en_US.UTF-8
+<span style="color: #0072b2;">export</span> <span style="color: #e69f00; font-weight: bold;">LANG</span>=en_US.UTF-8
+<span style="color: #0072b2;">export</span> <span style="color: #e69f00; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive
+
+<span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Swap</span>
+fallocate -l 2.5G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+swapon --show <span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Make sure it reports swap.</span>
+free -m <span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Make sure it reports swap.</span>
+
+<span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Persistent swap</span>
+<span style="color: #0072b2;">echo</span> <span style="color: #848ea9;">'/swapfile none swap sw 0 0'</span> | tee -a /etc/fstab
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0771c4e" class="outline-4">
+<h4 id="org0771c4e"><span class="section-number-4">3.3.3</span> Install</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+Already installed: git tmux htop
+</p>
+</div>
+
+<div id="outline-container-org4711592" class="outline-5">
+<h5 id="org4711592"><span class="section-number-5">3.3.3.1</span> Basic tools</h5>
+<div class="outline-text-5" id="text-3-3-3-1">
+<div class="org-src-container">
+<pre class="src src-shell">apt install -y mosh zsh neovim build-essential silversearcher-ag
+apt remove -y vim nano
+apt autoremove --yes
+
+chsh -s $(<span style="color: #0072b2;">which</span> zsh)
+
+cp /usr/share/zoneinfo/America/New_York /etc/localtime
+cat /dev/zero | ssh-keygen -q -N <span style="color: #848ea9;">""</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbf93820" class="outline-5">
+<h5 id="orgbf93820"><span class="section-number-5">3.3.3.2</span> Docker</h5>
+<div class="outline-text-5" id="text-3-3-3-2">
+<p>
+<a href="https://docs.docker.com/engine/install/ubuntu">Docker Ubuntu installation guide</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+add-apt-repository    <span style="color: #848ea9;">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
+<span style="color: #848ea9;">   $(lsb_release -cs) \</span>
+<span style="color: #848ea9;">   stable"</span>
+apt-get update &amp;&amp; apt upgrade -y
+apt-get install -y docker-ce docker-ce-cli containerd.io
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgadd08a1" class="outline-3">
+<h3 id="orgadd08a1"><span class="section-number-3">3.4</span> DPM</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-shell">docker install jakubstastny/docker-project-manager
+mkdir projects
+docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager <span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Dry run only to download it.</span>
+
+<span style="color: #0072b2;">echo</span> <span style="color: #848ea9;">"  Add your new key to https://github.com/settings/keys and reboot\n\n"</span>
+cat ~/.ssh/id_rsa.pub
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgefc5473" class="outline-2">
+<h2 id="orgefc5473"><span class="section-number-2">4</span> Links</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org9c367a6" class="outline-3">
+<h3 id="org9c367a6"><span class="section-number-3">4.1</span> <a href="https://nixos.org">Nix</a></h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Nix is a tool that takes a unique approach to package management and system configuration. Learn how to make reproducible, declarative and reliable systems.
+</p>
+
+<p>
+It looks very interesting. I don't need it at this moment, but let's keep it here as a reference.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: root</p>
+<p class="date">Created: 2021-07-02 Fri 20:50</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
