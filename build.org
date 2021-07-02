@@ -61,7 +61,7 @@ Please note, that this workflow can be automated using [[https://github.com/jaku
 
 I use it with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which automates the usual project workflow: creating a project, spinning off a Docker image with that environment, creating a new pair of SSH keys and setting up port sharing. The resulting container runs OpenSSH server and can be SSH'd into directly, without the need to connect to the host machine first.
 
-#+begin_src ditaa :file g.png :cmdline --round-corners
+#+begin_src ditaa :file img/graph.png :cmdline --round-corners
   +---------+
   | cBLU    |
   |         |
