@@ -17,10 +17,10 @@ We can manage these images either manually, or with [[https://github.com/jakub-s
 
 * Usage
 
-First, let's create a new directory for our project. For instance:
+First, let's create a new directory for our project. Let's call it =rpm=:
 
 #+begin_src shell
-  mkdir rental-property-management && cd rental-property-management
+  mkdir rpm && cd rpm
 #+end_src
 
 ** Dockerfile
@@ -36,7 +36,7 @@ FROM jakubstastny/dev:latest
 First, we need to copy our public SSH key into =.ssh/authorized_keys=:
 
 #+begin_src shell
-  mkdir .ssh && echo "<your-public-ssh-key>" > .ssh/authorized_keys
+  mkdir .ssh && chmod 700 .ssh && echo "<your-public-ssh-key>" > .ssh/authorized_keys
 #+end_src
 
 This is important, so you can SSH into the running container.
@@ -44,7 +44,7 @@ This is important, so you can SSH into the running container.
 Next, let's generate a new pair of SSH keys for the project:
 
 #+begin_src shell
-  mkdir .ssh && ssh-keygen -t rsa -f .ssh/id_rsa
+  mkdir .ssh && ssh-keygen -t rsa -C rpm -f .ssh/id_rsa
 #+end_src
 
 You will need to add the generated /public/ SSH key into your GitHub settings, in order to be able to push to your repositories (and clone any private repository that you might need).
@@ -55,7 +55,7 @@ Now let's copy the key pair to the image:
 COPY .ssh /root/.ssh
 #+end_src
 
-** Clone your repo and set up your projects
+*** Clone your repo and set up your projects
 
 This is really up to you. You might use something like this:
 
@@ -63,7 +63,7 @@ This is really up to you. You might use something like this:
 RUN ssh-keyscan -H github.com >> ~/.ssh/known_hosts && dotfiles pull -r && git clone git@github.com:jakub-stastny/dev.git
 #+end_src
 
-** SSHD port
+*** SSHD port
 
 For your first image, you don't have to worry about this. The default =SSHD_PORT= is =2222=.
 
@@ -72,6 +72,16 @@ However if you want to run multiple of these images in paralel, you'll need to o
 #+begin_src dockerfile
 ENV SSHD_PORT=2223
 #+end_src
+
+** Building the image
+
+#+begin_src shell
+  docker build . -t rpm-dev-env
+  docker create -it -v /var/run/docker.sock:/var/run/docker.sock -v $PWD/.history:/root/.history --network host --name rpm-dev-env --hostname rpm rpm-dev-env
+  docker start rpm-dev-env
+#+end_src
+
+** Connecting
 
 Now you're good to go. Assuming that you have the container on a VPS like I do, you can connect directly to it by SSH without having to go through the host machine first:
 
