@@ -73,11 +73,43 @@ However if you want to run multiple of these images in paralel, you'll need to o
 ENV SSHD_PORT=2223
 #+end_src
 
-** Building the image
+** Creating the image
+
+First, let's build the image:
 
 #+begin_src shell
   docker build . -t rpm-dev-env
+#+end_src
+
+As you can see, the naming convention I use is =<project-name>-dev-env=. It's not necessary, but it's a useful way of distinguishing the development environments from other Docker images.
+
+Now let's create the image:
+
+#+begin_src shell
   docker create -it -v /var/run/docker.sock:/var/run/docker.sock -v $PWD/.history:/root/.history --network host --name rpm-dev-env --hostname rpm rpm-dev-env
+#+end_src
+
+Let's break down the most important parts:
+
+*** Docker-in-Docker
+
+Proxying =/var/run/docker.sock= from the host to the development environment via =-v /var/run/docker.sock:/var/run/docker.sock= is a way of doing Docker-in-Docker, also known as DinD.
+
+It's not the most secure way, probably using =--privileged= flag would be better, but since I use my development environment as a stateless, ephemeral thing, I'm not really concerned with security.
+
+Also note that I've been using this approach for many years: I've seen there are better ways of doing DinD these days, but I haven't had the need to review them so far.
+
+*** Proxy shell history
+
+Unlike the SSH keys, which we simply =COPY= to the image, shell history keeps changing and we don't want to loose the changes when we rebuild the image.
+
+That's why we proxy it from the host machine as a volume using =-v $PWD/.history:/root/.history=. If your shell history is not named =.history=, replace the file name with the appropriate one.
+
+*** Host networking
+
+Host networking means that we can forget about exposing ports manually: if you start a server on port =8000= in your development environment, it will be available on port =8000= on the host machine automatically. This is what =--network host= is for.
+
+#+begin_src shell
   docker start rpm-dev-env
 #+end_src
 
@@ -89,4 +121,4 @@ Now you're good to go. Assuming that you have the container on a VPS like I do, 
   ssh root@ip:2222
 #+end_src
 
-And that's about it. There is [[https://jakub-stastny.github.io/dev/][development documentation]] in case you want to fork and tweak for yourself. Enjoy!
+And that's about it. There is [[https://jakub-stastny.github.io/dev/][development documentation]] in case you want to fork and tweak for yourself and also the [[https://jakub-stastny.github.io/dev/host-setup][host setup]]. Enjoy!
