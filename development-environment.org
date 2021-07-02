@@ -1,5 +1,4 @@
 #+TITLE: Development environment
-#+SETUPFILE: ../setupfile.org
 
 * Installation
 
@@ -18,13 +17,12 @@ Note that we need major modes for all the languages of the code blocks in our co
 
 
 * Configuration
-  :PROPERTIES:
-  :project-root: ~/dev
-  :END:
-
 In Emacs press =C-c C-v t= to tangle all the code blocks in this file.
 
 ** Emacs per-project configuration
+   :PROPERTIES:
+   :header-args: :tangle .env/emacs.el :mkdirp yes :noweb yes
+   :END:
 
 We want to keep environment-specific configuration out of our =~/.emacs=.
 
@@ -32,11 +30,32 @@ Dotfiles: [[https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environme
 
 Dichromacy doesn't look great in Emacs, but it exports well.
 
-#+begin_src emacs-lisp :tangle .env/emacs.el :mkdirp yes
-  (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp"))
+#+begin_src emacs-lisp
+  (message "X")
+  (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp/autoload"))
 
   (load "literate-programming")
   (load-theme 'dichromacy)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t)))
+#+end_src
+
+*** Autoloaded files
+
+https://www.emacswiki.org/emacs/LoadingLispFiles
+
+This allows us to decouple for instance the [[./publishing.org::#publishing-script][publishing helper]] from the development setup file.
+
+#+begin_src emacs-lisp
+  (message "X")
+  (setq elisp-autoload-dir (concat (file-name-directory (buffer-file-name)) "elisp/autoload"))
+  (message "X")
+  (require 'load-directory)
+  (message "Y")
+  (load-directory elisp-autoload-dir)
+  (message "Y")
 #+end_src
 
 ** ZSH per-project configuration
