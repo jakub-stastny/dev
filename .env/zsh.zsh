@@ -9,9 +9,9 @@ serve() {
 }
 
 commit() {
-  mv dev/build.html dev/index.html
-  mv dev/README.html dev/usage.html
-  git add dev
+  mv docs/build.html docs/index.html
+  mv docs/README.html docs/usage.html
+  git add docs
   git commit -m "GitHub pages regenerated"
 }
 
