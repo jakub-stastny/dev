@@ -2,6 +2,19 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
 #+TITLE: My development environment image
 
+#+begin_src ditaa :file diagram.png :command-line --round-corners
+  +---------+
+  | cBLU    |
+  |         |
+  |    +----+
+  |    |cPNK|
+  |    |    |
+  +----+----+
+#+end_src
+
+#+RESULTS:
+[[file:diagram.png]]
+
 * About
 
 #+name: badge

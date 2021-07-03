@@ -9,16 +9,6 @@
 
 My development environment with my favourite tools and dotfiles packed as a Docker image.
 
-#+begin_src ditaa :file diagram.png :command-line --round-corners
-  +---------+
-  | cBLU    |
-  |         |
-  |    +----+
-  |    |cPNK|
-  |    |    |
-  +----+----+
-#+end_src
-
 This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
 
 Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
