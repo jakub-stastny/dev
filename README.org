@@ -3,13 +3,19 @@
 
 * About
 
-# We show this file only on GH. GH happens to show the SVG correctly,
+# Currrently we show this file only on GH. GH happens to show the SVG correctly,
 # so there's no need for the export block we use for the Orgmode export.
 [[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
 
 My development environment with my favourite tools and dotfiles packed as a Docker image.
 
-It contains:
+This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
+
+Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
+
+We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created *specifically for this purpose*.
+
+* Software
 
 - Development version of *Emacs 28* with native compilation.
 - *NeoVim* 0.4.3.
@@ -18,12 +24,6 @@ It contains:
 - *GH CLI* 1.12.0 (2021-06-29).
 - My [[https://github.com/jakub-stastny/dotfiles][dotfiles]].
 - APT sources for Node.js and Yarn.
-
-This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
-
-Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
-
-We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created *specifically for this purpose*.
 
 * My specific use-case
 
