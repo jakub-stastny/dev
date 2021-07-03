@@ -2,3 +2,4 @@
 /*.log
 /Dockerfile
 /scripts
+/.env
