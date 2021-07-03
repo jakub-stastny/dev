@@ -32,7 +32,7 @@ That's it! Now let's set up the publisher.
     ("dev/documentation"
       :base-directory "~/dev"
       :base-extension "org"
-      :publishing-directory "~/dev.doc"
+      :publishing-directory "~/dev.doc/docs"
       :recursive t
       :publishing-function org-html-publish-to-html
       :headline-levels 4
@@ -41,7 +41,7 @@ That's it! Now let's set up the publisher.
     ("dev/static"
       :base-directory "~/dev"
       :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\"
-      :publishing-directory "~/dev.doc"
+      :publishing-directory "~/dev.doc/docs"
       :recursive t
       :publishing-function org-publish-attachment)))
 #+end_src
