@@ -9,6 +9,16 @@
 
 My development environment with my favourite tools and dotfiles packed as a Docker image.
 
+It contains:
+
+- Development version of *Emacs 28* with native compilation, fast JSON parser and better redo.
+- *NeoVim* 0.4.3.
+- *Babashka* 0.4.6.
+- *Clojure CLI* 1.10.3.855.
+- *GH CLI* 1.12.0 (2021-06-29).
+- My [[https://github.com/jakub-stastny/dotfiles][dotfiles]].
+- APT sources for Node.js and Yarn.
+
 This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
 
 Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
