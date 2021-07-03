@@ -11,7 +11,7 @@ My development environment with my favourite tools and dotfiles packed as a Dock
 
 It contains:
 
-- Development version of *Emacs 28* with native compilation, fast JSON parser and better redo.
+- Development version of *Emacs 28* with native compilation.
 - *NeoVim* 0.4.3.
 - *Babashka* 0.4.6.
 - *Clojure CLI* 1.10.3.855.
