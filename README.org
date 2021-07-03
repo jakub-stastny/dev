@@ -1,0 +1,158 @@
+#+OPTIONS: toc:nil html-postamble:nil tex:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
+
+* About
+
+# Currrently we show this file only on GH. GH happens to show the SVG correctly,
+# so there's no need for the export block we use for the Orgmode export.
+[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
+
+My development environment with my favourite tools and dotfiles packed as a Docker image.
+
+This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
+
+Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
+
+We can manage these images either manually, or with [[https://github.com/jakub-stastny/docker-project-manager][docker-project-manager]], which I created *specifically for this purpose*.
+
+* Software
+
+- Development version of *Emacs 28* with native compilation.
+- *NeoVim* 0.4.3.
+- *Babashka* 0.4.6.
+- *Clojure CLI* 1.10.3.855.
+- *GH CLI* 1.12.0 (2021-06-29).
+- My [[https://github.com/jakub-stastny/dotfiles][dotfiles]].
+- APT sources for Node.js and Yarn.
+
+* My specific use-case
+
+I use iPad Pro as my main work machine and I work on my VPS, since Linux really is what I want as my development environment.
+
+For that reason, my image is based on the OpenSSH server, and I can connect to my development environments directly, without having to touch the host machine at all.
+
+However would you be using this locally, you're better of /not using SSH/, but rather =docker exec -it zsh= or whatever your favourite shell is.
+
+Why? Because this way your =ENV=, =WORKDIR= and possibly other settings from your =Dockerfile= will be respected.
+
+By that I mean that if I put =ENV AWS_DEV_SECRET=1234567890= into my =Dockerfile=, if I connect with =docker exec=, the variable =AWS_DEV_SECRET= will be defined. However if I connect with the OpenSSH server, the variable is not going to be defined.
+
+/The rest of the documentation assumes your workflow is similar. Given how simple this is, I'm sure you can figure out for yourself which way is best for your usecase and adjust the [[https://jakub-stastny.github.io/dev/][build scripts]] appropriately./
+
+* Usage
+
+First, let's create a new directory for our project. Let's call it =rpm=:
+
+#+begin_src shell
+  mkdir rpm && cd rpm
+#+end_src
+
+** Dockerfile
+
+Next, let's start with the =Dockerfile=. Obviously we use the =dev= image as our base:
+
+#+begin_src dockerfile
+FROM jakubstastny/dev:latest
+#+end_src
+
+*** SSH keys
+
+First, we need to copy our public SSH key into =.ssh/authorized_keys=:
+
+#+begin_src shell
+  mkdir .ssh && chmod 700 .ssh && echo "<your-public-ssh-key>" > .ssh/authorized_keys
+#+end_src
+
+This is important, so you can SSH into the running container.
+
+Next, let's generate a new pair of SSH keys for the project:
+
+#+begin_src shell
+  mkdir .ssh && ssh-keygen -t rsa -C rpm -f .ssh/id_rsa
+#+end_src
+
+You will need to add the generated /public/ SSH key into your GitHub settings, in order to be able to push to your repositories (and clone any private repository that you might need).
+
+Now let's copy the key pair to the image:
+
+#+begin_src dockerfile
+COPY .ssh /root/.ssh
+#+end_src
+
+*** Clone your repo and set up your projects
+
+This is really up to you. You might use something like this:
+
+#+begin_src dockerfile
+RUN ssh-keyscan -H github.com >> ~/.ssh/known_hosts && dotfiles pull -r && git clone git@github.com:jakub-stastny/dev.git
+#+end_src
+
+*** SSHD port
+
+For your first image, you don't have to worry about this. The default =SSHD_PORT= is =2222=.
+
+However if you want to run multiple of these images in paralel, you'll need to override the =SSHD_PORT=, so that it's unique like so:
+
+#+begin_src dockerfile
+ENV SSHD_PORT=2223
+#+end_src
+
+** Creating the image
+
+First, let's build the image:
+
+#+begin_src shell
+  docker build . -t rpm-dev-env
+#+end_src
+
+As you can see, the naming convention I use is =<project-name>-dev-env=. It's not necessary, but it's a useful way of distinguishing the development environments from other Docker images.
+
+Now let's create the image:
+
+#+begin_src shell
+  docker create -it -v /var/run/docker.sock:/var/run/docker.sock -v $PWD/.history:/root/.history --network host --name rpm-dev-env --hostname rpm rpm-dev-env
+#+end_src
+
+Let's break down the most important parts:
+
+*** Docker-in-Docker
+
+Proxying =/var/run/docker.sock= from the host to the development environment via =-v /var/run/docker.sock:/var/run/docker.sock= is a way of doing Docker-in-Docker, also known as DinD.
+
+It's not the most secure way, probably using =--privileged= flag would be better, but since I use my development environment as a stateless, ephemeral thing, I'm not really concerned with security.
+
+Also note that I've been using this approach for many years: I've seen there are better ways of doing DinD these days, but I haven't had the need to review them so far.
+
+*** Proxying shell history
+
+Unlike the SSH keys, which we simply =COPY= to the image, shell history keeps changing and we don't want to loose the changes when we rebuild the image.
+
+That's why we proxy it from the host machine as a volume using =-v $PWD/.history:/root/.history=. If your shell history is not named =.history=, replace the file name with the appropriate one.
+
+*** Host networking
+
+Host networking means that we can forget about exposing ports manually: if you start a server on port =8000= in your development environment, it will be available on port =8000= on the host machine automatically. This is what =--network host= is for.
+
+** Starting the image
+
+#+begin_src shell
+  docker start rpm-dev-env
+#+end_src
+
+** Connecting to the container via SSH
+
+Now you're good to go. Assuming that you have the container on a VPS like I do, you can connect directly to it by SSH without having to go through the host machine first:
+
+#+begin_src shell
+  ssh root@ip:2222
+#+end_src
+
+As a side note, I highly recommend using [[https://mosh.org][Mosh]] instead of SSH. You won't even notice you're working on a remote machine, that's how fast it is. And it always reconnects, even if you switch network.
+
+* Development
+
+- The development branch is =literate.dev=.
+- The stable branch is =literate.stable=.
+- [[https://jakub-stastny.github.io/dev/][Development documentation]] is generated from =literate.stable=.
+
+Enjoy!
