@@ -149,6 +149,10 @@ Now you're good to go. Assuming that you have the container on a VPS like I do, 
 
 As a side note, I highly recommend using [[https://mosh.org][Mosh]] instead of SSH. You won't even notice you're working on a remote machine, that's how fast it is. And it always reconnects, even if you switch network.
 
-And that's about it. There is [[https://jakub-stastny.github.io/dev/][development documentation]] in case you want to fork and tweak for yourself and also the [[https://jakub-stastny.github.io/dev/host-setup][host setup]]. Also connection over SSH is only one option. Read the [[https://jakub-stastny.github.io/dev/design-decisions][design decisions]] chapter if you're interested in knowing more.
+* Development
+
+- The development branch is =literate.dev=.
+- The stable branch is =literate.stable=.
+- [[https://jakub-stastny.github.io/dev/][Development documentation]] is generated from =literate.stable=.
 
 Enjoy!
