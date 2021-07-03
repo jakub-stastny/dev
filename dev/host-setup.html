@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-02 Fri 20:50 -->
+<!-- 2021-07-03 Sat 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -306,14 +306,14 @@ See <a href="#org01ece66">3</a> for setting up the host machine.
 <div class="org-src-container">
 <pre class="src src-shell">git clone --bare https://github.com/jakub-stastny/dotfiles.git ~/.dotfiles.git
 
-git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git config remote.origin.fetch <span style="color: #848ea9;">"+refs/heads/*:refs/remotes/origin/*"</span>
-git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git fetch
-git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git branch --set-upstream-to=origin/master master
-git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git --work-tree=$<span style="color: #e69f00; font-weight: bold;">HOME</span> checkout
+git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git config remote.origin.fetch <span style="color: #79a8ff;">"+refs/heads/*:refs/remotes/origin/*"</span>
+git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git fetch
+git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git branch --set-upstream-to=origin/master master
+git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git --work-tree=$<span style="color: #00d3d0; font-weight: bold;">HOME</span> checkout
 ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
 
 ~/.scripts/hooks/dotfiles.install
-git --git-dir=$<span style="color: #e69f00; font-weight: bold;">HOME</span>/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
+git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
 </pre>
 </div>
 </div>
@@ -374,20 +374,20 @@ As DigitalOcean runs SSD's, there's no swap file enabled by default. <a href="ht
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0072b2;">export</span> <span style="color: #e69f00; font-weight: bold;">LC_ALL</span>=en_US.UTF-8
-<span style="color: #0072b2;">export</span> <span style="color: #e69f00; font-weight: bold;">LANG</span>=en_US.UTF-8
-<span style="color: #0072b2;">export</span> <span style="color: #e69f00; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive
+<pre class="src src-shell"><span style="color: #f78fe7;">export</span> <span style="color: #00d3d0; font-weight: bold;">LC_ALL</span>=en_US.UTF-8
+<span style="color: #f78fe7;">export</span> <span style="color: #00d3d0; font-weight: bold;">LANG</span>=en_US.UTF-8
+<span style="color: #f78fe7;">export</span> <span style="color: #00d3d0; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive
 
-<span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Swap</span>
+<span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Swap</span>
 fallocate -l 2.5G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
-swapon --show <span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Make sure it reports swap.</span>
-free -m <span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Make sure it reports swap.</span>
+swapon --show <span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Make sure it reports swap.</span>
+free -m <span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Make sure it reports swap.</span>
 
-<span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Persistent swap</span>
-<span style="color: #0072b2;">echo</span> <span style="color: #848ea9;">'/swapfile none swap sw 0 0'</span> | tee -a /etc/fstab
+<span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Persistent swap</span>
+<span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">'/swapfile none swap sw 0 0'</span> | tee -a /etc/fstab
 </pre>
 </div>
 </div>
@@ -409,10 +409,10 @@ Already installed: git tmux htop
 apt remove -y vim nano
 apt autoremove --yes
 
-chsh -s $(<span style="color: #0072b2;">which</span> zsh)
+chsh -s $(<span style="color: #f78fe7;">which</span> zsh)
 
 cp /usr/share/zoneinfo/America/New_York /etc/localtime
-cat /dev/zero | ssh-keygen -q -N <span style="color: #848ea9;">""</span>
+cat /dev/zero | ssh-keygen -q -N <span style="color: #79a8ff;">""</span>
 </pre>
 </div>
 </div>
@@ -429,9 +429,9 @@ cat /dev/zero | ssh-keygen -q -N <span style="color: #848ea9;">""</span>
 <div class="org-src-container">
 <pre class="src src-shell">apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-add-apt-repository    <span style="color: #848ea9;">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
-<span style="color: #848ea9;">   $(lsb_release -cs) \</span>
-<span style="color: #848ea9;">   stable"</span>
+add-apt-repository    <span style="color: #79a8ff;">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
+<span style="color: #79a8ff;">   $(lsb_release -cs) \</span>
+<span style="color: #79a8ff;">   stable"</span>
 apt-get update &amp;&amp; apt upgrade -y
 apt-get install -y docker-ce docker-ce-cli containerd.io
 </pre>
@@ -447,9 +447,9 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 <div class="org-src-container">
 <pre class="src src-shell">docker install jakubstastny/docker-project-manager
 mkdir projects
-docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager <span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">Dry run only to download it.</span>
+docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager <span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Dry run only to download it.</span>
 
-<span style="color: #0072b2;">echo</span> <span style="color: #848ea9;">"  Add your new key to https://github.com/settings/keys and reboot\n\n"</span>
+<span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">"  Add your new key to https://github.com/settings/keys and reboot\n\n"</span>
 cat ~/.ssh/id_rsa.pub
 </pre>
 </div>
@@ -477,7 +477,7 @@ It looks very interesting. I don't need it at this moment, but let's keep it her
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: root</p>
-<p class="date">Created: 2021-07-02 Fri 20:50</p>
+<p class="date">Created: 2021-07-03 Sat 12:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

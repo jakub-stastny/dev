@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-07-03 Sat 12:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="root" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles.css"/>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+
+<div id="outline-container-org428d721" class="outline-2">
+<h2 id="org428d721"><span class="section-number-2">1</span> About</h2>
+<div class="outline-text-2" id="text-1">
+
+<div id="org36b0ed5" class="figure">
+<p><a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml"><object type="image/svg+xml" data="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object></a>
+</p>
+</div>
+
+<p>
+My development environment with my favourite tools and dotfiles packed as a Docker image.
+</p>
+
+<p>
+This way I can use it as a base for per-project image and spin containers off of it, in order to separate my projects and keep my host system clean and state-less and therefore easily reinstallable.
+</p>
+
+<p>
+Although containers are ephemeral, we can keep our SSH keys, shell history and other desirable files by using Docker volumes.
+</p>
+
+<p>
+We can manage these images either manually, or with <a href="https://github.com/jakub-stastny/docker-project-manager">docker-project-manager</a>, which I created <b>specifically for this purpose</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb8f31e8" class="outline-2">
+<h2 id="orgb8f31e8"><span class="section-number-2">2</span> My specific use-case</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I use iPad Pro as my main work machine and I work on my VPS, since Linux really is what I want as my development environment.
+</p>
+
+<p>
+For that reason, my image is based on the OpenSSH server, and I can connect to my development environments directly, without having to touch the host machine at all.
+</p>
+
+<p>
+However would you be using this locally, you're better of <i>not using SSH</i>, but rather <code>docker exec -it zsh</code> or whatever your favourite shell is.
+</p>
+
+<p>
+Why? Because this way your <code>ENV</code>, <code>WORKDIR</code> and possibly other settings from your <code>Dockerfile</code> will be respected.
+</p>
+
+<p>
+By that I mean that if I put <code>ENV AWS_DEV_SECRET=1234567890</code> into my <code>Dockerfile</code>, if I connect with <code>docker exec</code>, the variable <code>AWS_DEV_SECRET</code> will be defined. However if I connect with the OpenSSH server, the variable is not going to be defined.
+</p>
+
+<p>
+<i>The rest of the documentation assumes your workflow is similar. Given how simple this is, I'm sure you can figure out for yourself which way is best for your usecase and adjust the <a href="https://jakub-stastny.github.io/dev/">build scripts</a> appropriately.</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd06bb8c" class="outline-2">
+<h2 id="orgd06bb8c"><span class="section-number-2">3</span> Usage</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+First, let's create a new directory for our project. Let's call it <code>rpm</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">mkdir rpm &amp;&amp; <span style="color: #f78fe7;">cd</span> rpm
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb0d3c25" class="outline-3">
+<h3 id="orgb0d3c25"><span class="section-number-3">3.1</span> Dockerfile</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Next, let's start with the <code>Dockerfile</code>. Obviously we use the <code>dev</code> image as our base:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">FROM</span> <span style="color: #6ae4b9; font-weight: bold;">jakubstastny/dev:latest</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org82abbdc" class="outline-4">
+<h4 id="org82abbdc"><span class="section-number-4">3.1.1</span> SSH keys</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+First, we need to copy our public SSH key into <code>.ssh/authorized_keys</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">mkdir .ssh &amp;&amp; chmod 700 .ssh &amp;&amp; <span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">"&lt;your-public-ssh-key&gt;"</span> &gt; .ssh/authorized_keys
+</pre>
+</div>
+
+<p>
+This is important, so you can SSH into the running container.
+</p>
+
+<p>
+Next, let's generate a new pair of SSH keys for the project:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">mkdir .ssh &amp;&amp; ssh-keygen -t rsa -C rpm -f .ssh/id_rsa
+</pre>
+</div>
+
+<p>
+You will need to add the generated <i>public</i> SSH key into your GitHub settings, in order to be able to push to your repositories (and clone any private repository that you might need).
+</p>
+
+<p>
+Now let's copy the key pair to the image:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">COPY</span> .ssh /root/.ssh
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeb68fef" class="outline-4">
+<h4 id="orgeb68fef"><span class="section-number-4">3.1.2</span> Clone your repo and set up your projects</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+This is really up to you. You might use something like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">RUN</span> ssh-keyscan -H github.com &gt;&gt; ~/.ssh/known_hosts &amp;&amp; dotfiles pull -r &amp;&amp; git clone git@github.com:jakub-stastny/dev.git
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf8199e0" class="outline-4">
+<h4 id="orgf8199e0"><span class="section-number-4">3.1.3</span> SSHD port</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<p>
+For your first image, you don't have to worry about this. The default <code>SSHD_PORT</code> is <code>2222</code>.
+</p>
+
+<p>
+However if you want to run multiple of these images in paralel, you'll need to override the <code>SSHD_PORT</code>, so that it's unique like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dockerfile"><span style="color: #b6a0ff; font-weight: bold;">ENV</span> <span style="color: #00d3d0; font-weight: bold;">SSHD_PORT</span>=2223
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org513aec3" class="outline-3">
+<h3 id="org513aec3"><span class="section-number-3">3.2</span> Creating the image</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+First, let's build the image:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">docker build . -t rpm-dev-env
+</pre>
+</div>
+
+<p>
+As you can see, the naming convention I use is <code>&lt;project-name&gt;-dev-env</code>. It's not necessary, but it's a useful way of distinguishing the development environments from other Docker images.
+</p>
+
+<p>
+Now let's create the image:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">docker create -it -v /var/run/docker.sock:/var/run/docker.sock -v $<span style="color: #00d3d0; font-weight: bold;">PWD</span>/.history:/root/.history --network host --name rpm-dev-env --hostname rpm rpm-dev-env
+</pre>
+</div>
+
+<p>
+Let's break down the most important parts:
+</p>
+</div>
+
+<div id="outline-container-orgf1ec703" class="outline-4">
+<h4 id="orgf1ec703"><span class="section-number-4">3.2.1</span> Docker-in-Docker</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Proxying <code>/var/run/docker.sock</code> from the host to the development environment via <code>-v /var/run/docker.sock:/var/run/docker.sock</code> is a way of doing Docker-in-Docker, also known as DinD.
+</p>
+
+<p>
+It's not the most secure way, probably using <code>--privileged</code> flag would be better, but since I use my development environment as a stateless, ephemeral thing, I'm not really concerned with security.
+</p>
+
+<p>
+Also note that I've been using this approach for many years: I've seen there are better ways of doing DinD these days, but I haven't had the need to review them so far.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org99775ea" class="outline-4">
+<h4 id="org99775ea"><span class="section-number-4">3.2.2</span> Proxying shell history</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+Unlike the SSH keys, which we simply <code>COPY</code> to the image, shell history keeps changing and we don't want to loose the changes when we rebuild the image.
+</p>
+
+<p>
+That's why we proxy it from the host machine as a volume using <code>-v $PWD/.history:/root/.history</code>. If your shell history is not named <code>.history</code>, replace the file name with the appropriate one.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f2d147" class="outline-4">
+<h4 id="org2f2d147"><span class="section-number-4">3.2.3</span> Host networking</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+Host networking means that we can forget about exposing ports manually: if you start a server on port <code>8000</code> in your development environment, it will be available on port <code>8000</code> on the host machine automatically. This is what <code>--network host</code> is for.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org91588be" class="outline-3">
+<h3 id="org91588be"><span class="section-number-3">3.3</span> Starting the image</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-shell">docker start rpm-dev-env
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3714a38" class="outline-3">
+<h3 id="org3714a38"><span class="section-number-3">3.4</span> Connecting to the container via SSH</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Now you're good to go. Assuming that you have the container on a VPS like I do, you can connect directly to it by SSH without having to go through the host machine first:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh root@ip:2222
+</pre>
+</div>
+
+<p>
+As a side note, I highly recommend using <a href="https://mosh.org">Mosh</a> instead of SSH. You won't even notice you're working on a remote machine, that's how fast it is. And it always reconnects, even if you switch network.
+</p>
+
+<p>
+And that's about it. There is <a href="https://jakub-stastny.github.io/dev/">development documentation</a> in case you want to fork and tweak for yourself and also the <a href="https://jakub-stastny.github.io/dev/host-setup">host setup</a>. Also connection over SSH is only one option. Read the <a href="https://jakub-stastny.github.io/dev/design-decisions">design decisions</a> chapter if you're interested in knowing more.
+</p>
+
+<p>
+Enjoy!
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

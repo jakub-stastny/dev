@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-02 Fri 20:50 -->
+<!-- 2021-07-03 Sat 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -287,27 +287,27 @@ That's it! Now let's set up the publisher.
 <h4 id="publishing-script"><span class="section-number-4">1.2.1</span> Orgmode publishing</h4>
 <div class="outline-text-4" id="text-publishing-script">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #56b4e9; font-weight: bold;">require</span> '<span style="color: #d55e00; font-weight: bold;">ox-publish</span>)
+<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff; font-weight: bold;">require</span> '<span style="color: #00bcff; font-weight: bold;">ox-publish</span>)
 
-(<span style="color: #56b4e9; font-weight: bold;">setq</span> org-publish-project-alist `(
-  (<span style="color: #848ea9;">"dev"</span>
-    <span style="color: #0072b2;">:components</span> (<span style="color: #848ea9;">"dev/documentation"</span> <span style="color: #848ea9;">"dev/static"</span>))
+(<span style="color: #b6a0ff; font-weight: bold;">setq</span> org-publish-project-alist `(
+  (<span style="color: #79a8ff;">"dev"</span>
+    <span style="color: #f78fe7;">:components</span> (<span style="color: #79a8ff;">"dev/documentation"</span> <span style="color: #79a8ff;">"dev/static"</span>))
 
-  (<span style="color: #848ea9;">"dev/documentation"</span>
-    <span style="color: #0072b2;">:base-directory</span> <span style="color: #848ea9;">"~/dev"</span>
-    <span style="color: #0072b2;">:base-extension</span> <span style="color: #848ea9;">"org"</span>
-    <span style="color: #0072b2;">:publishing-directory</span> <span style="color: #848ea9;">"~/dev.doc"</span>
-    <span style="color: #0072b2;">:recursive</span> t
-    <span style="color: #0072b2;">:publishing-function</span> org-html-publish-to-html
-    <span style="color: #0072b2;">:headline-levels</span> 4
-    <span style="color: #0072b2;">:auto-preamble</span> t)
+  (<span style="color: #79a8ff;">"dev/documentation"</span>
+    <span style="color: #f78fe7;">:base-directory</span> <span style="color: #79a8ff;">"~/dev"</span>
+    <span style="color: #f78fe7;">:base-extension</span> <span style="color: #79a8ff;">"org"</span>
+    <span style="color: #f78fe7;">:publishing-directory</span> <span style="color: #79a8ff;">"~/dev.doc/dev"</span>
+    <span style="color: #f78fe7;">:recursive</span> t
+    <span style="color: #f78fe7;">:publishing-function</span> org-html-publish-to-html
+    <span style="color: #f78fe7;">:headline-levels</span> 4
+    <span style="color: #f78fe7;">:auto-preamble</span> t)
 
-  (<span style="color: #848ea9;">"dev/static"</span>
-    <span style="color: #0072b2;">:base-directory</span> <span style="color: #848ea9;">"~/dev"</span>
-    <span style="color: #0072b2;">:base-extension</span> <span style="color: #848ea9;">"css</span><span style="color: #848ea9; font-weight: bold;">\\</span><span style="color: #848ea9; font-weight: bold;">|</span><span style="color: #848ea9;">js</span><span style="color: #848ea9; font-weight: bold;">\\</span><span style="color: #848ea9; font-weight: bold;">|</span><span style="color: #848ea9;">png</span><span style="color: #848ea9; font-weight: bold;">\\</span><span style="color: #848ea9; font-weight: bold;">|</span><span style="color: #848ea9;">jpg</span><span style="color: #848ea9; font-weight: bold;">\\</span><span style="color: #848ea9; font-weight: bold;">|</span><span style="color: #848ea9;">gif</span><span style="color: #848ea9; font-weight: bold;">\\</span><span style="color: #848ea9; font-weight: bold;">|</span><span style="color: #848ea9;">pdf\\"</span>
-    <span style="color: #0072b2;">:publishing-directory</span> <span style="color: #848ea9;">"~/dev.doc"</span>
-    <span style="color: #0072b2;">:recursive</span> t
-    <span style="color: #0072b2;">:publishing-function</span> org-publish-attachment)))
+  (<span style="color: #79a8ff;">"dev/static"</span>
+    <span style="color: #f78fe7;">:base-directory</span> <span style="color: #79a8ff;">"~/dev"</span>
+    <span style="color: #f78fe7;">:base-extension</span> <span style="color: #79a8ff;">"css</span><span style="color: #abab00; font-weight: bold;">\\</span><span style="color: #e7a59a; font-weight: bold;">|</span><span style="color: #79a8ff;">js</span><span style="color: #abab00; font-weight: bold;">\\</span><span style="color: #e7a59a; font-weight: bold;">|</span><span style="color: #79a8ff;">png</span><span style="color: #abab00; font-weight: bold;">\\</span><span style="color: #e7a59a; font-weight: bold;">|</span><span style="color: #79a8ff;">jpg</span><span style="color: #abab00; font-weight: bold;">\\</span><span style="color: #e7a59a; font-weight: bold;">|</span><span style="color: #79a8ff;">gif</span><span style="color: #abab00; font-weight: bold;">\\</span><span style="color: #e7a59a; font-weight: bold;">|</span><span style="color: #79a8ff;">pdf\\"</span>
+    <span style="color: #f78fe7;">:publishing-directory</span> <span style="color: #79a8ff;">"~/dev.doc/dev"</span>
+    <span style="color: #f78fe7;">:recursive</span> t
+    <span style="color: #f78fe7;">:publishing-function</span> org-publish-attachment)))
 </pre>
 </div>
 </div>
@@ -327,12 +327,12 @@ Since there's only one page, we just need <code>C-c C-e</code> (<code>org-export
 <h3 id="org2b7d955"><span class="section-number-3">1.4</span> Stylesheets</h3>
 <div class="outline-text-3" id="text-1-4">
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #d55e00;">html </span>{
-  <span style="color: #56b4e9; font-weight: bold;">font-family</span>: Helvetica;
+<pre class="src src-css"><span style="color: #feacd0;">html </span>{
+  <span style="color: #b6a0ff; font-weight: bold;">font-family</span>: Helvetica;
 }
 
-<span style="color: #d55e00;">.src </span>{
-  <span style="color: #56b4e9; font-weight: bold;">background-color</span>: <span style="color: #000000; background-color: #fffaf0;">floralwhite</span>;
+<span style="color: #feacd0;">.src </span>{
+  <span style="color: #b6a0ff; font-weight: bold;">background-color</span>: <span style="color: #000000; background-color: #fffaf0;">floralwhite</span>;
 }
 </pre>
 </div>
@@ -347,7 +347,7 @@ GitHub pages cache doesn't get invalidated on push to the GitHub pages branch (<
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0072b2;">cd</span> ..
+<pre class="src src-shell"><span style="color: #f78fe7;">cd</span> ..
 python -m SimpleHTTPServer 8080
 </pre>
 </div>
@@ -366,7 +366,7 @@ python -m SimpleHTTPServer 8080
 <h4 id="org92ef6c4"><span class="section-number-4">1.6.2</span> <span class="todo TODO">TODO</span> This won't work, since we use <i>dev</i> on GH pages.</h4>
 <div class="outline-text-4" id="text-1-6-2">
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #009e73; font-style: italic;"># </span><span style="color: #009e73; font-style: italic;">clone the branch to a different directory</span>
+<pre class="src src-shell"><span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">clone the branch to a different directory</span>
 Elisp fn: switch them there and back
 </pre>
 </div>
@@ -377,7 +377,7 @@ Elisp fn: switch them there and back
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: root</p>
-<p class="date">Created: 2021-07-02 Fri 20:50</p>
+<p class="date">Created: 2021-07-03 Sat 12:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

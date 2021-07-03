@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-02 Fri 20:50 -->
+<!-- 2021-07-03 Sat 12:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Development environment</title>
@@ -266,9 +266,9 @@ Note that we need major modes for all the languages of the code blocks in our co
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #56b4e9; font-weight: bold;">dolist</span> (package '(dockerfile-mode clojure-mode htmlize))
-  (<span style="color: #56b4e9; font-weight: bold;">unless</span> (package-installed-p package)
-    (message <span style="color: #848ea9;">"~ Installing %s."</span> package)
+<pre class="src src-elisp">(<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (package '(dockerfile-mode clojure-mode htmlize))
+  (<span style="color: #b6a0ff; font-weight: bold;">unless</span> (package-installed-p package)
+    (message <span style="color: #79a8ff;">"~ Installing %s."</span> package)
     (package-install package)))
 </pre>
 </div>
@@ -301,9 +301,9 @@ Dichromacy doesn't look great in Emacs, but it exports well.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(add-to-list 'load-path (expand-file-name <span style="color: #848ea9;">"~/.zsh/environments/elisp"</span>))
+<pre class="src src-emacs-lisp">(add-to-list 'load-path (expand-file-name <span style="color: #79a8ff;">"~/.zsh/environments/elisp"</span>))
 
-(load <span style="color: #848ea9;">"literate-programming"</span>)
+(load <span style="color: #79a8ff;">"literate-programming"</span>)
 (load-theme 'dichromacy)
 </pre>
 </div>
@@ -321,23 +321,23 @@ This allows us to decouple for instance the <a href="./publishing.html#publishin
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #56b4e9; font-weight: bold;">defun</span> <span style="color: #d55e00;">load-directory</span> (directory)
-  <span style="color: #848ea9;">"Load recursively all `</span><span style="color: #d55e00; font-weight: bold;">.el</span><span style="color: #848ea9;">' files in DIRECTORY."</span>
-  (<span style="color: #56b4e9; font-weight: bold;">dolist</span> (element (directory-files-and-attributes directory nil nil nil))
-    (<span style="color: #56b4e9; font-weight: bold;">let*</span> ((path (car element))
-           (fullpath (concat directory <span style="color: #848ea9;">"/"</span> path))
+<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">load-directory</span> (directory)
+  <span style="color: #b0d6f5;">"Load recursively all `</span><span style="color: #00bcff; font-weight: bold;">.el</span><span style="color: #b0d6f5;">' files in DIRECTORY."</span>
+  (<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (element (directory-files-and-attributes directory nil nil nil))
+    (<span style="color: #b6a0ff; font-weight: bold;">let*</span> ((path (car element))
+           (fullpath (concat directory <span style="color: #79a8ff;">"/"</span> path))
            (isdir (car (cdr element)))
-           (ignore-dir (<span style="color: #56b4e9; font-weight: bold;">or</span> (string= path <span style="color: #848ea9;">"."</span>) (string= path <span style="color: #848ea9;">".."</span>))))
-      (<span style="color: #56b4e9; font-weight: bold;">cond</span>
-       ((<span style="color: #56b4e9; font-weight: bold;">and</span> (eq isdir t) (not ignore-dir))
+           (ignore-dir (<span style="color: #b6a0ff; font-weight: bold;">or</span> (string= path <span style="color: #79a8ff;">"."</span>) (string= path <span style="color: #79a8ff;">".."</span>))))
+      (<span style="color: #b6a0ff; font-weight: bold;">cond</span>
+       ((<span style="color: #b6a0ff; font-weight: bold;">and</span> (eq isdir t) (not ignore-dir))
         (load-directory fullpath))
-       ((<span style="color: #56b4e9; font-weight: bold;">and</span> (eq isdir nil) (string= (substring path -3) <span style="color: #848ea9;">".el"</span>))
+       ((<span style="color: #b6a0ff; font-weight: bold;">and</span> (eq isdir nil) (string= (substring path -3) <span style="color: #79a8ff;">".el"</span>))
         (load (file-name-sans-extension fullpath)))))))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #56b4e9; font-weight: bold;">setq</span> elisp-autoload-dir (concat (getenv <span style="color: #848ea9;">"PROJECT_ROOT"</span>) <span style="color: #848ea9;">"/.env/elisp/autoload"</span>))
+<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff; font-weight: bold;">setq</span> elisp-autoload-dir (concat (getenv <span style="color: #79a8ff;">"PROJECT_ROOT"</span>) <span style="color: #79a8ff;">"/.env/elisp/autoload"</span>))
 (load-directory elisp-autoload-dir)
 </pre>
 </div>
@@ -382,17 +382,17 @@ We compile on save, but for the first-time compilation, we want to be able to do
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org9dc9be1">(<span style="color: #56b4e9; font-weight: bold;">progn</span> (<span style="color: #56b4e9; font-weight: bold;">dolist</span> (file command-line-args-left) (<span style="color: #56b4e9; font-weight: bold;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
+<pre class="src src-emacs-lisp" id="org9dc9be1">(<span style="color: #b6a0ff; font-weight: bold;">progn</span> (<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (file command-line-args-left) (<span style="color: #b6a0ff; font-weight: bold;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #d55e00;">tangle</span>() {
-  <span style="color: #56b4e9; font-weight: bold;">if</span> [ $<span style="color: #e69f00; font-weight: bold;">#</span> -eq 0 ]; <span style="color: #56b4e9; font-weight: bold;">then</span>
-    emacs -Q --batch --eval <span style="color: #848ea9;">"(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))"</span> *.org
-  <span style="color: #56b4e9; font-weight: bold;">else</span>
-    emacs -Q --batch --eval <span style="color: #848ea9;">"(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))"</span> <span style="color: #848ea9;">"$@"</span>
-  <span style="color: #56b4e9; font-weight: bold;">fi</span>
+<pre class="src src-shell"><span style="color: #feacd0;">tangle</span>() {
+  <span style="color: #b6a0ff; font-weight: bold;">if</span> [ $<span style="color: #00d3d0; font-weight: bold;">#</span> -eq 0 ]; <span style="color: #b6a0ff; font-weight: bold;">then</span>
+    emacs -Q --batch --eval <span style="color: #79a8ff;">"(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))"</span> *.org
+  <span style="color: #b6a0ff; font-weight: bold;">else</span>
+    emacs -Q --batch --eval <span style="color: #79a8ff;">"(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))"</span> <span style="color: #79a8ff;">"$@"</span>
+  <span style="color: #b6a0ff; font-weight: bold;">fi</span>
 }
 </pre>
 </div>
@@ -403,7 +403,7 @@ We compile on save, but for the first-time compilation, we want to be able to do
 <h4 id="org393c617"><span class="section-number-4">2.2.3</span> Push to DockerHub</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #d55e00;">push</span>() {
+<pre class="src src-shell"><span style="color: #feacd0;">push</span>() {
   docker push jakubstastny/dev
 }
 </pre>
@@ -415,8 +415,8 @@ We compile on save, but for the first-time compilation, we want to be able to do
 <h4 id="orgc434f08"><span class="section-number-4">2.2.4</span> Export to HTML</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #d55e00;">export-to-html</span>() {
-  <span style="color: #56b4e9; font-weight: bold;">for</span> file<span style="color: #56b4e9; font-weight: bold;"> in</span> *.org; <span style="color: #56b4e9; font-weight: bold;">do</span> emacs $<span style="color: #e69f00; font-weight: bold;">file</span> --batch --eval <span style="color: #848ea9;">'(org-html-export-to-html)'</span> &amp;&gt; /dev/null; <span style="color: #56b4e9; font-weight: bold;">done</span>
+<pre class="src src-shell"><span style="color: #feacd0;">export-to-html</span>() {
+  <span style="color: #b6a0ff; font-weight: bold;">for</span> file<span style="color: #b6a0ff; font-weight: bold;"> in</span> *.org; <span style="color: #b6a0ff; font-weight: bold;">do</span> emacs $<span style="color: #00d3d0; font-weight: bold;">file</span> --batch --eval <span style="color: #79a8ff;">'(org-html-export-to-html)'</span> &amp;&gt; /dev/null; <span style="color: #b6a0ff; font-weight: bold;">done</span>
   rm -rf ../dev.doc/*
   mv README.html index.html
   mv *.{html,css,png} ../dev.doc
@@ -444,7 +444,7 @@ report-custom-functions
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: root</p>
-<p class="date">Created: 2021-07-02 Fri 20:50</p>
+<p class="date">Created: 2021-07-03 Sat 12:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
