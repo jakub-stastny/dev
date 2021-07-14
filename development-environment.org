@@ -2,11 +2,11 @@
 
 * Installation
 
-In Emacs press =C-c C-c= to evaluate each code block in this section.
-
 ** Emacs packages
 
-Note that we need major modes for all the languages of the code blocks in our code, otherwise Emacs will export them without highlighted syntax.
+Note that we need major modes for all the languages of the code blocks in our code, otherwise Emacs will export them without highlighted syntax when publishing.
+
+*Instructions:* In Emacs navigate your cursor to the following code block and press =C-c C-c= to evaluate.
 
 #+begin_src elisp :results silent
   (dolist (package '(dockerfile-mode clojure-mode htmlize))
@@ -17,7 +17,8 @@ Note that we need major modes for all the languages of the code blocks in our co
 
 
 * Configuration
-In Emacs press =C-c C-v t= to tangle all the code blocks in this file.
+
+*Instructions:* In Emacs press =C-c C-v t= to tangle all the code blocks in this file.
 
 ** Emacs per-project configuration
    :PROPERTIES:
@@ -37,11 +38,13 @@ Dichromacy doesn't look great in Emacs, but it exports well.
   (load-theme 'dichromacy)
 #+end_src
 
-*** Autoloaded files
-
-https://www.emacswiki.org/emacs/LoadingLispFiles
+*** Autoloading files
 
 This allows us to decouple for instance the [[./publishing.org::#publishing-script][publishing helper]] from the development setup file.
+
+**** Links
+
+- [[https://www.emacswiki.org/emacs/LoadingLispFiles][Loading Lisp files]] (EmacsWiki).
 
 #+begin_src emacs-lisp
   (defun load-directory (directory)
@@ -84,14 +87,18 @@ This allows us to decouple for instance the [[./publishing.org::#publishing-scri
 
 *** Tangling
 
-We compile on save, but for the first-time compilation, we want to be able to do it from the shell, rather than having to go and save manually each file from Emacs.
+We compile on save, but for the first-time compilation, we want to be able to do it from the shell, rather than having to go and tangle manually each file from Emacs.
 
-https://orgmode.org/manual/Batch-Execution.html#Batch-Execution
+**** Links
+
+- [[https://orgmode.org/manual/Batch-Execution.html#Batch-Execution][Batch execution]] (Orgmode.org)
 
 #+name: tangle-files
 #+begin_src emacs-lisp :tangle no
   (progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
 #+end_src
+
+Use =tangle= with no arguments to tangle all the orgmode files in the project or with arguments, such as =tangle development-environment.org=.
 
 #+begin_src shell
   tangle() {
@@ -111,16 +118,13 @@ https://orgmode.org/manual/Batch-Execution.html#Batch-Execution
   }
 #+end_src
 
-*** Export to HTML
+**** Links
 
-#+begin_src shell :tangle no
-  export-to-html() {
-    for file in *.org; do emacs $file --batch --eval '(org-html-export-to-html)' &> /dev/null; done
-    rm -rf ../dev.doc/*
-    mv README.html index.html
-    mv *.{html,css,png} ../dev.doc
-  }
-#+end_src
+- [[https://hub.docker.com/repository/docker/jakubstastny/dev][The published image]] page.
+
+**** Considerations
+
+- It might be worth to check out the [[https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry][GitHub container registry]].
 
 *** Main
 
