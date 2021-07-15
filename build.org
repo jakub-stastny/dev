@@ -1,11 +1,14 @@
 #+OPTIONS: html-postamble:nil tex:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
+#+HTML_HEAD: <script>document.addEventListener('DOMContentLoaded', (e) => document.querySelector('a').href = "../")</script>
 #+TITLE: My development environment image
 
 * About
 #+INCLUDE: _badge.org
 
-My development environment with my favourite tools and dotfiles. For usage, please check out the [[../][README]]. This is the developer documentation, describing the implementation and reasoning if aplicable.
+# TODO: Fix the link with JS.
+
+My development environment with my favourite tools and dotfiles. For usage, please check out the [[./README.org][README]]. This is the developer documentation, describing the implementation and reasoning if aplicable.
 
 * Dockerfile
   :PROPERTIES:

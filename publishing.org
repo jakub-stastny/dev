@@ -42,17 +42,17 @@ That's it! Now let's set up the publisher.
 
     ("dev/static"
       :base-directory "~/dev"
-      :base-extension "css\\|png\\|jpg" ; TODO: do it dynamically, it doesn't seem to be able to take globs.
+      :base-extension "css\\|html\\" ; TODO: do it dynamically, it doesn't seem to be able to take globs.
       :publishing-directory "~/dev.doc/docs"
       :recursive t
       :publishing-function org-publish-attachment)))
 
-  (defun after-publish (fname-original fname-exported)
-    (when (equal (file-name-base fname-original) "README")
-      (message "Changing README.html -> index.html")
-      (rename-file fname-exported (replace-regexp-in-string "README" "index" fname-exported t) t)))
+  ;; (defun after-publish (fname-original fname-exported)
+  ;;   (when (equal (file-name-base fname-original) "README")
+  ;;     (message "Changing README.html -> index.html")
+  ;;     (rename-file fname-exported (replace-regexp-in-string "README" "index" fname-exported t) t)))
 
-  (setq org-publish-after-publishing-hook 'after-publish)
+  ;; (setq org-publish-after-publishing-hook 'after-publish)
 #+end_src
 
 **** TODO Take some ideas from these
@@ -69,6 +69,15 @@ That's it! Now let's set up the publisher.
   .src {
     background-color: floralwhite;
   }
+#+end_src
+
+** Redirect to the README page
+
+#+begin_src html :tangle index.html
+  <!DOCTYPE html>
+  <meta charset="utf-8">
+  <title>Redirecting to the README</title>
+  <meta http-equiv="refresh" content="0; URL=/README.html">
 #+end_src
 
 ** Development

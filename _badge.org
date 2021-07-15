@@ -1,0 +1,23 @@
+#+HTML_HEAD: <style>#content .figure:first-child { display: none; }</style>
+
+#+begin_comment
+  Dealing with SVG badges in Orgmode is tricky. Simply linking the image
+  doesn't work when published, it creates a figure with huge edges.
+
+  It works on GitHub though.
+
+  The export block is what makes it work for Orgmode publish.
+  But it doesn't work on GitHub. So we need both versions.
+
+  GitHub simply ignores the export block and we hide the image
+  on the published page using CSS, see the head of this file.
+#+end_comment
+
+[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
+
+#+name: badge
+#+begin_export html
+  <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
+    <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
+  </a>
+#+end_export

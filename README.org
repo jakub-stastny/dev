@@ -150,10 +150,10 @@ As a side note, I highly recommend using [[https://mosh.org][Mosh]] instead of S
 
 - The development branch is =literate.dev=.
 - The stable branch is =literate.stable=.
-- [[build.org][Development documentation]] is generated from =literate.stable=.
-- Here is [[development-environment.org][how to set up the development environment]] to hack on the image itself.
-- Here is what I do to [[host-setup.org][set up the host machine]].
-- Here is how I [[publishing.org][publish the documentation]].
-- And finally here is how I [[release.org][release the image]].
+- [[./build.org][Development documentation]] is generated from =literate.stable=.
+- Here is [[./development-environment.org][how to set up the development environment]] to hack on the image itself.
+- Here is what I do to [[./host-setup.org][set up the host machine]].
+- Here is how I [[./publishing.org][publish the documentation]].
+- And finally here is how I [[./release.org][release the image]].
 
 Enjoy!
