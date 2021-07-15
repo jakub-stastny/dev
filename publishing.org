@@ -46,15 +46,22 @@ That's it! Now let's set up the publisher.
       :publishing-directory "~/dev.doc/docs"
       :recursive t
       :publishing-function org-publish-attachment)))
+
+  (defun after-publish (fname-original fname-exported)
+    (when (equal (file-name-base fname-original) "README")
+      (message "Changing README.html -> index.html")
+      (rename-file fname-exported (replace-regexp-in-string "README" "index" fname-exported t))))
+
+  (setq org-publish-after-publishing-hook 'after-publish)
 #+end_src
 
-** Exporting
+**** TODO Take some ideas from these
 
-Since there's only one page, we just need =C-c C-e= (=org-export-dispatch=) and then rename =Dockerfile.html= to =index.html=. Commit on =generated-documentation= branch.
+- https://pavpanchekha.com/blog/org-mode-publish.html
 
 ** Stylesheets
 
-#+begin_src css :tangle ../dev.doc/styles.css
+#+begin_src css :tangle styles.css
   html {
     font-family: Helvetica;
   }
@@ -65,32 +72,9 @@ Since there's only one page, we just need =C-c C-e= (=org-export-dispatch=) and 
 #+end_src
 
 ** Development
-GitHub pages cache doesn't get invalidated on push to the GitHub pages branch (=generated-documentation= in this case).
+
+GitHub pages cache doesn't get invalidated on push to the GitHub pages branch (=gh-pages= in this case).
 
 #+begin_src shell
-  cd ..
-  python -m SimpleHTTPServer 8080
-#+end_src
-
-** Pending matters
-*** TODO Publishing workflows
-
-*** TODO This won't work, since we use /dev/ on GH pages.
-#+begin_src shell
-  # clone the branch to a different directory
-  Elisp fn: switch them there and back
-#+end_src
-
-*** Export to HTML
-**** TODO What do I do with this?
-
-I totally forgot, why does it have no tangling? Are we even going to use it, maybe an Emacs publish script would be better, even though it'd have to do the renaming.
-
-#+begin_src shell :tangle no
-  export-to-html() {
-    for file in *.org; do emacs $file --batch --eval '(org-html-export-to-html)' &> /dev/null; done
-    rm -rf ../dev.doc/*
-    mv README.html index.html
-    mv *.{html,css,png} ../dev.doc
-  }
+  (cd ../dev.doc/docs && python -m SimpleHTTPServer 8080)
 #+end_src

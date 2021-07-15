@@ -35,7 +35,7 @@ Dichromacy doesn't look great in Emacs, but it exports well.
   (add-to-list 'load-path (expand-file-name "~/.zsh/environments/elisp"))
 
   (load "literate-programming")
-  (load-theme 'dichromacy)
+  ;; (load-theme 'dichromacy)
 #+end_src
 
 *** Autoloading files
