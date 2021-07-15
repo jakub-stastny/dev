@@ -2,30 +2,10 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
 #+TITLE: My development environment image
 
-#+begin_src ditaa :file diagram.png :command-line --round-corners
-  +---------+
-  | cBLU    |
-  |         |
-  |    +----+
-  |    |cPNK|
-  |    |    |
-  +----+----+
-#+end_src
-
-#+RESULTS:
-[[file:export/diagram.png]]
-
 * About
+#+INCLUDE: _badge.org
 
-#+name: badge
-#+begin_export html
-  <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
-    <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
-  </a>
-#+end_export
-
-
-My development environment with my favourite tools and dotfiles. For usage, please check out the [[https://github.com/jakub-stastny/dev][README]]. This is the developer documentation, describing the implementation and reasoning if aplicable.
+My development environment with my favourite tools and dotfiles. For usage, please check out the [[../][README]]. This is the developer documentation, describing the implementation and reasoning if aplicable.
 
 * Dockerfile
   :PROPERTIES:
@@ -61,7 +41,7 @@ ENV TERM=xterm-256color
 
 Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from =~/.script/dotfiles=.
 
-This has less importance now, since we switched to connecting to the image directly over SSH, which doesn't respect ENV variables, but it's still useful, for instance so we can do =dotfiles pull -r= in our project =Dockerfile=.
+This has less importance now, since we switched to connecting to the image directly over SSH, which doesn't respect ENV variables defined in the Dockerfile (logically), but it's still useful, for instance so we can do =dotfiles pull -r= in our project =Dockerfile=.
 
 #+begin_src dockerfile
 ENV PATH="/root/.scripts:${PATH}"

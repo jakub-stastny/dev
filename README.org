@@ -2,21 +2,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
 
 * About
-
-# Currrently we show this file only on GH. GH happens to show the SVG correctly,
-# so there's no need for the export block we use for the Orgmode export.
-[[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
-
-#+begin_comment
-Let's see if GH sees this.
-#+end_comment
-
-#+name: badge
-#+begin_export html
-  <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
-    <img src="https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg" />
-  </a>
-#+end_export
+#+INCLUDE: _badge.org
 
 My development environment with my favourite tools and dotfiles packed as a Docker image.
 
@@ -162,8 +148,15 @@ As a side note, I highly recommend using [[https://mosh.org][Mosh]] instead of S
 
 * Development
 
+# Can GH read this?
+** COMMENT Test
+
 - The development branch is =literate.dev=.
 - The stable branch is =literate.stable=.
-- [[https://jakub-stastny.github.io/dev/][Development documentation]] is generated from =literate.stable=.
+- [[build.org][Development documentation]] is generated from =literate.stable=.
+- Here is [[development-environment.org][how to set up the development environment]] to hack on the image itself.
+- Here is what I do to [[host-setup.org][set up the host machine]].
+- Here is how I [[publishing.org][publish the documentation]].
+- And finally here is how I [[release.org][release the image]].
 
 Enjoy!
