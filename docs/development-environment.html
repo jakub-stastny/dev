@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-03 Sat 12:51 -->
+<!-- 2021-07-15 Thu 17:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Development environment</title>
@@ -223,25 +223,37 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1b59723">1. Installation</a>
+<li><a href="#orgbb61990">1. Installation</a>
 <ul>
-<li><a href="#org83eaf2d">1.1. Emacs packages</a></li>
+<li><a href="#org0732b03">1.1. Emacs packages</a></li>
 </ul>
 </li>
-<li><a href="#orga80b14e">2. Configuration</a>
+<li><a href="#org542a3b4">2. Configuration</a>
 <ul>
-<li><a href="#org1043224">2.1. Emacs per-project configuration</a>
+<li><a href="#orgd06431e">2.1. Emacs per-project configuration</a>
 <ul>
-<li><a href="#orgfe3e122">2.1.1. Autoloaded files</a></li>
+<li><a href="#org9d24f2b">2.1.1. Autoloading files</a>
+<ul>
+<li><a href="#org754c9c0">2.1.1.1. Links</a></li>
 </ul>
 </li>
-<li><a href="#orga7bce03">2.2. ZSH per-project configuration</a>
+</ul>
+</li>
+<li><a href="#org4bf8def">2.2. ZSH per-project configuration</a>
 <ul>
-<li><a href="#orgbdd9dd7">2.2.1. Dependencies</a></li>
-<li><a href="#org5a78656">2.2.2. Tangling</a></li>
-<li><a href="#org393c617">2.2.3. Push to DockerHub</a></li>
-<li><a href="#orgc434f08">2.2.4. Export to HTML</a></li>
-<li><a href="#org2f0d508">2.2.5. Main</a></li>
+<li><a href="#org2cef59e">2.2.1. Dependencies</a></li>
+<li><a href="#org621f32d">2.2.2. Tangling</a>
+<ul>
+<li><a href="#org6ced6dd">2.2.2.1. Links</a></li>
+</ul>
+</li>
+<li><a href="#orgb5e7568">2.2.3. Push to DockerHub</a>
+<ul>
+<li><a href="#orgd644ca9">2.2.3.1. Links</a></li>
+<li><a href="#org90d515d">2.2.3.2. Considerations</a></li>
+</ul>
+</li>
+<li><a href="#orgc5fdb0a">2.2.4. Main</a></li>
 </ul>
 </li>
 </ul>
@@ -250,24 +262,24 @@
 </div>
 </div>
 
-<div id="outline-container-org1b59723" class="outline-2">
-<h2 id="org1b59723"><span class="section-number-2">1</span> Installation</h2>
+<div id="outline-container-orgbb61990" class="outline-2">
+<h2 id="orgbb61990"><span class="section-number-2">1</span> Installation</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-In Emacs press <code>C-c C-c</code> to evaluate each code block in this section.
-</p>
 </div>
-
-<div id="outline-container-org83eaf2d" class="outline-3">
-<h3 id="org83eaf2d"><span class="section-number-3">1.1</span> Emacs packages</h3>
+<div id="outline-container-org0732b03" class="outline-3">
+<h3 id="org0732b03"><span class="section-number-3">1.1</span> Emacs packages</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Note that we need major modes for all the languages of the code blocks in our code, otherwise Emacs will export them without highlighted syntax.
+Note that we need major modes for all the languages of the code blocks in our code, otherwise Emacs will export them without highlighted syntax when publishing.
+</p>
+
+<p>
+<b>Instructions:</b> In Emacs navigate your cursor to the following code block and press <code>C-c C-c</code> to evaluate.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (package '(dockerfile-mode clojure-mode htmlize))
-  (<span style="color: #b6a0ff; font-weight: bold;">unless</span> (package-installed-p package)
+<pre class="src src-elisp">(<span style="color: #b6a0ff;">dolist</span> (package '(dockerfile-mode clojure-mode htmlize))
+  (<span style="color: #b6a0ff;">unless</span> (package-installed-p package)
     (message <span style="color: #79a8ff;">"~ Installing %s."</span> package)
     (package-install package)))
 </pre>
@@ -277,16 +289,16 @@ Note that we need major modes for all the languages of the code blocks in our co
 </div>
 
 
-<div id="outline-container-orga80b14e" class="outline-2">
-<h2 id="orga80b14e"><span class="section-number-2">2</span> Configuration</h2>
+<div id="outline-container-org542a3b4" class="outline-2">
+<h2 id="org542a3b4"><span class="section-number-2">2</span> Configuration</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-In Emacs press <code>C-c C-v t</code> to tangle all the code blocks in this file.
+<b>Instructions:</b> In Emacs press <code>C-c C-v t</code> to tangle all the code blocks in this file.
 </p>
 </div>
 
-<div id="outline-container-org1043224" class="outline-3">
-<h3 id="org1043224"><span class="section-number-3">2.1</span> Emacs per-project configuration</h3>
+<div id="outline-container-orgd06431e" class="outline-3">
+<h3 id="orgd06431e"><span class="section-number-3">2.1</span> Emacs per-project configuration</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 We want to keep environment-specific configuration out of our <code>~/.emacs</code>.
@@ -296,62 +308,63 @@ We want to keep environment-specific configuration out of our <code>~/.emacs</co
 Dotfiles: <a href="https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/elisp/literate-programming.el">~/zsh/environments/elisp/literate-programming.el</a>
 </p>
 
-<p>
-Dichromacy doesn't look great in Emacs, but it exports well.
-</p>
-
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-to-list 'load-path (expand-file-name <span style="color: #79a8ff;">"~/.zsh/environments/elisp"</span>))
 
 (load <span style="color: #79a8ff;">"literate-programming"</span>)
-(load-theme 'dichromacy)
+(load-theme 'modus-vivendi)
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgfe3e122" class="outline-4">
-<h4 id="orgfe3e122"><span class="section-number-4">2.1.1</span> Autoloaded files</h4>
+<div id="outline-container-org9d24f2b" class="outline-4">
+<h4 id="org9d24f2b"><span class="section-number-4">2.1.1</span> Autoloading files</h4>
 <div class="outline-text-4" id="text-2-1-1">
-<p>
-<a href="https://www.emacswiki.org/emacs/LoadingLispFiles">https://www.emacswiki.org/emacs/LoadingLispFiles</a>
-</p>
-
 <p>
 This allows us to decouple for instance the <a href="./publishing.html#publishing-script">publishing helper</a> from the development setup file.
 </p>
+</div>
+
+<div id="outline-container-org754c9c0" class="outline-5">
+<h5 id="org754c9c0"><span class="section-number-5">2.1.1.1</span> Links</h5>
+<div class="outline-text-5" id="text-2-1-1-1">
+<ul class="org-ul">
+<li><a href="https://www.emacswiki.org/emacs/LoadingLispFiles">Loading Lisp files</a> (EmacsWiki).</li>
+</ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">load-directory</span> (directory)
-  <span style="color: #b0d6f5;">"Load recursively all `</span><span style="color: #00bcff; font-weight: bold;">.el</span><span style="color: #b0d6f5;">' files in DIRECTORY."</span>
-  (<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (element (directory-files-and-attributes directory nil nil nil))
-    (<span style="color: #b6a0ff; font-weight: bold;">let*</span> ((path (car element))
+<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff;">defun</span> <span style="color: #feacd0;">load-directory</span> (directory)
+  <span style="color: #b0d6f5;">"Load recursively all `</span><span style="color: #00bcff;">.el</span><span style="color: #b0d6f5;">' files in DIRECTORY."</span>
+  (<span style="color: #b6a0ff;">dolist</span> (element (directory-files-and-attributes directory nil nil nil))
+    (<span style="color: #b6a0ff;">let*</span> ((path (car element))
            (fullpath (concat directory <span style="color: #79a8ff;">"/"</span> path))
            (isdir (car (cdr element)))
-           (ignore-dir (<span style="color: #b6a0ff; font-weight: bold;">or</span> (string= path <span style="color: #79a8ff;">"."</span>) (string= path <span style="color: #79a8ff;">".."</span>))))
-      (<span style="color: #b6a0ff; font-weight: bold;">cond</span>
-       ((<span style="color: #b6a0ff; font-weight: bold;">and</span> (eq isdir t) (not ignore-dir))
+           (ignore-dir (<span style="color: #b6a0ff;">or</span> (string= path <span style="color: #79a8ff;">"."</span>) (string= path <span style="color: #79a8ff;">".."</span>))))
+      (<span style="color: #b6a0ff;">cond</span>
+       ((<span style="color: #b6a0ff;">and</span> (eq isdir t) (not ignore-dir))
         (load-directory fullpath))
-       ((<span style="color: #b6a0ff; font-weight: bold;">and</span> (eq isdir nil) (string= (substring path -3) <span style="color: #79a8ff;">".el"</span>))
+       ((<span style="color: #b6a0ff;">and</span> (eq isdir nil) (string= (substring path -3) <span style="color: #79a8ff;">".el"</span>))
         (load (file-name-sans-extension fullpath)))))))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff; font-weight: bold;">setq</span> elisp-autoload-dir (concat (getenv <span style="color: #79a8ff;">"PROJECT_ROOT"</span>) <span style="color: #79a8ff;">"/.env/elisp/autoload"</span>))
+<pre class="src src-emacs-lisp">(<span style="color: #b6a0ff;">setq</span> elisp-autoload-dir (concat (getenv <span style="color: #79a8ff;">"PROJECT_ROOT"</span>) <span style="color: #79a8ff;">"/.env/elisp/autoload"</span>))
 (load-directory elisp-autoload-dir)
 </pre>
 </div>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orga7bce03" class="outline-3">
-<h3 id="orga7bce03"><span class="section-number-3">2.2</span> ZSH per-project configuration</h3>
+<div id="outline-container-org4bf8def" class="outline-3">
+<h3 id="org4bf8def"><span class="section-number-3">2.2</span> ZSH per-project configuration</h3>
 <div class="outline-text-3" id="text-2-2">
 </div>
 
-<div id="outline-container-orgbdd9dd7" class="outline-4">
-<h4 id="orgbdd9dd7"><span class="section-number-4">2.2.1</span> Dependencies</h4>
+<div id="outline-container-org2cef59e" class="outline-4">
+<h4 id="org2cef59e"><span class="section-number-4">2.2.1</span> Dependencies</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <ul class="org-ul">
 <li>Dotfiles: <a href="https://github.com/jakub-stastny/dotfiles/blob/master/.zsh/environments/helpers.zsh">~/zsh/environments/helpers.zsh</a></li>
@@ -370,37 +383,46 @@ load ~/.zsh/environments/docker.zsh
 </div>
 </div>
 
-<div id="outline-container-org5a78656" class="outline-4">
-<h4 id="org5a78656"><span class="section-number-4">2.2.2</span> Tangling</h4>
+<div id="outline-container-org621f32d" class="outline-4">
+<h4 id="org621f32d"><span class="section-number-4">2.2.2</span> Tangling</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
-We compile on save, but for the first-time compilation, we want to be able to do it from the shell, rather than having to go and save manually each file from Emacs.
+We compile on save, but for the first-time compilation, we want to be able to do it from the shell, rather than having to go and tangle manually each file from Emacs.
 </p>
+</div>
 
-<p>
-<a href="https://orgmode.org/manual/Batch-Execution.html#Batch-Execution">https://orgmode.org/manual/Batch-Execution.html#Batch-Execution</a>
-</p>
+<div id="outline-container-org6ced6dd" class="outline-5">
+<h5 id="org6ced6dd"><span class="section-number-5">2.2.2.1</span> Links</h5>
+<div class="outline-text-5" id="text-2-2-2-1">
+<ul class="org-ul">
+<li><a href="https://orgmode.org/manual/Batch-Execution.html#Batch-Execution">Batch execution</a> (Orgmode.org)</li>
+</ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org9dc9be1">(<span style="color: #b6a0ff; font-weight: bold;">progn</span> (<span style="color: #b6a0ff; font-weight: bold;">dolist</span> (file command-line-args-left) (<span style="color: #b6a0ff; font-weight: bold;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
+<pre class="src src-emacs-lisp" id="org09f0fad">(<span style="color: #b6a0ff;">progn</span> (<span style="color: #b6a0ff;">dolist</span> (file command-line-args-left) (<span style="color: #b6a0ff;">with-current-buffer</span> (find-file-noselect file) (org-babel-tangle))))
 </pre>
 </div>
 
+<p>
+Use <code>tangle</code> with no arguments to tangle all the orgmode files in the project or with arguments, such as <code>tangle development-environment.org</code>.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #feacd0;">tangle</span>() {
-  <span style="color: #b6a0ff; font-weight: bold;">if</span> [ $<span style="color: #00d3d0; font-weight: bold;">#</span> -eq 0 ]; <span style="color: #b6a0ff; font-weight: bold;">then</span>
+  <span style="color: #b6a0ff;">if</span> [ $<span style="color: #00d3d0;">#</span> -eq 0 ]; <span style="color: #b6a0ff;">then</span>
     emacs -Q --batch --eval <span style="color: #79a8ff;">"(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))"</span> *.org
-  <span style="color: #b6a0ff; font-weight: bold;">else</span>
+  <span style="color: #b6a0ff;">else</span>
     emacs -Q --batch --eval <span style="color: #79a8ff;">"(progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))"</span> <span style="color: #79a8ff;">"$@"</span>
-  <span style="color: #b6a0ff; font-weight: bold;">fi</span>
+  <span style="color: #b6a0ff;">fi</span>
 }
 </pre>
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org393c617" class="outline-4">
-<h4 id="org393c617"><span class="section-number-4">2.2.3</span> Push to DockerHub</h4>
+<div id="outline-container-orgb5e7568" class="outline-4">
+<h4 id="orgb5e7568"><span class="section-number-4">2.2.3</span> Push to DockerHub</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #feacd0;">push</span>() {
@@ -409,26 +431,29 @@ We compile on save, but for the first-time compilation, we want to be able to do
 </pre>
 </div>
 </div>
+
+<div id="outline-container-orgd644ca9" class="outline-5">
+<h5 id="orgd644ca9"><span class="section-number-5">2.2.3.1</span> Links</h5>
+<div class="outline-text-5" id="text-2-2-3-1">
+<ul class="org-ul">
+<li><a href="https://hub.docker.com/repository/docker/jakubstastny/dev">The published image</a> page.</li>
+</ul>
+</div>
 </div>
 
-<div id="outline-container-orgc434f08" class="outline-4">
-<h4 id="orgc434f08"><span class="section-number-4">2.2.4</span> Export to HTML</h4>
+<div id="outline-container-org90d515d" class="outline-5">
+<h5 id="org90d515d"><span class="section-number-5">2.2.3.2</span> Considerations</h5>
+<div class="outline-text-5" id="text-2-2-3-2">
+<ul class="org-ul">
+<li>It might be worth to check out the <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry">GitHub container registry</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5fdb0a" class="outline-4">
+<h4 id="orgc5fdb0a"><span class="section-number-4">2.2.4</span> Main</h4>
 <div class="outline-text-4" id="text-2-2-4">
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #feacd0;">export-to-html</span>() {
-  <span style="color: #b6a0ff; font-weight: bold;">for</span> file<span style="color: #b6a0ff; font-weight: bold;"> in</span> *.org; <span style="color: #b6a0ff; font-weight: bold;">do</span> emacs $<span style="color: #00d3d0; font-weight: bold;">file</span> --batch --eval <span style="color: #79a8ff;">'(org-html-export-to-html)'</span> &amp;&gt; /dev/null; <span style="color: #b6a0ff; font-weight: bold;">done</span>
-  rm -rf ../dev.doc/*
-  mv README.html index.html
-  mv *.{html,css,png} ../dev.doc
-}
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org2f0d508" class="outline-4">
-<h4 id="org2f0d508"><span class="section-number-4">2.2.5</span> Main</h4>
-<div class="outline-text-4" id="text-2-2-5">
 <div class="org-src-container">
 <pre class="src src-shell">docker-login
 start-emacs-session
@@ -444,7 +469,7 @@ report-custom-functions
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: root</p>
-<p class="date">Created: 2021-07-03 Sat 12:51</p>
+<p class="date">Created: 2021-07-15 Thu 17:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

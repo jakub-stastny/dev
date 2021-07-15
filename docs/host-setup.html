@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-07-03 Sat 12:51 -->
+<!-- 2021-07-15 Thu 17:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -222,47 +222,47 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org84a1869">1. Dependencies</a></li>
-<li><a href="#orgd23f646">2. Usage</a></li>
-<li><a href="#org01ece66">3. VPS setup</a>
+<li><a href="#orgf2140ab">1. Dependencies</a></li>
+<li><a href="#org7c23721">2. Usage</a></li>
+<li><a href="#org4b30aaf">3. VPS setup</a>
 <ul>
-<li><a href="#org3cfefca">3.1. Set up for literate DevOps</a>
+<li><a href="#orgb36a814">3.1. Set up for literate DevOps</a>
 <ul>
-<li><a href="#org3be3359">3.1.1. Install Emacs</a></li>
-<li><a href="#org1040f8a">3.1.2. Install Dotfiles</a></li>
-<li><a href="#org9024284">3.1.3. Download this README</a></li>
+<li><a href="#org55089e2">3.1.1. Install Emacs</a></li>
+<li><a href="#org3804f11">3.1.2. Install Dotfiles</a></li>
+<li><a href="#orgeb0f8b7">3.1.3. Download this README</a></li>
 </ul>
 </li>
-<li><a href="#org572fd27">3.2. Set up AWS EC2</a></li>
-<li><a href="#orgb120233">3.3. Set up using literate DevOps</a>
+<li><a href="#org0be9583">3.2. Set up AWS EC2</a></li>
+<li><a href="#org290c0eb">3.3. Set up using literate DevOps</a>
 <ul>
-<li><a href="#org39ed20f">3.3.1. Troubleshooting: <code>No org-babel-execute function for sh!</code></a></li>
-<li><a href="#orgcad789c">3.3.2. Swap</a></li>
-<li><a href="#org0771c4e">3.3.3. Install</a>
+<li><a href="#org7df4463">3.3.1. Troubleshooting: <code>No org-babel-execute function for sh!</code></a></li>
+<li><a href="#org4a36f1e">3.3.2. Swap</a></li>
+<li><a href="#orgee463d9">3.3.3. Install</a>
 <ul>
-<li><a href="#org4711592">3.3.3.1. Basic tools</a></li>
-<li><a href="#orgbf93820">3.3.3.2. Docker</a></li>
+<li><a href="#orge419346">3.3.3.1. Basic tools</a></li>
+<li><a href="#orgbae1865">3.3.3.2. Docker</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgadd08a1">3.4. DPM</a></li>
+<li><a href="#org1c51931">3.4. DPM</a></li>
 </ul>
 </li>
-<li><a href="#orgefc5473">4. Links</a>
+<li><a href="#org63381e8">4. Links</a>
 <ul>
-<li><a href="#org9c367a6">4.1. Nix</a></li>
+<li><a href="#orgd4e2ef8">4.1. Nix</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <p>
-See <a href="#org01ece66">3</a> for setting up the host machine.
+See <a href="#org4b30aaf">3</a> for setting up the host machine.
 </p>
 
-<div id="outline-container-org84a1869" class="outline-2">
-<h2 id="org84a1869"><span class="section-number-2">1</span> Dependencies</h2>
+<div id="outline-container-orgf2140ab" class="outline-2">
+<h2 id="orgf2140ab"><span class="section-number-2">1</span> Dependencies</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li>Ruby is require by the <code>bin/build</code> script.</li>
@@ -272,8 +272,8 @@ See <a href="#org01ece66">3</a> for setting up the host machine.
 </div>
 </div>
 
-<div id="outline-container-orgd23f646" class="outline-2">
-<h2 id="orgd23f646"><span class="section-number-2">2</span> Usage</h2>
+<div id="outline-container-org7c23721" class="outline-2">
+<h2 id="org7c23721"><span class="section-number-2">2</span> Usage</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-shell">build &amp;&amp; verify &amp;&amp; push
@@ -282,16 +282,16 @@ See <a href="#org01ece66">3</a> for setting up the host machine.
 </div>
 </div>
 
-<div id="outline-container-org01ece66" class="outline-2">
-<h2 id="org01ece66"><span class="section-number-2">3</span> VPS setup</h2>
+<div id="outline-container-org4b30aaf" class="outline-2">
+<h2 id="org4b30aaf"><span class="section-number-2">3</span> VPS setup</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org3cfefca" class="outline-3">
-<h3 id="org3cfefca"><span class="section-number-3">3.1</span> Set up for literate DevOps</h3>
+<div id="outline-container-orgb36a814" class="outline-3">
+<h3 id="orgb36a814"><span class="section-number-3">3.1</span> Set up for literate DevOps</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
-<div id="outline-container-org3be3359" class="outline-4">
-<h4 id="org3be3359"><span class="section-number-4">3.1.1</span> Install Emacs</h4>
+<div id="outline-container-org55089e2" class="outline-4">
+<h4 id="org55089e2"><span class="section-number-4">3.1.1</span> Install Emacs</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <div class="org-src-container">
 <pre class="src src-shell">apt update &amp;&amp; apt upgrade -y &amp;&amp; apt install emacs-nox
@@ -300,27 +300,27 @@ See <a href="#org01ece66">3</a> for setting up the host machine.
 </div>
 </div>
 
-<div id="outline-container-org1040f8a" class="outline-4">
-<h4 id="org1040f8a"><span class="section-number-4">3.1.2</span> Install Dotfiles</h4>
+<div id="outline-container-org3804f11" class="outline-4">
+<h4 id="org3804f11"><span class="section-number-4">3.1.2</span> Install Dotfiles</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
 <pre class="src src-shell">git clone --bare https://github.com/jakub-stastny/dotfiles.git ~/.dotfiles.git
 
-git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git config remote.origin.fetch <span style="color: #79a8ff;">"+refs/heads/*:refs/remotes/origin/*"</span>
-git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git fetch
-git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git branch --set-upstream-to=origin/master master
-git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git --work-tree=$<span style="color: #00d3d0; font-weight: bold;">HOME</span> checkout
+git --git-dir=$<span style="color: #00d3d0;">HOME</span>/.dotfiles.git config remote.origin.fetch <span style="color: #79a8ff;">"+refs/heads/*:refs/remotes/origin/*"</span>
+git --git-dir=$<span style="color: #00d3d0;">HOME</span>/.dotfiles.git fetch
+git --git-dir=$<span style="color: #00d3d0;">HOME</span>/.dotfiles.git branch --set-upstream-to=origin/master master
+git --git-dir=$<span style="color: #00d3d0;">HOME</span>/.dotfiles.git --work-tree=$<span style="color: #00d3d0;">HOME</span> checkout
 ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
 
 ~/.scripts/hooks/dotfiles.install
-git --git-dir=$<span style="color: #00d3d0; font-weight: bold;">HOME</span>/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
+git --git-dir=$<span style="color: #00d3d0;">HOME</span>/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9024284" class="outline-4">
-<h4 id="org9024284"><span class="section-number-4">3.1.3</span> Download this README</h4>
+<div id="outline-container-orgeb0f8b7" class="outline-4">
+<h4 id="orgeb0f8b7"><span class="section-number-4">3.1.3</span> Download this README</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <div class="org-src-container">
 <pre class="src src-shell">wget https://raw.githubusercontent.com/jakub-stastny/dev/master/README.org -O install.org
@@ -331,8 +331,8 @@ emacs install.org
 </div>
 </div>
 
-<div id="outline-container-org572fd27" class="outline-3">
-<h3 id="org572fd27"><span class="section-number-3">3.2</span> Set up AWS EC2</h3>
+<div id="outline-container-org0be9583" class="outline-3">
+<h3 id="org0be9583"><span class="section-number-3">3.2</span> Set up AWS EC2</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <a href="https://blink.sh/docs/cloud-providers/aws">https://blink.sh/docs/cloud-providers/aws</a>
@@ -340,8 +340,8 @@ emacs install.org
 </div>
 </div>
 
-<div id="outline-container-orgb120233" class="outline-3">
-<h3 id="orgb120233"><span class="section-number-3">3.3</span> Set up using literate DevOps</h3>
+<div id="outline-container-org290c0eb" class="outline-3">
+<h3 id="org290c0eb"><span class="section-number-3">3.3</span> Set up using literate DevOps</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 From here on you can run blocks of code from this very README using <a href="http://howardism.org/Technical/Emacs/literate-devops.html">Literate DevOps</a>.
@@ -352,8 +352,8 @@ Eval code using <code>C-c C-c</code>.
 </p>
 </div>
 
-<div id="outline-container-org39ed20f" class="outline-4">
-<h4 id="org39ed20f"><span class="section-number-4">3.3.1</span> Troubleshooting: <code>No org-babel-execute function for sh!</code></h4>
+<div id="outline-container-org7df4463" class="outline-4">
+<h4 id="org7df4463"><span class="section-number-4">3.3.1</span> Troubleshooting: <code>No org-babel-execute function for sh!</code></h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 Eval this in <code>*scratch*</code>:
@@ -366,43 +366,43 @@ Eval this in <code>*scratch*</code>:
 </div>
 </div>
 
-<div id="outline-container-orgcad789c" class="outline-4">
-<h4 id="orgcad789c"><span class="section-number-4">3.3.2</span> Swap</h4>
+<div id="outline-container-org4a36f1e" class="outline-4">
+<h4 id="org4a36f1e"><span class="section-number-4">3.3.2</span> Swap</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <p>
 As DigitalOcean runs SSD's, there's no swap file enabled by default. <a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-18-04#step-5-%E2%80%93-making-the-swap-file-permanent">DigitalOcean community post</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #f78fe7;">export</span> <span style="color: #00d3d0; font-weight: bold;">LC_ALL</span>=en_US.UTF-8
-<span style="color: #f78fe7;">export</span> <span style="color: #00d3d0; font-weight: bold;">LANG</span>=en_US.UTF-8
-<span style="color: #f78fe7;">export</span> <span style="color: #00d3d0; font-weight: bold;">DEBIAN_FRONTEND</span>=noninteractive
+<pre class="src src-shell"><span style="color: #f78fe7;">export</span> <span style="color: #00d3d0;">LC_ALL</span>=en_US.UTF-8
+<span style="color: #f78fe7;">export</span> <span style="color: #00d3d0;">LANG</span>=en_US.UTF-8
+<span style="color: #f78fe7;">export</span> <span style="color: #00d3d0;">DEBIAN_FRONTEND</span>=noninteractive
 
-<span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Swap</span>
+<span style="color: #a8a8a8;"># </span><span style="color: #a8a8a8;">Swap</span>
 fallocate -l 2.5G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
-swapon --show <span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Make sure it reports swap.</span>
-free -m <span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Make sure it reports swap.</span>
+swapon --show <span style="color: #a8a8a8;"># </span><span style="color: #a8a8a8;">Make sure it reports swap.</span>
+free -m <span style="color: #a8a8a8;"># </span><span style="color: #a8a8a8;">Make sure it reports swap.</span>
 
-<span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Persistent swap</span>
+<span style="color: #a8a8a8;"># </span><span style="color: #a8a8a8;">Persistent swap</span>
 <span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">'/swapfile none swap sw 0 0'</span> | tee -a /etc/fstab
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0771c4e" class="outline-4">
-<h4 id="org0771c4e"><span class="section-number-4">3.3.3</span> Install</h4>
+<div id="outline-container-orgee463d9" class="outline-4">
+<h4 id="orgee463d9"><span class="section-number-4">3.3.3</span> Install</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <p>
 Already installed: git tmux htop
 </p>
 </div>
 
-<div id="outline-container-org4711592" class="outline-5">
-<h5 id="org4711592"><span class="section-number-5">3.3.3.1</span> Basic tools</h5>
+<div id="outline-container-orge419346" class="outline-5">
+<h5 id="orge419346"><span class="section-number-5">3.3.3.1</span> Basic tools</h5>
 <div class="outline-text-5" id="text-3-3-3-1">
 <div class="org-src-container">
 <pre class="src src-shell">apt install -y mosh zsh neovim build-essential silversearcher-ag
@@ -419,8 +419,8 @@ cat /dev/zero | ssh-keygen -q -N <span style="color: #79a8ff;">""</span>
 </div>
 
 
-<div id="outline-container-orgbf93820" class="outline-5">
-<h5 id="orgbf93820"><span class="section-number-5">3.3.3.2</span> Docker</h5>
+<div id="outline-container-orgbae1865" class="outline-5">
+<h5 id="orgbae1865"><span class="section-number-5">3.3.3.2</span> Docker</h5>
 <div class="outline-text-5" id="text-3-3-3-2">
 <p>
 <a href="https://docs.docker.com/engine/install/ubuntu">Docker Ubuntu installation guide</a>.
@@ -441,13 +441,13 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 </div>
 </div>
 
-<div id="outline-container-orgadd08a1" class="outline-3">
-<h3 id="orgadd08a1"><span class="section-number-3">3.4</span> DPM</h3>
+<div id="outline-container-org1c51931" class="outline-3">
+<h3 id="org1c51931"><span class="section-number-3">3.4</span> DPM</h3>
 <div class="outline-text-3" id="text-3-4">
 <div class="org-src-container">
 <pre class="src src-shell">docker install jakubstastny/docker-project-manager
 mkdir projects
-docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager <span style="color: #a8a8a8; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">Dry run only to download it.</span>
+docker run -it --rm -v ~/projects:/projects jakubstastny/docker-project-manager <span style="color: #a8a8a8;"># </span><span style="color: #a8a8a8;">Dry run only to download it.</span>
 
 <span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">"  Add your new key to https://github.com/settings/keys and reboot\n\n"</span>
 cat ~/.ssh/id_rsa.pub
@@ -457,12 +457,12 @@ cat ~/.ssh/id_rsa.pub
 </div>
 </div>
 
-<div id="outline-container-orgefc5473" class="outline-2">
-<h2 id="orgefc5473"><span class="section-number-2">4</span> Links</h2>
+<div id="outline-container-org63381e8" class="outline-2">
+<h2 id="org63381e8"><span class="section-number-2">4</span> Links</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org9c367a6" class="outline-3">
-<h3 id="org9c367a6"><span class="section-number-3">4.1</span> <a href="https://nixos.org">Nix</a></h3>
+<div id="outline-container-orgd4e2ef8" class="outline-3">
+<h3 id="orgd4e2ef8"><span class="section-number-3">4.1</span> <a href="https://nixos.org">Nix</a></h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Nix is a tool that takes a unique approach to package management and system configuration. Learn how to make reproducible, declarative and reliable systems.
@@ -477,7 +477,7 @@ It looks very interesting. I don't need it at this moment, but let's keep it her
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: root</p>
-<p class="date">Created: 2021-07-03 Sat 12:51</p>
+<p class="date">Created: 2021-07-15 Thu 17:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
