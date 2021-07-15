@@ -148,9 +148,6 @@ As a side note, I highly recommend using [[https://mosh.org][Mosh]] instead of S
 
 * Development
 
-# Can GH read this?
-** COMMENT Test
-
 - The development branch is =literate.dev=.
 - The stable branch is =literate.stable=.
 - [[build.org][Development documentation]] is generated from =literate.stable=.
