@@ -13,7 +13,7 @@
 #+end_src
 
 #+RESULTS:
-[[file:diagram.png]]
+[[file:export/diagram.png]]
 
 * About
 
@@ -25,7 +25,7 @@
 #+end_export
 
 
-My development environment with my favourite tools and dotfiles. For usage, please check out the [[https://github.com/jakub-stastny/dev][README]]. This is the developer documentation.
+My development environment with my favourite tools and dotfiles. For usage, please check out the [[https://github.com/jakub-stastny/dev][README]]. This is the developer documentation, describing the implementation and reasoning if aplicable.
 
 * Dockerfile
   :PROPERTIES:
