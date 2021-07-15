@@ -124,6 +124,17 @@ Use =tangle= with no arguments to tangle all the orgmode files in the project or
 
 - It might be worth to check out the [[https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry][GitHub container registry]].
 
+*** Serve the published site
+    :PROPERTIES:
+    :CUSTOM_ID: serve-command
+    :END:
+
+#+begin_src shell
+  serve() {
+    (cd ../dev.doc/docs && python -m SimpleHTTPServer 8080)
+  }
+#+end_src
+
 *** Main
 
 #+begin_src shell

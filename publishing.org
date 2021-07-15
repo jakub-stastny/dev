@@ -42,7 +42,7 @@ That's it! Now let's set up the publisher.
 
     ("dev/static"
       :base-directory "~/dev"
-      :base-extension "css\\|html\\" ; TODO: do it dynamically, it doesn't seem to be able to take globs.
+      :base-extension "css\\|html" ; TODO: do it dynamically, it doesn't seem to be able to take globs.
       :publishing-directory "~/dev.doc/docs"
       :recursive t
       :publishing-function org-publish-attachment)))
@@ -77,13 +77,11 @@ That's it! Now let's set up the publisher.
   <!DOCTYPE html>
   <meta charset="utf-8">
   <title>Redirecting to the README</title>
-  <meta http-equiv="refresh" content="0; URL=/README.html">
+  <meta http-equiv="refresh" content="0; URL=../README.html">
 #+end_src
 
 ** Development
 
 GitHub pages cache doesn't get invalidated on push to the GitHub pages branch (=gh-pages= in this case).
 
-#+begin_src shell
-  (cd ../dev.doc/docs && python -m SimpleHTTPServer 8080)
-#+end_src
+Use the [[./development-environment.org::#serve-command][serve command]] command to start an HTTP server.
