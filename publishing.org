@@ -50,7 +50,7 @@ That's it! Now let's set up the publisher.
   (defun after-publish (fname-original fname-exported)
     (when (equal (file-name-base fname-original) "README")
       (message "Changing README.html -> index.html")
-      (rename-file fname-exported (replace-regexp-in-string "README" "index" fname-exported t))))
+      (rename-file fname-exported (replace-regexp-in-string "README" "index" fname-exported t) t)))
 
   (setq org-publish-after-publishing-hook 'after-publish)
 #+end_src

@@ -7,6 +7,10 @@
 # so there's no need for the export block we use for the Orgmode export.
 [[https://github.com/jakub-stastny/dev/actions/workflows/test.yml][https://github.com/jakub-stastny/dev/actions/workflows/test.yml/badge.svg]]
 
+#+begin_comment
+Let's see if GH sees this.
+#+end_comment
+
 #+name: badge
 #+begin_export html
   <a href="https://github.com/jakub-stastny/dev/actions/workflows/test.yml">
