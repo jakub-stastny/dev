@@ -178,15 +178,13 @@ Only after we get to the end of the =block=, the commands in it should execute a
     ([command] (sh "zsh" "-c" command))
     ([command env] (apply sh "zsh" "-c" command env)))
 
-  (def colours {
-    :red 31 :green 32 :yellow 33
-    :blue 34 :purple 35 :cyan 36
-    :grey 37})
+  (def colours {:red 31 :green 32 :yellow 33
+                :blue 34 :purple 35 :cyan 36 :grey 37})
 
   ; \033[fg;bgm
-  (defn colour [colour text]
-    (let [colour-code (colour colours)]
-      (str "\033[" colour-code "m" text "\033[0m")))
+  (defn colour "Wraps text in ANSI colour escape sequence" [colour text]
+    (if-let [colour-code (colours colour)]
+      (str "\033[" colour-code "m" text "\033[0m") text))
 
   (defn current-unix-time [] (quot (System/currentTimeMillis) 1000))
 

@@ -1,9 +1,18 @@
 #+TITLE: Release
 
-- Again rather clone under (a new) =dev.stable= directory.
-- Copy everything over from =dev=.
-- Use =.gitignore= to ignore everything but =*.org= and =.github=. Release has the Docker image available, there is no need to supply the dev tools, these are in the dev branch. Of course it'd have the Org files that these tools get tangled from, but no need to include the tangled forms specifically.
+# - Again rather clone under (a new) =dev.stable= directory.
+# - Copy everything over from =dev=.
+# - Use =.gitignore= to ignore everything but =*.org= and =.github=. Release has the Docker image available, there is no need to supply the dev tools, these are in the dev branch. Of course it'd have the Org files that these tools get tangled from, but no need to include the tangled forms specifically.
+# - Inline =bin/verify= (using a template/script?)
+# - Build & Docker tag. Every tag should be based on Ubuntu version, but can have extra info, such as: =ubuntu-21.04= (base) and then if a new feature is added, say Emacs 28, it'd be =ubuntu-21.04-emacs-28=.
+# - Git add and commit all & Git tag.
+# - Link the Docker tag from the README (using a template/script?)
+# - Publish =gh-pages= (show instructions, don't do it in a script).
+
+
+.github, filter branch
 - Inline =bin/verify= (using a template/script?)
+
 - Build & Docker tag. Every tag should be based on Ubuntu version, but can have extra info, such as: =ubuntu-21.04= (base) and then if a new feature is added, say Emacs 28, it'd be =ubuntu-21.04-emacs-28=.
 - Git add and commit all & Git tag.
 - Link the Docker tag from the README (using a template/script?)

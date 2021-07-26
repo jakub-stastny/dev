@@ -46,6 +46,12 @@ That's it! Now let's set up the publisher.
       :publishing-directory "~/dev.doc/docs"
       :recursive t
       :publishing-function org-publish-attachment)))
+      ;; TODO:
+      ;; :section-numbers nil
+      ;; :table-of-contents nil
+      ;; :style "<link rel=\"stylesheet\"
+      ;;        href=\"../other/mystyle.css\"
+      ;;        type=\"text/css\"/>")))
 
   ;; (defun after-publish (fname-original fname-exported)
   ;;   (when (equal (file-name-base fname-original) "README")
