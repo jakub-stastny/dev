@@ -172,14 +172,16 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
 #+name: bb-helpers
 #+begin_src clojure
-  ;; TODO: Show how much time is something taking.
-
   (require '[clojure.java.shell :refer [sh with-sh-dir]])
   (require '[clojure.string :as str])
 
   (defn zsh
     ([command] (sh "zsh" "-c" command))
-    ([command env] (apply sh "zsh" "-c" command env)))
+    ([command env] (sh "zsh" "-c" command :env env)))
+
+  (comment
+    (zsh "echo $HOME")
+    (zsh "echo $VAR" {:VAR "TEST"}))
 
   (def colours {:red 31 :green 32 :yellow 33
                 :blue 34 :purple 35 :cyan 36 :grey 37})
@@ -188,14 +190,24 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (if-let [colour-code (colours colour)]
       (str "\033[" colour-code "m" text "\033[0m") text))
 
+  (comment
+    (colour :red "Hello world!")
+    (colour "whatever" "Hello world!"))
+
   (defn- current-unix-time [] (quot (System/currentTimeMillis) 1000))
+
+  (comment (current-unix-time))
 
   (def ^:private execution-duration-limits {:instant 3 :fast 35 :slow 90})
 
   (defn- format-duration-as-seconds [duration] (str duration "s"))
 
+  (comment (format-duration-as-seconds 7))
+
   (defn- format-duration-as-minutes [duration]
     (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m"))
+
+  (comment (format-duration-as-minutes 92))
 
   (defn- format-duration [duration]
     (if-let [colour-name
@@ -208,16 +220,21 @@ Only after we get to the end of the =block=, the commands in it should execute a
                             (> duration 60) (format-duration-as-minutes duration)))))
 
   (comment
-    (format-duration 1)
+    (format-duration 1)                   ; show nothing
     (format-duration 37)
     (format-duration 92))
 
-  (defn- format-duration-wrapper
-    ([duration]
-     (if-let [formatted-duration (format-duration duration)] (str "took " (format-duration duration) ".") ""))
+  (defn- format-duration-unless-instant [duration formatter-fn]
+    (if-let [formatted-duration (format-duration duration)]
+      (formatter-fn formatted-duration) ""))
 
-    ([duration lambda]
-     (if-let [formatted-duration (format-duration duration)] (lambda (format-duration-wrapper duration)) "")))
+  (comment
+    (format-duration-unless-instant 2 identity)
+    (format-duration-unless-instant 7 identity))
+
+  (defn- format-duration-wrapper
+    ([duration] (format-duration-unless-instant duration #(str "took " (format-duration %) ".")))
+    ([duration lambda] (format-duration-unless-instant duration #(lambda (format-duration-wrapper %)))))
 
   (comment
     (format-duration-wrapper 1)
