@@ -190,7 +190,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
   (defn- current-unix-time [] (quot (System/currentTimeMillis) 1000))
 
-  (def ^:private execution-duration-limits {:short 35 :normal 90})
+  (def ^:private execution-duration-limits {:instant 3 :fast 35 :slow 90})
 
   (defn- format-duration-as-seconds [duration] (str duration "s"))
 
@@ -198,18 +198,31 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (str (int (/ duration 60.0)) ":" (format "%02d" (mod duration 60)) "m"))
 
   (defn- format-duration [duration]
-    (let [colour-name (cond (< duration 35) :green
-                            (< duration 90) :yellow
-                            :else           :red)]
+    (if-let [colour-name
+             (cond (< duration (:instant execution-duration-limits)) nil
+                   (< duration (:fast execution-duration-limits)) :green
+                   (< duration (:slow execution-duration-limits)) :yellow
+                   :default :red)]
       (colour colour-name (cond
                             (< duration 60) (format-duration-as-seconds duration)
                             (> duration 60) (format-duration-as-minutes duration)))))
 
-  ;; TODO: refactor, this should be in format-duration: return false if too short.
-  (def ^:private too-short 3)
+  (comment
+    (format-duration 1)
+    (format-duration 37)
+    (format-duration 92))
+
   (defn- format-duration-wrapper
-    ([duration] (if (<= duration too-short) "" (str "took " (format-duration duration) ".")))
-    ([duration lambda] (if (<= duration too-short) "" (lambda (format-duration-wrapper duration)))))
+    ([duration]
+     (if-let [formatted-duration (format-duration duration)] (str "took " (format-duration duration) ".") ""))
+
+    ([duration lambda]
+     (if-let [formatted-duration (format-duration duration)] (lambda (format-duration-wrapper duration)) "")))
+
+  (comment
+    (format-duration-wrapper 1)
+    (format-duration-wrapper 37)
+    (format-duration-wrapper 92))
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
