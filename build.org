@@ -239,15 +239,19 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (format-duration-wrapper 37)
     (format-duration-wrapper 92))
 
-  (defn run [command & rest]
-    (let [start-time (current-unix-time)]
+  (defn run [& args]
+    (let [[command] args start-time (current-unix-time)]
       (print (str "  " (colour :green "λ ") (colour :grey command)) "")
       (flush)
-      (let [result (zsh command rest)]
+      (let [result (apply zsh args)]
         (let [duration (- (current-unix-time) start-time)]
           (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
             (println (format-duration-wrapper duration format-fn)))
           result))))
+
+  (comment
+    (run "echo $HOME")
+    (run "echo $VAR" :env {:VAR "TEST"}))
 
   (defn- error-message [result]
     (let [out (:out result) err (:err result)
