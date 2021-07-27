@@ -282,7 +282,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
   (defn package "Install package(s)." [& names]
     (let [command (str "apt-get install -y " (str/join " " names))]
-      (ensure-success (run command :env {"DEBIAN_FRONTEND" "noninteractive"}))))
+      (ensure-success (run command :env {:DEBIAN_FRONTEND "noninteractive"}))))
 #+end_src
 
 ** Unminimise the system
