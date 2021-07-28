@@ -245,16 +245,6 @@ Only after we get to the end of the =block=, the commands in it should execute a
             (println (format-duration-unless-instant duration format-fn)))
           result))))
 
-  ;; (defn run [& args]
-  ;;   (let [[command] args start-time (current-unix-time)]
-  ;;     (print (str "  " (colour :green "λ ") (colour :grey command)) "")
-  ;;     (flush)
-  ;;     (let [result (zsh command args)]
-  ;;       (let [duration (- (current-unix-time) start-time)]
-  ;;         (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
-  ;;           (println (format-duration-unless-instant duration format-fn)))
-  ;;         result))))
-
   (comment
     (run "echo $HOME")
     (run "echo $VAR" :env {:VAR "TEST"}))
@@ -275,8 +265,6 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (println (error-message result))
     (System/exit 1))
 
-
-  ;;; Public helpers.
   (defn ensure-success [result]
     (if (= (:exit result) 0) result (fail result)))
 
@@ -288,7 +276,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
        (let [start-time (current-unix-time)]
          (do ~@sexps)
          (let [duration (- (current-unix-time) start-time)]
-           (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-unless-instant duration #(str "took" % ".")) "\n")))))
+           (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-unless-instant duration #(str "took " % ".")) "\n")))))
 
   (defn package "Install package(s)." [& names]
     (let [command (str "apt-get install -y " (str/join " " names))]
