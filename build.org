@@ -239,11 +239,11 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (let [start-time (current-unix-time)]
       (print (str "  " (colour :green "λ ") (colour :grey command)) "")
       (flush)
-      (let [result (apply zsh command rest)]
-        (let [duration (- (current-unix-time) start-time)]
-          (let [format-fn (fn [formatted-duration-string] (str "... took " formatted-duration-string "."))]
-            (println (format-duration-unless-instant duration format-fn)))
-          result))))
+      (let [result (apply zsh command rest)
+            duration (- (current-unix-time) start-time)
+            format-fn (fn [formatted-duration-string] (str "... took " formatted-duration-string "."))]
+        (println (format-duration-unless-instant duration format-fn))
+        result)))
 
   (comment
     (run "echo $HOME")
