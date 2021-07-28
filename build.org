@@ -207,43 +207,33 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
   (comment (format-duration-as-minutes 92))
 
-  (defn- format-duration [duration]
+  (defn- format-duration-as-either-minutes-or-seconds [duration]
+    (if (< duration 60)
+        (format-duration-as-seconds duration)
+        (format-duration-as-minutes duration)))
+
+  (defn- format-duration
+    "Format duration as seconds, minutes or return nil if beneath certain threshold."
+    [duration]
     (if-let [colour-name
              (cond (< duration (:instant execution-duration-limits)) nil
                    (< duration (:fast execution-duration-limits)) :green
                    (< duration (:slow execution-duration-limits)) :yellow
                    :default :red)]
-      (colour colour-name (cond
-                            (< duration 60) (format-duration-as-seconds duration)
-                            (> duration 60) (format-duration-as-minutes duration)))))
+      (colour colour-name (format-duration-as-either-minutes-or-seconds duration))))
 
   (comment
     (format-duration 1)                   ; show nothing
     (format-duration 37)
     (format-duration 92))
 
-  (defn- format-duration-unless-instant [duration formatter-fn]
+  (defn- format-duration-unless-instant [duration format-fn]
     (if-let [formatted-duration (format-duration duration)]
-      (formatter-fn formatted-duration) ""))
+      (format-fn formatted-duration) ""))
 
   (comment
-    (format-duration-unless-instant 2 identity)
-    (format-duration-unless-instant 7 identity))
-
-  ;;    (format-duration-unless-instant duration #(lambda (format-duration-wrapper %)))))
-  (defn- format-duration-wrapper
-    ([duration]
-     (format-duration-unless-instant duration #(str "took " % ".")))
-    ([duration lambda]
-     (format-duration-unless-instant duration (lambda (format-duration-wrapper duration)))))
-
-  (comment
-    (format-duration-wrapper 1)
-    (format-duration-wrapper 37)
-    (format-duration-wrapper 92)
-    (format-duration-wrapper 1 #(str "~ " %))
-    (format-duration-wrapper 37 #(str "~ " %))
-    (format-duration-wrapper 92 #(str "~ " %)))
+    (format-duration-unless-instant 2 #(str "~ " %))
+    (format-duration-unless-instant 7 #(str "~ " %)))
 
   (defn run [command & rest]
     (let [start-time (current-unix-time)]
@@ -252,7 +242,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
       (let [result (zsh command rest)]
         (let [duration (- (current-unix-time) start-time)]
           (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
-            (println (format-duration-wrapper duration format-fn)))
+            (println (format-duration-unless-instant duration format-fn)))
           result))))
 
   (defn- error-message [result]
@@ -284,7 +274,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
        (let [start-time (current-unix-time)]
          (do ~@sexps)
          (let [duration (- (current-unix-time) start-time)]
-           (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-wrapper duration) "\n")))))
+           (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-unless-instant duration #(str "took" % ".")) "\n")))))
 
   (defn package "Install package(s)." [& names]
     (let [command (str "apt-get install -y " (str/join " " names))]
