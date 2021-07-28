@@ -276,7 +276,11 @@ Only after we get to the end of the =block=, the commands in it should execute a
        (let [start-time (current-unix-time)]
          (do ~@sexps)
          (let [duration (- (current-unix-time) start-time)]
-           (println (colour :cyan "\n  ~") "Block" (colour :grey ~name) (format-duration-unless-instant duration #(str "took " % ".")) "\n")))))
+           (println (colour :cyan "\n  ~")
+                    "Block"
+                    (colour :grey ~name)
+                    (format-duration-unless-instant duration #(str "took " % "."))
+                    "\n")))))
 
   (defn package "Install package(s)." [& names]
     (let [command (str "apt-get install -y " (str/join " " names))]
