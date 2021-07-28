@@ -177,8 +177,8 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
   (defn zsh [& args] (apply sh "zsh" "-c" (vec (flatten args))))
 
-  (run "apt-get install -y man" :env {:DEBIAN_FRONTEND "noninteractive"})
-  (run "yes | unminimize")
+  ;; (run "apt-get install -y man" :env {:DEBIAN_FRONTEND "noninteractive"})
+  ;; (run "yes | unminimize")
   (comment
     (zsh "echo $HOME")
     (zsh "echo $VAR" :env {:VAR "TEST"}))
