@@ -241,7 +241,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
       (flush)
       (let [result (apply zsh command rest)
             duration (- (current-unix-time) start-time)
-            format-fn (fn [formatted-duration-string] (str "... took " formatted-duration-string "."))]
+            format-fn #(str "... took " % ".")]
         (println (format-duration-unless-instant duration format-fn))
         result)))
 
