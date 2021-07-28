@@ -230,28 +230,30 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (format-duration-unless-instant 2 identity)
     (format-duration-unless-instant 7 identity))
 
+  ;;    (format-duration-unless-instant duration #(lambda (format-duration-wrapper %)))))
   (defn- format-duration-wrapper
-    ([duration] (format-duration-unless-instant duration #(str "took " (format-duration %) ".")))
-    ([duration lambda] (format-duration-unless-instant duration #(lambda (format-duration-wrapper %)))))
+    ([duration]
+     (format-duration-unless-instant duration #(str "took " % ".")))
+    ([duration lambda]
+     (format-duration-unless-instant duration (lambda (format-duration-wrapper duration)))))
 
   (comment
     (format-duration-wrapper 1)
     (format-duration-wrapper 37)
-    (format-duration-wrapper 92))
+    (format-duration-wrapper 92)
+    (format-duration-wrapper 1 #(str "~ " %))
+    (format-duration-wrapper 37 #(str "~ " %))
+    (format-duration-wrapper 92 #(str "~ " %)))
 
-  (defn run [& args]
-    (let [[command] args start-time (current-unix-time)]
+  (defn run [command & rest]
+    (let [start-time (current-unix-time)]
       (print (str "  " (colour :green "λ ") (colour :grey command)) "")
       (flush)
-      (let [result (apply zsh args)]
+      (let [result (zsh command rest)]
         (let [duration (- (current-unix-time) start-time)]
           (let [format-fn (fn [formatted-duration-string] (str "... " formatted-duration-string))]
             (println (format-duration-wrapper duration format-fn)))
           result))))
-
-  (comment
-    (run "echo $HOME")
-    (run "echo $VAR" :env {:VAR "TEST"}))
 
   (defn- error-message [result]
     (let [out (:out result) err (:err result)
