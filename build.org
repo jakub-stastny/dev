@@ -411,7 +411,8 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
     (let [script-name "linux-install.sh"]
       (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o " script-name)))
       (ensure-success (run (str "chmod +x " script-name)))
-      (ensure-success (run (str "./" script-name)))))
+      (ensure-success (run (str "./" script-name)))
+      (ensure-success (run (str "rm " script-name))))
 #+end_src
 
 ** GH CLI
