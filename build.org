@@ -175,8 +175,10 @@ Only after we get to the end of the =block=, the commands in it should execute a
   (require '[clojure.java.shell :refer [sh with-sh-dir]])
   (require '[clojure.string :as str])
 
-  (defn zsh [& args] (apply sh "zsh" "-c" (flatten args)))
+  (defn zsh [& args] (apply sh "zsh" "-c" (vec (flatten args))))
 
+  (run "apt-get install -y man" :env {:DEBIAN_FRONTEND "noninteractive"})
+  (run "yes | unminimize")
   (comment
     (zsh "echo $HOME")
     (zsh "echo $VAR" :env {:VAR "TEST"}))
