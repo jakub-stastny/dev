@@ -19,12 +19,13 @@ def run(command_args, log, &block)
   command = command_args.reduce do |buffer, chunk|
     [buffer, chunk.match(/ /) ? "'#{chunk}'" : chunk].join(' ')
   end
+  puts %x{#{command}}
 
-  puts "\n#{`tput setaf 1`}# #{`tput setaf 7`}#{command}#{`tput sgr0`}"
-  log.puts("\n$ #{command}")
-  Open3.popen3(*command_args) do |_, stdout, stderr, status_thread|
-    block.call(stdout, stderr, status_thread)
-  end
+  # puts "\n#{`tput setaf 1`}# #{`tput setaf 7`}#{command}#{`tput sgr0`}"
+  # log.puts("\n$ #{command}")
+  # Open3.popen3(*command_args) do |_, stdout, stderr, status_thread|
+  #   block.call(stdout, stderr, status_thread)
+  # end
 end
 
 def main # So we can rescue
@@ -35,6 +36,7 @@ def main # So we can rescue
 
   docker_build_metadata = BUILD_METADATA.map { |key, value| ["--build-arg", "#{key}=#{value}"] }.flatten
   # The --progress tty option is for allowing progress bars to update.
+  # Actually it doesn't update because it runs in Ruby, the option isn't required I think.
   docker_build_command = [
     'docker', 'build', '.', '-t', IMAGE, *docker_build_metadata, '--progress', 'tty'
   ]
