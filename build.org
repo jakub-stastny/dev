@@ -175,6 +175,8 @@ No need for GH actions then.
 
 *** TODO Start Emacs, so Leaf installs everything, do native comp on all the packages.
 
+*** FIXME What TZ to use? US East is no longer relevant.
+
 #+name: bb-helpers
 #+begin_src clojure
   (require '[clojure.java.shell :refer [sh with-sh-dir]])
@@ -346,7 +348,9 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
     (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
 
     ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)
-    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev" "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6" "libxml2" "zlib1g" "libncurses-dev")
+    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev"
+             "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6"
+             "libxml2" "zlib1g" "libncurses-dev")
 
     ; Dependencies for building Emacs.
     (package "build-essential" "texinfo" "autoconf" "pkg-config")
