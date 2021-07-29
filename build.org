@@ -413,16 +413,16 @@ Add Yarn sources (without installing it).
 - https://yarnpkg.com/lang/en/docs/install/#debian-stable
 - https://github.com/nodesource/distributions
 
-
 ** Time zone
 
 #+begin_src clojure :tangle scripts/set-up-time-zone
   <<bb-helpers>>
 
+  (def time-zone "America/Mexico_City")
+
   (block "setting up time zone"
-    (let [time-zone "America/Mexico_City"]
-      (ensure-success
-       (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime")))))
+    (ensure-success
+     (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime"))))
 #+end_src
 
 ** Dotfiles
@@ -462,9 +462,10 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
 #+begin_src clojure :tangle scripts/install-clojure-cli
   <<bb-helpers>>
 
+  (def version "1.10.3.933") ; July 28, 2021
+
   (block "installing Clojure CLI"
-    (let [version "1.10.3.933"    ;  July 28, 2021
-          script-name "linux-install.sh"
+    (let [script-name "linux-install.sh"
           script-url (str "https://download.clojure.org/install/linux-install-" version ".sh")]
       (ensure-success (run (str "curl " script-url " -o " script-name)))
       (ensure-success (run (str "chmod +x " script-name)))
@@ -495,9 +496,11 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
 #+begin_src clojure :tangle scripts/make-zsh-the-default-shell
   <<bb-helpers>>
 
+  (def zsh-path
+    (str/trim (:out (ensure-success (run "which zsh")))))
+
   (block "making ZSH the default shell"
-    (let [zsh-path (str/trim (:out (ensure-success (run "which zsh"))))]
-      (ensure-success (run (str "chsh -s " zsh-path)))))
+    (ensure-success (run (str "chsh -s " zsh-path))))
 #+end_src
 
 ** Set up SSH and change root password
