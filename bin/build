@@ -34,8 +34,9 @@ def main # So we can rescue
   ]
 
   docker_build_metadata = BUILD_METADATA.map { |key, value| ["--build-arg", "#{key}=#{value}"] }.flatten
+  # The --progress tty option is for allowing progress bars to update.
   docker_build_command = [
-    'docker', 'build', '.', '-t', IMAGE, '--progress', 'tty', *docker_build_metadata
+    'docker', 'build', '.', '-t', IMAGE, *docker_build_metadata, '--progress', 'tty'
   ]
 
   File.rename(LOG, LOG_PREV) if File.exist?(LOG)
