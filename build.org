@@ -341,25 +341,26 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 ** Install Emacs 28 with native compilation, fast JSON parser and better redo
 
 #+begin_src clojure :tangle scripts/install-emacs-dependencies
-  <<bb-helpers>>
+    <<bb-helpers>>
 
-  (block "installing Emacs dependencies"
-    (package "git")
-    (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
+    (block "installing Emacs dependencies"
+      (package "git")
+      (ensure-success (run "git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git"))
 
-    ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox (libncurses-dev isn't listed, but is required)
-    (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev"
-             "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6"
-             "libxml2" "zlib1g" "libncurses-dev")
+      ; Dependencies from https://packages.ubuntu.com/impish/emacs-nox
+      ; Package libncurses-dev isn't listed there, but is required.
+      (package "libacl1" "libasound2" "libc6" "libdbus-1-3" "libgmp10" "libgnutls28-dev"
+               "libgpm2" "libjansson4" "liblcms2-2" "libselinux1" "libsystemd0" "libtinfo6"
+               "libxml2" "zlib1g" "libncurses-dev")
 
-    ; Dependencies for building Emacs.
-    (package "build-essential" "texinfo" "autoconf" "pkg-config")
+      ; Dependencies for building Emacs.
+      (package "build-essential" "texinfo" "autoconf" "pkg-config")
 
-    ; Needed for fast JSON
-    (package "libjansson4" "libjansson-dev")
+      ; Needed for fast JSON
+      (package "libjansson4" "libjansson-dev")
 
-    ; Dependencies for native compilation
-    (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
+      ; Dependencies for native compilation
+      (package "zlib1g-dev" "libgccjit0" "libgccjit-10-dev" "gcc-10"))
 #+end_src
 
 #+begin_src clojure :tangle scripts/build-emacs
@@ -367,9 +368,9 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
   (block "building Emacs 28 with native compilation and fast JSON"
     (with-sh-dir "emacs"
-      (let [path (System/getenv "PATH") cc "gcc-10"]
+      (let [env {:path (System/getenv "PATH") :cc "gcc-10"}]
         (ensure-success (run "./autogen.sh"))
-        (ensure-success (run "./configure --with-native-compilation" :env {"PATH" path "CC" cc}))
+        (ensure-success (run "./configure --with-native-compilation" :env env))
         (ensure-success (run "make -j$(nproc)"))
         (ensure-success (run "make install" ))))
     (ensure-success (run "rm -rf emacs")))
@@ -383,7 +384,8 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   <<bb-helpers>>
 
   (block "installing basic tools"
-    (package "locales" "automake" "htop" "curl" "wget" "git" "silversearcher-ag" "neovim" "docker.io" "tmux" "tree" "expect-dev" "rlwrap"))
+    (package "locales" "automake" "htop" "curl" "wget" "git" "silversearcher-ag"
+             "neovim" "docker.io" "tmux" "tree" "expect-dev" "rlwrap"))
 #+end_src
 
 ** Node.js & Yarn sources
@@ -399,7 +401,12 @@ https://github.com/nodesource/distributions
 
   (block "adding apt sources for Node.js"
     (package "gnupg")
-    (ensure-success (run "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo deb https://dl.yarnpkg.com/debian/ stable main | tee /etc/apt/sources.list.d/yarn.list")))
+    (let [get-key "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg"
+          add-key "apt-key add -"
+          echo-source "echo deb https://dl.yarnpkg.com/debian/ stable main"
+          add-source-list-entry "tee /etc/apt/sources.list.d/yarn.list"]
+      (ensure-success
+       (run (str get-key " | " add-key " && " echo-source " | " add-source-list-entry)))))
 #+end_src
 
 ** Time zone
@@ -408,9 +415,9 @@ https://github.com/nodesource/distributions
   <<bb-helpers>>
 
   (block "setting up time zone"
-    (package "tzdata")
-    (ensure-success (run "echo America/New_York > /etc/timezone"))
-    (ensure-success (run "dpkg-reconfigure -f noninteractive tzdata")))
+    (let [time-zone "America/Mexico_City"]
+      (ensure-success
+       (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime")))))
 #+end_src
 
 ** Dotfiles
@@ -443,12 +450,16 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
 
 ** Clojure CLI
 
+Current release can be found on this page: [[https://clojure.org/releases/tools]].
+
 #+begin_src clojure :tangle scripts/install-clojure-cli
   <<bb-helpers>>
 
   (block "installing Clojure CLI"
-    (let [script-name "linux-install.sh"]
-      (ensure-success (run (str "curl https://download.clojure.org/install/linux-install-1.10.3.855.sh -o " script-name)))
+    (let [version "1.10.3.933"    ;  July 28, 2021
+          script-name "linux-install.sh"
+          script-url (str "https://download.clojure.org/install/linux-install-" version ".sh")]
+      (ensure-success (run (str "curl " script-url " -o " script-name)))
       (ensure-success (run (str "chmod +x " script-name)))
       (ensure-success (run (str "./" script-name)))
       (ensure-success (run (str "rm " script-name))))
@@ -460,10 +471,16 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
   <<bb-helpers>>
 
   (block "installing GitHub CLI"
-    (ensure-success (run "curl curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg"))
-    (ensure-success (run "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\" | tee /etc/apt/sources.list.d/github-cli.list"))
-    (ensure-success (run "apt-get update"))
-    (package "gh"))
+    (let [get-key "curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg"
+          key-path "/usr/share/keyrings/githubcli-archive-keyring.gpg"
+          gpg-dearmor (str "gpg --dearmor -o " key-path)
+          arch (str/trim (:out (ensure-success (zsh "dpkg --print-architecture"))))
+          source-list-entry (str "echo " "'deb [arch=" arch " signed-by=" key-path "] " "https://cli.github.com/packages stable main")
+          source-list-path "/etc/apt/sources.list.d/github-cli.list"]
+      (ensure-success (run (str get-key " | " gpg-dearmor)))
+      (ensure-success (run (str source-list-entry "' | tee " source-list-path)))
+      (ensure-success (run "apt-get update"))
+      (package "gh")))
 #+end_src
 
 ** Make ZSH the default shell
@@ -472,7 +489,8 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
   <<bb-helpers>>
 
   (block "making ZSH the default shell"
-    (ensure-success (run "chsh -s $(which zsh)")))
+    (let [zsh-path (str/trim (:out (ensure-success (run "which zsh"))))]
+      (ensure-success (run (str "chsh -s " zsh-path)))))
 #+end_src
 
 ** Set up SSH and change root password
@@ -480,9 +498,18 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
 #+begin_src clojure :tangle scripts/secure-installation
   <<bb-helpers>>
 
+  (defn random-string [length]
+    (let [ascii-codes (concat (range 48 58) (range 66 91) (range 97 123))]
+      (apply str (repeatedly length #(char (rand-nth ascii-codes))))))
+
   (block "setting up OpenSSH server and securing the installation"
-    (package "openssh-server" "mosh")
-    (ensure-success (run "mkdir /run/sshd"))
-    (ensure-success (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config"))
-    (ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)\" | chpasswd")))
+    (let [random-password (random-string 32)]
+      (package "openssh-server" "mosh")
+      (ensure-success (run "mkdir /run/sshd"))
+      (ensure-success (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config"))
+      (ensure-success (run (str "echo 'root:" random-password "' | chpasswd")))))
 #+end_src
+
+Alternatively we could use: =(ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)\" | chpasswd"))=.
+
+The biggest difference is whether we want to show the password in the logs or not. Also the Clojure version is more readable.
