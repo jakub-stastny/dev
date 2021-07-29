@@ -237,21 +237,28 @@ Only after we get to the end of the =block=, the commands in it should execute a
     (format-duration-unless-instant 2 #(str "~ " %))
     (format-duration-unless-instant 7 #(str "~ " %)))
 
+  (defn execution-worker [result-atom command & rest]
+    (let [result (apply zsh command rest)]
+      (reset! result-atom result)))
+
+  (defn counter [result-atom command & rest]
+    (let [start-timestamp (current-unix-time)]
+      (loop [duration (- (current-unix-time) start-timestamp)]
+        (when-not (deref result-atom)
+          (Thread/sleep 1000)
+          (print (str "\r  "
+                      (colour :green "λ ")
+                      (colour :grey command)
+                      " ... "
+                      (format-duration-unless-instant duration)))
+          (flush)
+          (recur)))))
+
   (defn run [command & rest]
-    (let [start-time (current-unix-time) result (atom nil)]
-      (print (str "  " (colour :green "λ ") (colour :grey command)) "")
-      (flush)
-
-      ;; Trying to integrate this
+    (let [result-atom (atom nil)]
       (run! deref
-            [(future (execution-worker result)),
-             (future (counter result))])
-
-      (let [result (apply zsh command rest)
-            duration (- (current-unix-time) start-time)
-            format-fn #(str "... took " % ".")]
-        (println (format-duration-unless-instant duration format-fn))
-        result)))
+            [(future (execution-worker result-atom command rest)),
+             (future (counter result-atom command rest))])))
 
   (comment
     (run "echo $HOME")
@@ -293,28 +300,6 @@ Only after we get to the end of the =block=, the commands in it should execute a
   (defn package "Install package(s)." [& names]
     (let [command (str "apt-get install -y " (str/join " " names))]
       (ensure-success (run command :env {:DEBIAN_FRONTEND "noninteractive"}))))
-
-
-
-
-  (defn execution-worker [result]
-    (println "~ Execution starts")
-    (Thread/sleep 3000)
-    (reset! result {:stdout []}))
-
-  (defn counter [result]
-    (let [start-timestamp (current-unix-time)]
-      (loop []
-        (when-not (deref result)
-          (Thread/sleep 1000)
-          (print (str "\r" (- (current-unix-time) start-timestamp)))
-          (flush)
-          (recur)))))
-
-  ;; (let [result (atom nil)]
-  ;;   (run! deref
-  ;;         [(future (execution-worker result)),
-  ;;          (future (counter result))]))
 #+end_src
 
 ** Unminimise the system
