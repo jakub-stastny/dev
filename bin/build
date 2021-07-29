@@ -35,7 +35,7 @@ def main # So we can rescue
 
   docker_build_metadata = BUILD_METADATA.map { |key, value| ["--build-arg", "#{key}=#{value}"] }.flatten
   docker_build_command = [
-    'docker', 'build', '.', '-t', '--progress', 'tty', IMAGE, *docker_build_metadata
+    'docker', 'build', '.', '-t', IMAGE, '--progress', 'tty', *docker_build_metadata
   ]
 
   File.rename(LOG, LOG_PREV) if File.exist?(LOG)
