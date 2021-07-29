@@ -121,6 +121,9 @@ RUN /build/make-zsh-the-default-shell
 
 ADD scripts/secure-installation /build/secure-installation
 RUN /build/secure-installation
+
+ADD scripts/verify-installation /build/verify-installation
+RUN /build/verify-installation
 #+end_src
 
 ** Save build metadata
@@ -174,8 +177,6 @@ Or maybe even run it as the last thing, if it fails, the image build fails.
 No need for GH actions then.
 
 *** TODO Start Emacs, so Leaf installs everything, do native comp on all the packages.
-
-*** FIXME What TZ to use? US East is no longer relevant.
 
 #+name: bb-helpers
 #+begin_src clojure
@@ -378,7 +379,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 
 ** Install basic tools
 
-=expect-dev= is for autologin scripts.
+Package =expect-dev= is for autologin scripts.
 
 #+begin_src clojure :tangle scripts/install-basic-tools
   <<bb-helpers>>
@@ -391,8 +392,6 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
 ** Node.js & Yarn sources
 
 Add Yarn sources (without installing it).
-https://yarnpkg.com/lang/en/docs/install/#debian-stable
-https://github.com/nodesource/distributions
 
 # curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 
@@ -408,6 +407,12 @@ https://github.com/nodesource/distributions
       (ensure-success
        (run (str get-key " | " add-key " && " echo-source " | " add-source-list-entry)))))
 #+end_src
+
+*** Links
+
+- https://yarnpkg.com/lang/en/docs/install/#debian-stable
+- https://github.com/nodesource/distributions
+
 
 ** Time zone
 
@@ -425,6 +430,8 @@ https://github.com/nodesource/distributions
 Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
 
 *** Install traditional dotfiles
+
+/Let's not bother converting it into something more clojure-y as we're changing to Orgmode-based dotfiles anyway (see the next section)./
 
 #+begin_src clojure :tangle scripts/install-dotfiles
   <<bb-helpers>>
@@ -513,3 +520,27 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
 Alternatively we could use: =(ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)\" | chpasswd"))=.
 
 The biggest difference is whether we want to show the password in the logs or not. Also the Clojure version is more readable.
+
+** Verify the installation
+*** TODO Convert to BB
+
+#+begin_src shell :tangle scripts/verify-installation :shebang "#!/usr/bin/env zsh"
+  # Silence tput warning on GitHub workflows.
+  export TERM=xterm-256color
+
+  image=jakubstastny/dev
+  exit_status=0
+
+  expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree expect)
+
+  for binary in $expected_binaries; do
+    if docker run --rm $image which $binary > /dev/null; then
+      echo "$(tput setaf 2)✓ $(tput setaf 7)$binary$(tput sgr0) has been correctly installed."
+    else
+      echo "$(tput setaf 1)✘ $(tput setaf 7)$binary$(tput sgr0) hasn't been correctly installed."
+      exit_status=1
+    fi
+  done
+
+  exit $exit_status
+#+end_src
