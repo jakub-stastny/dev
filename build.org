@@ -239,26 +239,43 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
   (defn execution-worker [result-atom command & rest]
     (let [result (apply zsh command rest)]
-      (reset! result-atom result)))
+      (reset! result-atom result)
+      result))
 
-  (defn counter [result-atom command & rest]
+  (comment
+    (let [atom (atom nil)]
+      (execution-worker atom "apt-get install -y man"))
+
+    (let [atom (atom nil) env {:DEBIAN_FRONTEND "noninteractive"}]
+      (execution-worker atom "apt-get install -y man" :env env)))
+
+  (defn counter [result-atom command]
     (let [start-timestamp (current-unix-time)]
       (loop [duration (- (current-unix-time) start-timestamp)]
         (when-not (deref result-atom)
-          (Thread/sleep 1000)
+          (Thread/sleep 500)
           (print (str "\r  "
                       (colour :green "λ ")
-                      (colour :grey command)
-                      " ... "
-                      (format-duration-unless-instant duration)))
+                      (colour :grey command) " "))
+          (when (> duration 3)
+            (print (str "... " (format-duration-unless-instant duration identity))))
           (flush)
-          (recur)))))
+          (recur (- (current-unix-time) start-timestamp))))
+      (println)))
+
+  (comment
+    (let [atom (atom nil)]
+      (run! deref
+            [(future (Thread/sleep 1500) (reset! atom :my-result))
+             (future (counter atom "apt-get install -y man"))])
+      @atom))
 
   (defn run [command & rest]
     (let [result-atom (atom nil)]
       (run! deref
-            [(future (execution-worker result-atom command rest)),
-             (future (counter result-atom command rest))])))
+            [(future (apply execution-worker result-atom command rest))
+             (future (counter result-atom command))])
+      @result-atom))
 
   (comment
     (run "echo $HOME")
