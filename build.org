@@ -157,7 +157,7 @@ CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 
 ** Helpers
 
-Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
+/Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts./
 
 *** TODO Refactor to group side-effects in one place
 
@@ -167,10 +167,7 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
 *** TODO Start Emacs, so Leaf installs everything, do native comp on all the packages.
 
-*** TODO Show current duration of execution
-
-- [[https://book.babashka.org/#core_async][Babashka async]]
-- [[https://stackoverflow.com/questions/5290994/remove-and-replace-printed-items#5291396][ASCII escape sequence \r]]
+*** FIXME Why the async counter doesn't work in docker build?
 
 #+name: bb-helpers
 #+begin_src clojure
