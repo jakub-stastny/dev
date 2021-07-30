@@ -1,12 +1,11 @@
 #+OPTIONS: html-postamble:nil tex:nil
+#+TODO: TODO FIXME | DONE CANCELED
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css"/>
 #+HTML_HEAD: <script>document.addEventListener('DOMContentLoaded', (e) => document.querySelector('a').href = "../")</script>
 #+TITLE: My development environment image
 
 * About
 #+INCLUDE: _badge.org
-
-# TODO: Fix the link with JS.
 
 My development environment with my favourite tools and dotfiles. For usage, please check out the [[./README.org][README]]. This is the developer documentation, describing the implementation and reasoning if aplicable.
 
@@ -16,8 +15,7 @@ My development environment with my favourite tools and dotfiles. For usage, plea
   :END:
 
 #+begin_comment
-  I don't indent the dockerfile source blocks, since doing
-  so breaks the syntax highlighting in Emacs and on export.
+  I don't indent the dockerfile source blocks, since doing so breaks the syntax highlighting in Emacs and on export.
 #+end_comment
 
 ** Use the latest Ubuntu
@@ -132,6 +130,10 @@ We are passing these build args to =docker build= in [[./bin/build]].
 
 Previously we have been saving these into a file, but really, an ENV variable is better suited for this.
 
+*** FIXME These are not exported when we SSH in
+
+Go back to using a file.
+
 #+begin_src dockerfile
 ARG DOCKER_IMAGE_GIT_SHA
 ARG DOCKER_IMAGE_BUILD_DATE
@@ -160,7 +162,7 @@ CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 
 ** Helpers
 
-/Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts./
+Keep in mind that changing the helpers will invalidate Docker cache for all the build scripts.
 
 *** TODO Refactor to group side-effects in one place
 
@@ -172,13 +174,13 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
 Check the Slack.
 
-*** TODO Consider what to do with shell commands and what with Babashka
+*** TODO Redirect STDERR to STDOUT
 
-On one hand shell commands are easier to copy around, on the other hand doing certain things with Babashka might be cleaner and we might not need so many =(str a b c)=.
+So they would be in sync when mixing STDOUT/STDERR for logging.
 
-Babashka has =curl= for instance.
+*** TODO Rewrite more parts to babashka
 
-Maybe we can do only things that cannot be done any other way (such as =apt-get install -y=) in shell?
+Do only things that cannot be done any other way (such as =apt-get install -y=) in shell.
 
 *** TODO Save build logs to the image
 
@@ -186,7 +188,11 @@ Maybe we can do only things that cannot be done any other way (such as =apt-get 
 
 For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b" "c")=.
 
-*** FIXME If the line is too long, \r wouldn't work
+*** FIXME If the line is too long, \r doesn't work
+
+*** TODO Give for review
+
+#clojure, but also #babashka.
 
 #+name: bb-helpers
 #+begin_src clojure
@@ -194,7 +200,6 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
   (require '[babashka.fs :refer [which]])
   (require '[babashka.curl :as curl])
 
-  ; TODO: Redirect STDERR to STDOUT, so they would be in sync when mixing STDOUT/STDERR for logging.
   (defn zsh [& args] (apply sh "zsh" "-c" args))
 
   (comment
@@ -359,7 +364,9 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
 
 ** Unminimise the system
 
-This makes man pages available.
+Makes man pages available.
+
+*** Conflicts with packages installed manually via =dpkg -i=
 
 Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CLI has to be installed after.
 
@@ -450,23 +457,23 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 
 ** Time zone
 
+*** TODO write the TZ into /etc/timezone
+*** TODO babashka.fs can create symlinks
+
 #+begin_src clojure :tangle scripts/set-up-time-zone
   <<bb-helpers>>
 
   (def time-zone "America/Mexico_City")
 
-  ; TODO: write the TZ into /etc/timezone
   (block "setting up time zone"
     (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime")))
 #+end_src
 
 ** Dotfiles
 
-Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
-
 *** Install traditional dotfiles
 
-/Let's not bother converting it into something more clojure-y as we're changing to Orgmode-based dotfiles anyway (see the next section)./
+Let's not bother converting it into something more clojure-y as we're changing to Orgmode-based dotfiles anyway (see the next section).
 
 #+begin_src clojure :tangle scripts/install-dotfiles
   <<bb-helpers>>
@@ -494,10 +501,13 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
 
 Current release can be found on this page: [[https://clojure.org/releases/tools]].
 
+*** TODO Get the version programatically
+
+Probably from GitHub?
+
 #+begin_src clojure :tangle scripts/install-clojure-cli
   <<bb-helpers>>
 
-  ; TODO: get this from GH or somewhere.
   (def version "1.10.3.933") ; July 28, 2021
 
   (block "installing Clojure CLI"
@@ -557,6 +567,7 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
   (defn disable-password-auth-for-ssh
     "Don't allow password auth when logging via SSH" []
     ;; if match ...
+    ; Append: (spit file-name line :append true)
     (run "echo 'PasswordAuth no' >> /etc/ssh/sshd_config")
     )
 
