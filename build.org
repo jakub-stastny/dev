@@ -178,6 +178,10 @@ Babashka has =curl= for instance.
 
 Maybe we can do only things that cannot be done any other way (such as =apt-get install -y=) in shell?
 
+*** TODO Save build logs to the image
+
+*** FIXME If the line is too long, \r wouldn't work
+
 #+name: bb-helpers
 #+begin_src clojure
   (require '[clojure.java.shell :refer [sh with-sh-dir]])
@@ -530,25 +534,26 @@ The biggest difference is whether we want to show the password in the logs or no
 
 Verify the image as the last step of the build. This way we can never push corrupted image which we forgot to test.
 
-*** TODO Convert to BB
+#+begin_src clojure :tangle scripts/verify-installation
+  <<bb-helpers>>
 
-#+begin_src shell :tangle scripts/verify-installation :shebang "#!/usr/bin/env zsh"
-  # Silence tput warning on GitHub workflows.
-  export TERM=xterm-256color
+  (def expected-binaries
+    ["bb" "zsh" "curl"     ; These were installed for the build process.
+     "git" "clojure" "gh" "dotfiles" "emacs" "wget"
+     "ag" "nvim" "tmux" "git" "htop" "tree" "expect"])
 
-  image=jakubstastny/dev
-  exit_status=0
+  (defn verify-installed [binary]
+    (= 0 (:exit (zsh (str "which " binary)))))
 
-  expected_binaries=(clojure bb gh dotfiles emacs curl wget ag nvim tmux git htop tree expect)
+  (comment
+    (verify-installed "zsh")
+    (verify-installed "magic-wand"))
 
-  for binary in $expected_binaries; do
-    if docker run --rm $image which $binary > /dev/null; then
-      echo "$(tput setaf 2)✓ $(tput setaf 7)$binary$(tput sgr0) has been correctly installed."
-    else
-      echo "$(tput setaf 1)✘ $(tput setaf 7)$binary$(tput sgr0) hasn't been correctly installed."
-      exit_status=1
-    fi
-  done
-
-  exit $exit_status
+  (let [missing-binaries (remove verify-installed expected-binaries)]
+    (when-not (empty? missing-binaries)
+      (println
+       (colour :red "ERROR:")
+       "the following binaries should be installed, but are in fact missing:"
+       (colour :grey (str/join ", " missing-binaries))
+       (System/exit 1))))
 #+end_src
