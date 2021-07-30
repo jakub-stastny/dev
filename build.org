@@ -170,6 +170,8 @@ Only after we get to the end of the =block=, the commands in it should execute a
 
 *** TODO Start Emacs, so Leaf installs everything, do native comp on all the packages.
 
+Check the Slack.
+
 *** TODO Consider what to do with shell commands and what with Babashka
 
 On one hand shell commands are easier to copy around, on the other hand doing certain things with Babashka might be cleaner and we might not need so many =(str a b c)=.
@@ -431,8 +433,7 @@ Add Yarn sources (without installing it).
   (def time-zone "America/Mexico_City")
 
   (block "setting up time zone"
-    (ensure-success
-     (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime"))))
+    (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime")))
 #+end_src
 
 ** Dotfiles
@@ -447,7 +448,7 @@ Our =WORKDIR= is =/root=, so we don't have to =cd= anywhere.
   <<bb-helpers>>
 
   (block "installing dotfiles"
-    (ensure-success (run "mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh")))
+    (run "mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh"))
 #+end_src
 
 *** Install literate dotfiles
@@ -476,11 +477,11 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
 
   (block "installing Clojure CLI"
     (let [script-name "linux-install.sh"
-          script-url (str "https://download.clojure.org/install/linux-install-" version ".sh")]
-      (ensure-success (run (str "curl " script-url " -o " script-name)))
-      (ensure-success (run (str "chmod +x " script-name)))
-      (ensure-success (run (str "./" script-name)))
-      (ensure-success (run (str "rm " script-name))))
+          script-url (format "https://download.clojure.org/install/linux-install-%s.sh" version)]
+      (run (format "curl %s -o %s" script-url script-name))
+      (run (str "chmod +x " script-name))
+      (run (str "./" script-name))
+      (run (str "rm " script-name)))
 #+end_src
 
 ** GitHub CLI
@@ -495,9 +496,9 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
           arch (str/trim (:out (ensure-success (zsh "dpkg --print-architecture"))))
           source-list-entry (str "echo " "'deb [arch=" arch " signed-by=" key-path "] " "https://cli.github.com/packages stable main")
           source-list-path "/etc/apt/sources.list.d/github-cli.list"]
-      (ensure-success (run (str get-key " | " gpg-dearmor)))
-      (ensure-success (run (str source-list-entry "' | tee " source-list-path)))
-      (ensure-success (run "apt-get update"))
+      (run (str get-key " | " gpg-dearmor))
+      (run (str source-list-entry "' | tee " source-list-path))
+      (run "apt-get update")
       (package "gh")))
 #+end_src
 
@@ -510,7 +511,7 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
     (str/trim (:out (ensure-success (zsh "which zsh")))))
 
   (block "making ZSH the default shell"
-    (ensure-success (run (str "chsh -s " zsh-path))))
+    (run (str "chsh -s " zsh-path)))
 #+end_src
 
 ** Set up SSH and change root password
@@ -525,9 +526,9 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
   (block "setting up OpenSSH server and securing the installation"
     (let [random-password (random-string 32)]
       (package "openssh-server" "mosh")
-      (ensure-success (run "mkdir /run/sshd"))
-      (ensure-success (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config"))
-      (ensure-success (run (str "echo 'root:" random-password "' | chpasswd")))))
+      (run "mkdir /run/sshd")
+      (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config")
+      (run (str "echo 'root:" random-password "' | chpasswd"))))
 #+end_src
 
 Alternatively we could use: =(ensure-success (run "echo \"root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)\" | chpasswd"))=.
