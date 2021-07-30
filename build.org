@@ -180,6 +180,10 @@ Maybe we can do only things that cannot be done any other way (such as =apt-get 
 
 *** TODO Save build logs to the image
 
+*** TODO Remove str when not necessary
+
+For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b" "c")=.
+
 *** FIXME If the line is too long, \r wouldn't work
 
 #+name: bb-helpers
@@ -377,7 +381,7 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
     (with-sh-dir "emacs"
       (run "./autogen.sh")
       (run "./configure --with-native-compilation"
-        :env {:path (System/getenv "PATH") :cc "gcc-10"})
+        :env {:PATH (System/getenv "PATH") :CC "gcc-10"})
       (run "make -j$(nproc)")
       (run "make install"))
     (run "rm -rf emacs"))
@@ -479,7 +483,7 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
       (ensure-success (run (str "rm " script-name))))
 #+end_src
 
-** GH CLI
+** GitHub CLI
 
 #+begin_src clojure :tangle scripts/install-gh-cli
   <<bb-helpers>>
@@ -503,7 +507,7 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
   <<bb-helpers>>
 
   (def zsh-path
-    (str/trim (:out (ensure-success (run "which zsh")))))
+    (str/trim (:out (ensure-success (zsh "which zsh")))))
 
   (block "making ZSH the default shell"
     (ensure-success (run (str "chsh -s " zsh-path))))
