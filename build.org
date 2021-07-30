@@ -430,7 +430,7 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 #+begin_src clojure :tangle scripts/add-node-sources
   <<bb-helpers>>
 
-  (def node-version "node_16.x")
+  (def version "node_16.x")
   (def domain "https://deb.nodesource.com")
 
   (defn get-key "Get NodeSource GPG key" []
@@ -443,7 +443,7 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
                      (format "deb-src %s/%s %s main" domain version distro)])))
 
   (block "adding apt sources for Node.js"
-    (let [gpg-key (fun (meta # 'get-key) get-key)]
+    (let [gpg-key (fun (meta #'get-key) get-key)]
       (run "apt-key add -" :in gpg-key))
     (fun (meta #'write-source-list) write-source-list))
 #+end_src
@@ -550,12 +550,24 @@ Current release can be found on this page: [[https://clojure.org/releases/tools]
 
   (comment (random-string 5))
 
+  (defn set-root-password-to-random
+    "Set root password to a random string" []
+    (sh "chpasswd" :in (str "root:" (random-string 32))))
+
+  (defn disable-password-auth-for-ssh
+    "Don't allow password auth when logging via SSH" []
+    ;; if match ...
+    (run "echo 'PasswordAuth no' >> /etc/ssh/sshd_config")
+    )
+
+  (defn create-sshd-run-directory "......" []
+    (fs/create-dir "/run/sshd"))
+
   (block "setting up OpenSSH server and securing the installation"
-    (let [random-password (random-string 32)]
-      (package "openssh-server" "mosh")
-      (run "mkdir /run/sshd")
-      (run "echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config")
-      (run (format "echo 'root:%s' | chpasswd" random-password))))
+    (package "openssh-server" "mosh")
+    (fun (meta #'create-sshd-run-directory) create-sshd-run-directory)
+    (fun (meta #'disable-password-auth-for-ssh) disable-password-auth-for-ssh)
+    (fun (meta #'set-root-password-to-random) set-root-password-to-random))
 #+end_src
 
 Alternatively we could pass =echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd= into =run=.
