@@ -358,7 +358,8 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
     (let [command (str "apt-get install -y " (str/join " " names))]
       (run command :env {:DEBIAN_FRONTEND "noninteractive"})))
 
-  (def distro (str/trim (:out (ensure-success (zsh "lsb_release -s -c")))))
+  ;(def distro (str/trim (:out (ensure-success (zsh "lsb_release -s -c")))))
+  (def distro (str/trim (:out (ensure-success (sh "lsb_release" "-s" "-c")))))
 
   (comment (str distro))
 #+end_src
