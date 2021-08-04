@@ -248,9 +248,7 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
       (colour colour-name (format-duration-as-either-minutes-or-seconds duration))))
 
   (comment
-    (format-duration 1)                   ; show nothing
-    (format-duration 37)
-    (format-duration 92))
+    (map #(format-duration %) [1 37 92])) ; Shows nothing for 1.
 
   (defn- format-duration-unless-instant [duration format-fn]
     (if-let [formatted-duration (format-duration duration)]
