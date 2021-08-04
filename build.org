@@ -358,8 +358,8 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
     (let [command (str "apt-get install -y " (str/join " " names))]
       (run command :env {:DEBIAN_FRONTEND "noninteractive"})))
 
-  ;(def distro (str/trim (:out (ensure-success (zsh "lsb_release -s -c")))))
-  (def distro (str/trim (:out (ensure-success (sh "lsb_release" "-s" "-c")))))
+  (defn distro (str/trim (:out (ensure-success (zsh "lsb_release -s -c")))))
+  ;(def distro (str/trim (:out (ensure-success (sh "lsb_release" "-s" "-c")))))
 
   (comment (str distro))
 #+end_src
@@ -448,8 +448,8 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
   (defn write-source-list "Add a new APT source list for NodeSource" []
     (spit "/etc/apt/sources.list.d/nodesource.list"
           (str/join "\n"
-                    [(format "deb %s/%s %s main" domain version distro)
-                     (format "deb-src %s/%s %s main" domain version distro)])))
+                    [(format "deb %s/%s %s main" domain version (distro))
+                     (format "deb-src %s/%s %s main" domain version (distro))])))
 
   (block "adding apt sources for Node.js"
     (let [gpg-key (fun get-key)]
