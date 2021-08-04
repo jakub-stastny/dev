@@ -339,19 +339,20 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
 
   (defn run [& args] (ensure-success (apply try-run args)))
 
-  (defn fun [fn-meta fn & args]
-    (print (str "\r  "
-                (colour :green "λ ")
-                (if (:doc fn-meta)
-                  (colour :grey (format "(%s) ; %s" (:name fn-meta) (:doc fn-meta)))
-                  (colour :grey (format "(%s)" (:name fn-meta))))))
-    (fn))
+  (defn fun [fn-ref]
+    (let [fn-meta (meta fn-ref)]
+      (print (str "\r  "
+                  (colour :green "λ ")
+                  (if (:doc fn-meta)
+                    (colour :grey (format "(%s) ; %s" (:name fn-meta) (:doc fn-meta)))
+                    (colour :grey (format "(%s)" (:name fn-meta)))))))
+    (fn-ref)) ; Surprisingly doesn't require deref.
 
   (comment
     (let [no-doc-fn ^{:name "no-doc-fn"} (fn [] "body")]
-      (fun (meta #'no-doc-fn) no-doc-fn))
+      (fun #'no-doc-fn))
     (let [doc-fn ^{:name "doc-fn" :doc "Doc string"} (fn [] "body")]
-      (fun (meta #'doc-fn) doc-fn)))
+      (fun #'doc-fn)))
 
   (defn package "Install package(s)." [& names]
     (let [command (str "apt-get install -y " (str/join " " names))]
@@ -450,9 +451,9 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
                      (format "deb-src %s/%s %s main" domain version distro)])))
 
   (block "adding apt sources for Node.js"
-    (let [gpg-key (fun (meta #'get-key) get-key)]
+    (let [gpg-key (fun get-key)]
       (run "apt-key add -" :in gpg-key))
-    (fun (meta #'write-source-list) write-source-list))
+    (fun write-source-list))
 #+end_src
 
 ** Time zone
@@ -576,9 +577,9 @@ Probably from GitHub?
 
   (block "setting up OpenSSH server and securing the installation"
     (package "openssh-server" "mosh")
-    (fun (meta #'create-sshd-run-directory) create-sshd-run-directory)
-    (fun (meta #'disable-password-auth-for-ssh) disable-password-auth-for-ssh)
-    (fun (meta #'set-root-password-to-random) set-root-password-to-random))
+    (fun create-sshd-run-directory)
+    (fun disable-password-auth-for-ssh)
+    (fun set-root-password-to-random))
 #+end_src
 
 Alternatively we could pass =echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd= into =run=.
