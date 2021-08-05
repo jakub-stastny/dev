@@ -15,7 +15,8 @@ My development environment with my favourite tools and dotfiles. For usage, plea
   :END:
 
 #+begin_comment
-  I don't indent the dockerfile source blocks, since doing so breaks the syntax highlighting in Emacs and on export.
+  I don't indent the dockerfile source blocks, since doing
+  so breaks the syntax highlighting in Emacs and on export.
 #+end_comment
 
 ** Use the latest Ubuntu
@@ -454,16 +455,20 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 
 ** Time zone
 
-*** TODO write the TZ into /etc/timezone
-*** TODO babashka.fs can create symlinks
-
 #+begin_src clojure :tangle scripts/set-up-time-zone
   <<bb-helpers>>
 
   (def time-zone "America/Mexico_City")
 
+  (defn link-zoneinfo-to-etc-localtime []
+    (fs/create-sym-link (str "/usr/share/zoneinfo/" time-zone "/etc/localtime")))
+
+  (defn write-tz-to-etc-timezone []
+    (spit time-zone "/etc/timezone"))
+
   (block "setting up time zone"
-    (run (str "ln -sf /usr/share/zoneinfo/" time-zone "/etc/localtime")))
+    (fun #'link-zoneinfo-to-etc-localtime)
+    (fun #'write-tz-to-etc-timezone))
 #+end_src
 
 ** Dotfiles

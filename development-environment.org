@@ -144,3 +144,20 @@ Use =tangle= with no arguments to tangle all the orgmode files in the project or
 
   report-custom-functions
 #+end_src
+
+*** Build
+
+**** TODO Add back the timer:
+# start_build_time = Time.now; puts "\n#{`tput setaf 5`}Build time:#{`tput sgr0`} #{((Time.now - start_build_time) / 60).round(2)} min"
+
+#+begin_src shell
+  DOCKER_IMAGE=jakubstastny/dev
+
+  build() {
+    run docker pull ubuntu
+    run git commit -a -m "Automated commit from the build function on $docker_build_date"
+    run docker build . -t $DOCKER_IMAGE \
+        --build-arg DOCKER_IMAGE_GIT_SHA=$(git rev-parse HEAD) \
+        --build-arg DOCKER_IMAGE_BUILD_DATE=$(date --iso-8601=minutes)
+  }
+#+end_src
