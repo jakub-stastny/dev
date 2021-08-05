@@ -213,9 +213,7 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
     (if-let [colour-code (colours colour)]
       (str "\033[" colour-code "m" text "\033[0m") text))
 
-  (comment
-    (colour :red "Hello world!")
-    (colour "whatever" "Hello world!"))
+  (comment (map #(colour % "Hello world!") [:red nil "whatever"]))
 
   (defn- current-unix-time [] (quot (System/currentTimeMillis) 1000))
 
@@ -247,16 +245,14 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
                    :default :red)]
       (colour colour-name (format-duration-as-either-minutes-or-seconds duration))))
 
-  (comment
-    (map #(format-duration %) [1 37 92])) ; Shows nothing for 1.
+  (comment (map #(format-duration %) [1 37 92]))
 
   (defn- format-duration-unless-instant [duration format-fn]
     (if-let [formatted-duration (format-duration duration)]
       (format-fn formatted-duration) ""))
 
-  (comment
-    (format-duration-unless-instant 2 #(str "~ " %))
-    (format-duration-unless-instant 7 #(str "~ " %)))
+  (comment (format-duration-unless-instant 2 #(str "~ " %))
+           (format-duration-unless-instant 7 #(str "~ " %)))
 
   (defn execution-worker [result-atom command & rest]
     (let [result (apply zsh command rest)]
@@ -310,9 +306,10 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
       (str/join "\n" [heading stdout stderr])))
 
   (comment
-    (error-message {:exit 127 :err "Command not found."})
-    (error-message {:exit 0 :out "Log message."})
-    (error-message {:exit 1 :out "Log message." :err "Stack overflow"}))
+    (map #(error-message %)
+         [{:exit 127 :err "Not found."}
+          {:exit 0 :out "Message."}
+          {:exit 1 :out "Message." :err "Stack overflow"}]))
 
   (defn- fail [result]
     (println (error-message result))
