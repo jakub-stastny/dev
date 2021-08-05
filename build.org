@@ -342,9 +342,11 @@ For instance =(print (str "a " "b " "c "))= can be rewritten like =(print "a" "b
       (print (str "\r  "
                   (colour :green "λ ")
                   (if (:doc fn-meta)
-                    (colour :grey (format "(%s) ; %s" (:name fn-meta) (:doc fn-meta)))
+                    (format "(%s) ; %s"
+                            (colour :grey (:name fn-meta))
+                            (colour :cyan (:doc fn-meta)))
                     (colour :grey (format "(%s)" (:name fn-meta)))))))
-    (fn-ref)) ; Surprisingly doesn't require deref.
+    (fn-ref))
 
   (comment
     (let [no-doc-fn ^{:name "no-doc-fn"} (fn [] "body")]
