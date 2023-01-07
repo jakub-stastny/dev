@@ -468,9 +468,9 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
   (defn write-tz-to-etc-timezone []
     (spit time-zone "/etc/timezone"))
 
-  (block "setting up time zone"
-    (fun #'link-zoneinfo-to-etc-localtime)
-    (fun #'write-tz-to-etc-timezone))
+;  (block "setting up time zone"
+;    (fun #'link-zoneinfo-to-etc-localtime)
+;    (fun #'write-tz-to-etc-timezone))
 #+end_src
 
 ** Dotfiles
@@ -556,33 +556,35 @@ Probably from GitHub?
 ** Set up SSH and change root password
 
 #+begin_src clojure :tangle scripts/secure-installation
-  <<bb-helpers>>
+    <<bb-helpers>>
 
-  (defn random-string [length]
-    (let [ascii-codes (concat (range 48 58) (range 66 91) (range 97 123))]
-      (apply str (repeatedly length #(char (rand-nth ascii-codes))))))
+    (defn random-string [length]
+      (let [ascii-codes (concat (range 48 58) (range 66 91) (range 97 123))]
+        (apply str (repeatedly length #(char (rand-nth ascii-codes))))))
 
-  (comment (random-string 5))
+    (comment (random-string 5))
 
-  (defn set-root-password-to-random
-    "Set root password to a random string" []
-    (sh "chpasswd" :in (str "root:" (random-string 32))))
+    (defn set-root-password-to-random
+      "Set root password to a random string" []
+      (sh "chpasswd" :in (str "root:" (random-string 32))))
 
-  (defn disable-password-auth-for-ssh
-    "Don't allow password auth when logging via SSH" []
-    ;; if match ...
-    ; Append: (spit file-name line :append true)
-    (run "echo 'PasswordAuth no' >> /etc/ssh/sshd_config")
-    )
+  ; This doesn't work, PasswordAuth is not valid in SSH (anymore?)
+  ; Besides, I don't think we need it.
+  ;  (defn disable-password-auth-for-ssh
+  ;    "Don't allow password auth when logging via SSH" []
+  ;    ;; if match ...
+  ;    ; Append: (spit file-name line :append true)
+  ;    (run "echo 'PasswordAuth no' >> /etc/ssh/sshd_config")
+  ;    )
+  ;
+    (defn create-sshd-run-directory "......" []
+      (fs/create-dir "/run/sshd"))
 
-  (defn create-sshd-run-directory "......" []
-    (fs/create-dir "/run/sshd"))
-
-  (block "setting up OpenSSH server and securing the installation"
-    (package "openssh-server" "mosh")
-    (fun #'create-sshd-run-directory)
-    (fun #'disable-password-auth-for-ssh)
-    (fun #'set-root-password-to-random))
+    (block "setting up OpenSSH server and securing the installation"
+      (package "openssh-server" "mosh")
+      (fun #'create-sshd-run-directory)
+      (fun #'disable-password-auth-for-ssh)
+      (fun #'set-root-password-to-random))
 #+end_src
 
 Alternatively we could pass =echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" | chpasswd= into =run=.
