@@ -583,7 +583,7 @@ Probably from GitHub?
     (block "setting up OpenSSH server and securing the installation"
       (package "openssh-server" "mosh")
       (fun #'create-sshd-run-directory)
-      (fun #'disable-password-auth-for-ssh)
+      ;(fun #'disable-password-auth-for-ssh)
       (fun #'set-root-password-to-random))
 #+end_src
 
