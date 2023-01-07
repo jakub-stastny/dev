@@ -435,7 +435,7 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 #+begin_src clojure :tangle scripts/add-node-sources
   <<bb-helpers>>
 
-  (def version "node_16.x")
+  (def version "node_19.x")
   (def domain "https://deb.nodesource.com")
 
   (defn get-key "Get NodeSource GPG key" []
@@ -510,7 +510,7 @@ Probably from GitHub?
 #+begin_src clojure :tangle scripts/install-clojure-cli
   <<bb-helpers>>
 
-  (def version "1.10.3.933") ; July 28, 2021
+  (def version "1.11.1.1208") ; July 28, 2021
 
   (block "installing Clojure CLI"
     (let [script-name "linux-install.sh"
