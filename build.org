@@ -520,7 +520,7 @@ Probably from GitHub?
       (run (format "curl %s -o %s" script-url script-name))
       (run (str "chmod +x " script-name))
       (run (str "./" script-name))
-      (run (str "rm " script-name)))
+      (run (str "rm " script-name))))
 #+end_src
 
 ** GitHub CLI
