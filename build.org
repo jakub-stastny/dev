@@ -435,6 +435,8 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 #+begin_src clojure :tangle scripts/add-node-sources
   <<bb-helpers>>
 
+  (package "lsb-core") ; The distro helper requires this, it's not installed by default anymore.
+
   (def version "node_19.x")
   (def domain "https://deb.nodesource.com")
 
