@@ -115,6 +115,9 @@ RUN /build/install-clojure-cli
 ADD scripts/install-gh-cli /build/install-gh-cli
 RUN /build/install-gh-cli
 
+ADD scripts/install-deno /build/install-deno
+RUN /build/install-deno
+
 ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
 RUN /build/make-zsh-the-default-shell
 
@@ -505,19 +508,19 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
 
 Current release can be found on this page: [[https://clojure.org/releases/tools]].
 
-*** TODO Get the version programatically
-
+#+begin_comment
+https://github.com/clojure/brew-install/blob/1.11.1/stable.properties
+https://github.com/clojure/homebrew-tools/blob/master/Formula/clojure.rb
+#+end_comment
 Probably from GitHub?
 
 #+begin_src clojure :tangle scripts/install-clojure-cli
   <<bb-helpers>>
 
-  (def version "1.11.1.1208") ; July 28, 2021
-
   (block "installing Clojure CLI"
     (let [script-name "linux-install.sh"
-          script-url (format "https://download.clojure.org/install/linux-install-%s.sh" version)]
-      (run (format "curl %s -o %s" script-url script-name))
+          script-url (str "https://download.clojure.org/install/" script-name)]
+      (run (str "wget --quiet " script-url))
       (run (str "chmod +x " script-name))
       (run (str "./" script-name))
       (run (str "rm " script-name))))
@@ -539,6 +542,16 @@ Probably from GitHub?
       (run (str source-list-entry "' | tee " source-list-path))
       (run "apt-get update")
       (package "gh")))
+#+end_src
+
+** Deno
+
+#+begin_src clojure :tangle scripts/install-deno
+    <<bb-helpers>>
+
+    (block "installing Deno"
+      (let [script-url "https://deno.land/x/install/install.sh"]
+        (run (format "curl -fsSL %s | sh" script-url))))
 #+end_src
 
 ** Make ZSH the default shell
