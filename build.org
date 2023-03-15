@@ -4,6 +4,19 @@
 #+HTML_HEAD: <script>document.addEventListener('DOMContentLoaded', (e) => document.querySelector('a').href = "../")</script>
 #+TITLE: My development environment image
 
+* TODO
+Integrate ET for builds.
+
+#+name: build
+#+begin_src sh :task yes :doc "..."
+  docker build -t jakubstastny/build
+#+end_src
+
+#+name: upload
+#+begin_src sh :task yes :doc "..."
+  docker push jakubstastny/build
+#+end_src
+
 * About
 #+INCLUDE: _badge.org
 
@@ -506,13 +519,10 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
 
 ** Clojure CLI
 
-Current release can be found on this page: [[https://clojure.org/releases/tools]].
-
 #+begin_comment
 https://github.com/clojure/brew-install/blob/1.11.1/stable.properties
 https://github.com/clojure/homebrew-tools/blob/master/Formula/clojure.rb
 #+end_comment
-Probably from GitHub?
 
 #+begin_src clojure :tangle scripts/install-clojure-cli
   <<bb-helpers>>
@@ -629,5 +639,5 @@ Verify the image as the last step of the build. This way we can never push corru
        (colour :red "ERROR:")
        "the following binaries should be installed, but are in fact missing:"
        (colour :grey (str/join ", " missing-binaries))
-       (System/exit 1))))
+       (System/exit 1)))) ; TODO: Use the bb version with exit code.
 #+end_src
