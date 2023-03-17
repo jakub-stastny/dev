@@ -52,6 +52,19 @@ Silence =tput= warnings and show colours instead.
 ENV TERM=xterm-256color
 #+end_src
 
+** Set =XDG= variables
+
+https://wiki.archlinux.org/title/XDG_Base_Directory
+
+#+begin_src dockerfile
+ENV XDG_CONFIG_HOME=$HOME/.config
+ENV XDG_CACHE_HOME=$HOME/.cache
+ENV XDG_DATA_HOME=$HOME/.local/share
+ENV XDG_STATE_HOME=$HOME/.local/state
+
+RUN mkdir -p $XDG_CONFIG_HOME $XDG_CACHE_HOME $XDG_DATA_HOME $XDG_STATE_HOME
+#+end_src
+
 ** Set up =$PATH=
 
 Even though we do this in dotfiles, having it exported means we can use these custom scripts when building a DPM image. For instance in the home image we use dotfiles from =~/.script/dotfiles=.
@@ -469,6 +482,16 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
     (let [gpg-key (fun #'get-key)]
       (run "apt-key add -" :in gpg-key))
     (fun #'write-source-list))
+
+  ; For now, working on BizMentor.
+  (block "install Node.js" (package "nodejs"))
+
+  ; HACK: it doesn't belong here!
+  (block "install JRE & R" (package "default-jre" "r-base"))
+
+  (block "Download ET"
+    (run "mkdir -p $HOME/.local/share/et")
+    (run " wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $HOME/.local/share/et"))
 #+end_src
 
 ** Time zone
@@ -514,7 +537,9 @@ This has to be on one line, otherwise it gets exported with =emacs -Q --batch --
 #+begin_src clojure :tangle scripts/install-dotfiles
   (block "tangling literate dotfiles"
     (with-sh-dir "/root/org"
-      (ensure-success (run "emacs -Q --batch --eval '<<tangle-files>>' **/*.org"))))
+      ;(ensure-success (run "emacs -Q --batch --eval '<<tangle-files>>' **/*.org"))))
+      ; We don't want to tangle macOS.org.
+      (ensure-success (run "emacs -Q --batch --eval '<<tangle-files>>' emacs.org"))))
 #+end_src
 
 ** Clojure CLI
