@@ -10,9 +10,9 @@
   docker build -t jakubstastny/build
 #+end_src
 
-#+name: upload
+#+name: push
 #+begin_src sh :task yes :doc "Upload the built image to Docker Hub"
-  # et build.org upload
+  # et build.org push
   docker push jakubstastny/build
 #+end_src
 
