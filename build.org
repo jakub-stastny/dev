@@ -484,10 +484,10 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
     (fun #'write-source-list))
 
   ; For now, working on BizMentor.
-  (block "install Node.js" (package "nodejs"))
+  (block "install Node.js" (package "nodejs" "npm"))
 
   ; HACK: it doesn't belong here!
-  (block "install JRE & R" (package "default-jre" "r-base"))
+  (block "install JRE & R" (package "default-jre" "r-base" "rsync"))
 
   (block "Download ET"
     (run "mkdir -p $HOME/.local/share/et")
