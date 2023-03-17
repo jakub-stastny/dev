@@ -4,16 +4,15 @@
 #+HTML_HEAD: <script>document.addEventListener('DOMContentLoaded', (e) => document.querySelector('a').href = "../")</script>
 #+TITLE: My development environment image
 
-* TODO
-Integrate ET for builds.
-
 #+name: build
-#+begin_src sh :task yes :doc "..."
+#+begin_src sh :task yes :doc "Build the Docker image"
+  # et build.org build
   docker build -t jakubstastny/build
 #+end_src
 
 #+name: upload
-#+begin_src sh :task yes :doc "..."
+#+begin_src sh :task yes :doc "Upload the built image to Docker Hub"
+  # et build.org upload
   docker push jakubstastny/build
 #+end_src
 
@@ -491,7 +490,10 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 
   (block "Download ET"
     (run "mkdir -p $HOME/.local/share/et")
-    (run " wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $HOME/.local/share/et"))
+    (run "wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $HOME/.local/share/et"))
+
+  (block "Create ~/.ssh"
+    (run "mkdir ~/.ssh && chmod 700 ~/.ssh"))
 #+end_src
 
 ** Time zone
