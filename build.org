@@ -56,10 +56,10 @@ ENV TERM=xterm-256color
 https://wiki.archlinux.org/title/XDG_Base_Directory
 
 #+begin_src dockerfile
-ENV XDG_CONFIG_HOME=$HOME/.config
-ENV XDG_CACHE_HOME=$HOME/.cache
-ENV XDG_DATA_HOME=$HOME/.local/share
-ENV XDG_STATE_HOME=$HOME/.local/state
+ENV XDG_CONFIG_HOME=/root/.config
+ENV XDG_CACHE_HOME=/root/.cache
+ENV XDG_DATA_HOME=/root/.local/share
+ENV XDG_STATE_HOME=/root/.local/state
 
 RUN mkdir -p $XDG_CONFIG_HOME $XDG_CACHE_HOME $XDG_DATA_HOME $XDG_STATE_HOME
 #+end_src
