@@ -491,9 +491,6 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
   (block "Download ET"
     (run "mkdir -p $HOME/.local/share/et")
     (run "wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $HOME/.local/share/et"))
-
-  (block "Create ~/.ssh"
-    (run "mkdir ~/.ssh && chmod 700 ~/.ssh"))
 #+end_src
 
 ** Time zone
