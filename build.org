@@ -142,6 +142,8 @@ RUN /build/install-gh-cli
 
 ADD scripts/install-deno /build/install-deno
 RUN /build/install-deno
+ENV DENO_INSTALL /root/.deno
+ENV PATH $PATH:$DENO_INSTALL/bin
 
 ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
 RUN /build/make-zsh-the-default-shell
@@ -463,6 +465,7 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
 #+begin_src clojure :tangle scripts/add-node-sources
   <<bb-helpers>>
 
+  (run "apt-get update")
   (package "lsb-core") ; The distro helper requires this, it's not installed by default anymore.
 
   (def version "node_19.x")
@@ -489,8 +492,9 @@ This script is based on the [[https://github.com/nodesource/distributions][NodeS
   (block "install JRE & R" (package "default-jre" "r-base" "rsync"))
 
   (block "Download ET"
-    (run "mkdir -p $HOME/.local/share/et")
-    (run "wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $HOME/.local/share/et"))
+    (let [et-home (str "$XDG_DATA_HOME/et")]
+      (run (str  "mkdir -p " et-home))
+      (run (str "wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P " et-home))))
 #+end_src
 
 ** Time zone

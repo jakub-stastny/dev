@@ -26,8 +26,6 @@ We can manage these images either manually, or with [[https://github.com/jakub-s
 Or babashka version (exec)
 or both.
 
-** TODO Deno
-
 * My specific use-case
 
 I use iPad Pro as my main work machine and I work on my VPS, since Linux really is what I want as my development environment.
