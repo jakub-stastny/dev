@@ -4,6 +4,13 @@
 #+HTML_HEAD: <script>document.addEventListener('DOMContentLoaded', (e) => document.querySelector('a').href = "../")</script>
 #+TITLE: My development environment image
 
+* TODO Should I have interactive (DPM) vs non-interactive (CI) image?
+- jakubstastny/base & jakubstastny/dev
+- Woukd be easy to do so with ~base-package~ vs. ~int-package~.
+  - or just inherit the Dockerfile, even better
+- Not sure whether it's necessary though. We need Emacs either way.
+  htop, unminimise, gh-cli
+
 #+name: build
 #+begin_src sh :task yes :doc "Build the Docker image"
   # et build.org build
@@ -74,6 +81,8 @@ This has less importance now, since we switched to connecting to the image direc
 ENV PATH="/root/.scripts:${PATH}"
 #+end_src
 
+*** TODO Should this go with dotfiles?
+
 ** Update APT cache and upgrade packages
 
 #+begin_src dockerfile
@@ -116,11 +125,11 @@ I don't do =ADD /build=, since any change in any of the files invalidates Docker
 ADD scripts/unminimise-system /build/unminimise-system
 RUN /build/unminimise-system
 
-ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
-RUN /build/install-emacs-dependencies
+# ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
+# RUN /build/install-emacs-dependencies
 
-ADD scripts/build-emacs /build/build-emacs
-RUN /build/build-emacs
+# ADD scripts/build-emacs /build/build-emacs
+# RUN /build/build-emacs
 
 ADD scripts/install-basic-tools /build/install-basic-tools
 RUN /build/install-basic-tools
@@ -453,7 +462,7 @@ Package =expect-dev= is for autologin scripts.
 
   (block "installing basic tools"
     (package "locales" "automake" "htop" "curl" "wget" "git" "silversearcher-ag"
-             "neovim" "docker.io" "tmux" "tree" "expect-dev" "rlwrap"))
+             "neovim" "docker.io" "tmux" "tree" "expect-dev" "rlwrap" "git" "emacs-nox"))
 #+end_src
 
 ** Node.js & Yarn sources
