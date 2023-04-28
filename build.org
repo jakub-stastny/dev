@@ -335,9 +335,6 @@ RUN /build/install-dotfiles
 ADD scripts/install-clojure-cli /build/install-clojure-cli
 RUN /build/install-clojure-cli
 
-ADD scripts/install-gh-cli /build/install-gh-cli
-RUN /build/install-gh-cli
-
 ADD scripts/install-deno /build/install-deno
 RUN /build/install-deno
 ENV DENO_INSTALL /root/.deno
@@ -369,19 +366,6 @@ ARG DOCKER_IMAGE_BUILD_DATE
 
 ENV DOCKER_IMAGE_GIT_SHA=$DOCKER_IMAGE_GIT_SHA
 ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
-#+end_src
-
-** Run OpenSSH server
-
-This allows us to connect directly, rather than having to go through the host machine.
-
-On the flip side, it render many declarations made in the project =Dockerfile= useless: namely =ENV= and =WORKDIR= declarations.
-
-Just redefine =SSHD_PORT= for each of the project images, so that they don't clash and you'll be able to connect straight to the running image from your SSH terminal.
-
-#+begin_src dockerfile
-ENV SSHD_PORT=2222
-CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 #+end_src
 
 ** The build scripts
@@ -428,15 +412,13 @@ CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 
 *** Install basic tools
 
-Package =expect-dev= is for autologin scripts.
-
 #+begin_src clojure :tangle scripts/install-basic-tools
-  <<bb-helpers>>
+    <<bb-helpers>>
 
-  (block "installing basic tools"
-    (package "locales" "automake" "htop" "curl" "wget" "git" "silversearcher-ag"
-             "neovim" "docker.io" "tmux" "tree" "expect-dev" "rlwrap" "git" "emacs-nox"))
+    (block "installing basic tools"
+      (package "locales" "automake" "curl" "wget" "git" "docker.io"))
 #+end_src
+
 
 *** Node.js & Yarn sources
 
@@ -644,6 +626,12 @@ FROM jakubstastny/base:latest
 
 ADD scripts/unminimise-system /build/unminimise-system
 RUN /build/unminimise-system
+
+ADD scripts/install-dev-tools /build/install-dev-tools
+RUN /build/install-dev-tools
+
+ADD scripts/install-gh-cli /build/install-gh-cli
+RUN /build/install-gh-cli
 #+end_src
 
 ** The build scripts
@@ -682,4 +670,27 @@ Gives =Reinstallation of gh is not possible, it cannot be downloaded.=, so GH CL
   (block "unminimising the system"
     (package "man")
     (run "yes | unminimize"))
+#+end_src
+*** Install dev tools
+
+Package =expect-dev= is for autologin scripts.
+
+#+begin_src clojure :tangle scripts/install-dev-tools
+  <<bb-helpers>>
+
+  (block "installing dev tools"
+    (package "htop" "silversearcher-ag" "neovim" "tmux" "tree" "expect-dev" "rlwrap"))
+#+end_src
+
+** Run OpenSSH server
+
+This allows us to connect directly, rather than having to go through the host machine.
+
+On the flip side, it render many declarations made in the project =Dockerfile= useless: namely =ENV= and =WORKDIR= declarations.
+
+Just redefine =SSHD_PORT= for each of the project images, so that they don't clash and you'll be able to connect straight to the running image from your SSH terminal.
+
+#+begin_src dockerfile
+ENV SSHD_PORT=2222
+CMD /usr/sbin/sshd -p $SSHD_PORT -D -e
 #+end_src
