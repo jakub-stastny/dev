@@ -6,13 +6,13 @@
 
 #+name: build
 #+begin_src sh :task yes :doc "Build the Docker image"
-  # java -jar ~/.local/share/et/et.jar build.org build
+  # java -jar ~/.local/share/et/et.jar build.org build dev
   docker build . -f Dockerfile.${1:-base} -t jakubstastny/${1:-base}
 #+end_src
 
 #+name: push
 #+begin_src sh :task yes :doc "Upload the built image to Docker Hub"
-  # java -jar ~/.local/share/et/et.jar build.org push
+  # java -jar ~/.local/share/et/et.jar build.org push dev
   docker push jakubstastny/${1:-base}
 #+end_src
 
@@ -314,14 +314,20 @@ I purposedly want to leave the scripts in the build, as they might come in handy
 I don't do =ADD /build=, since any change in any of the files invalidates Docker cache.
 
 #+begin_src dockerfile
-ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
-RUN /build/install-emacs-dependencies
+#ADD scripts/install-emacs-dependencies /build/install-emacs-dependencies
+#RUN /build/install-emacs-dependencies
 
-ADD scripts/build-emacs /build/build-emacs
-RUN /build/build-emacs
+#ADD scripts/build-emacs /build/build-emacs
+#RUN /build/build-emacs
+
+ADD scripts/install-docker /build/install-docker
+RUN /build/install-docker
 
 ADD scripts/install-basic-tools /build/install-basic-tools
 RUN /build/install-basic-tools
+
+ADD scripts/download-et /build/download-et
+RUN /build/download-et
 
 ADD scripts/add-node-sources /build/add-node-sources
 RUN /build/add-node-sources
@@ -335,19 +341,16 @@ RUN /build/install-dotfiles
 ADD scripts/install-clojure-cli /build/install-clojure-cli
 RUN /build/install-clojure-cli
 
-ADD scripts/install-deno /build/install-deno
-RUN /build/install-deno
-ENV DENO_INSTALL /root/.deno
-ENV PATH $PATH:$DENO_INSTALL/bin
+#ADD scripts/install-deno /build/install-deno
+#RUN /build/install-deno
+#ENV DENO_INSTALL /root/.deno
+#ENV PATH $PATH:$DENO_INSTALL/bin
+
+ADD scripts/current-project /build/current-project
+RUN /build/current-project
 
 ADD scripts/make-zsh-the-default-shell /build/make-zsh-the-default-shell
 RUN /build/make-zsh-the-default-shell
-
-ADD scripts/secure-installation /build/secure-installation
-RUN /build/secure-installation
-
-ADD scripts/verify-installation /build/verify-installation
-RUN /build/verify-installation
 #+end_src
 
 ** Save build metadata
@@ -416,49 +419,49 @@ ENV DOCKER_IMAGE_BUILD_DATE=$DOCKER_IMAGE_BUILD_DATE
     <<bb-helpers>>
 
     (block "installing basic tools"
-      (package "locales" "automake" "curl" "wget" "git" "docker.io"))
+      (package "locales" "automake" "curl" "wget" "git" "emacs-nox"))
 #+end_src
 
+*** Install Docker
 
-*** Node.js & Yarn sources
+#+begin_src clojure :tangle scripts/install-docker
+  <<bb-helpers>>
 
-This script used to add Yarn sources as well, but starting from Yarn 2, the recommended way is to install Yarn per each project rather than system-wide. See the [[https://yarnpkg.com/getting-started/install][Yarn installation guide]].
+  (block "installing Docker dependencies"
+         (package "ca-certificates" "curl" "gnupg")
+         (let [key "/etc/apt/keyrings/docker.gpg"
+               gpg-url "https://download.docker.com/linux/ubuntu/gpg"
+               url "https://download.docker.com/linux/ubuntu"
+               list-path "/etc/apt/sources.list.d/docker.list"]
+           (run (str "install -m 0755 -d " (fs/parent key)))
+           (run (str "curl -fsSL " gpg-url " | gpg --dearmor -o " key))
+           (run (str "chmod a+r " key))
+           (run (str "echo \"deb [arch=$(dpkg --print-architecture) signed-by=" key "] " url " $(source /etc/os-release && echo $VERSION_CODENAME) stable\""
+                     " | tee " list-path))
+           (run (str "cat " list-path))
+           (run "apt-get update")
+           (package "docker-ce" "docker-ce-cli")))
+#+end_src
+
+*** Install ET
+
+#+begin_src clojure :tangle scripts/download-et
+  <<bb-helpers>>
+
+  (block "Download ET"
+    (let [et-home (str "$XDG_DATA_HOME/et")]
+      (run (str  "mkdir -p " et-home))
+      (run (str "wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P " et-home))))
+#+end_src
+
+*** Node.js sources
 
 This script is based on the [[https://github.com/nodesource/distributions][NodeSource installation guide]].
 
 #+begin_src clojure :tangle scripts/add-node-sources
   <<bb-helpers>>
 
-  (run "apt-get update")
-  (package "lsb-core") ; The distro helper requires this, it's not installed by default anymore.
-
-  (def version "node_19.x")
-  (def domain "https://deb.nodesource.com")
-
-  (defn get-key "Get NodeSource GPG key" []
-    (:body (curl/get (format "%s/gpgkey/nodesource.gpg.key" domain))))
-
-  (defn write-source-list "Add a new APT source list for NodeSource" []
-    (spit "/etc/apt/sources.list.d/nodesource.list"
-          (str/join "\n"
-                    [(format "deb %s/%s %s main" domain version (distro))
-                     (format "deb-src %s/%s %s main" domain version (distro))])))
-
-  (block "adding apt sources for Node.js"
-    (let [gpg-key (fun #'get-key)]
-      (run "apt-key add -" :in gpg-key))
-    (fun #'write-source-list))
-
-  ; For now, working on BizMentor.
-  (block "install Node.js" (package "nodejs" "npm"))
-
-  ; HACK: it doesn't belong here!
-  (block "install JRE & R" (package "default-jre" "r-base" "rsync"))
-
-  (block "Download ET"
-    (let [et-home (str "$XDG_DATA_HOME/et")]
-      (run (str  "mkdir -p " et-home))
-      (run (str "wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P " et-home))))
+  (run "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -")
 #+end_src
 
 *** Time zone
@@ -488,14 +491,27 @@ Let's not bother converting it into something more clojure-y as we're changing t
 #+begin_src clojure :tangle scripts/install-dotfiles
   <<bb-helpers>>
 
+  (defn- dotfiles [& args]
+    (str/join " " (apply conj ["git" "--git-dir=/root/.dotfiles.git"] args)))
+
   (block "installing dotfiles"
-    (run "mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/**:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh"))
+    (let [commands
+          ["mkdir ~/.ssh && chmod 700 ~/.ssh"
+           "ssh-keyscan github.com >> ~/.ssh/known_hosts"
+           "git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare"
+           (dotfiles "fetch")
+           "echo OK pre"
+           ;(dotfiles "branch" "--set-upstream-to=origin/master" "master")
+           "echo OK post"
+           (dotfiles "--work-tree=/root" "checkout")
+           "zsh ~/.scripts/hooks/dotfiles.install"
+           (dotfiles "remote" "set-url" "origin" "git@github.com:jakub-stastny/dotfiles.git")]]
+      (run (str/join " && " commands))))
+
+  ; mkdir .ssh && chmod 700 .ssh && git clone https://github.com/jakub-stastny/dotfiles.git .dotfiles.git --bare && git --git-dir=/root/.dotfiles.git config remote.origin.fetch '+refs/heads/**:refs/remotes/origin/*' && git --git-dir=/root/.dotfiles.git fetch && git --git-dir=/root/.dotfiles.git branch --set-upstream-to=origin/master master && git --git-dir=/root/.dotfiles.git --work-tree=/root checkout && ssh-keyscan github.com >> ~/.ssh/known_hosts && zsh ~/.scripts/hooks/dotfiles.install && git --git-dir=/root/.dotfiles.git remote set-url origin git@github.com:jakub-stastny/dotfiles.git && rm -rf ~/.ssh
 #+end_src
 
 **** Install literate dotfiles
-
-This has to be on one line, otherwise it gets exported with =emacs -Q --batch --eval= and =***/*.org= repeated for each line of the Emacs lisp code here.
-
 #+name: tangle-files
 #+begin_src elisp :tangle no
   (progn (dolist (file command-line-args-left) (with-current-buffer (find-file-noselect file) (org-babel-tangle))))
@@ -520,6 +536,7 @@ https://github.com/clojure/homebrew-tools/blob/master/Formula/clojure.rb
   <<bb-helpers>>
 
   (block "installing Clojure CLI"
+    (package "openjdk-17-jre")
     (let [script-name "linux-install.sh"
           script-url (str "https://download.clojure.org/install/" script-name)]
       (run (str "wget --quiet " script-url))
@@ -588,6 +605,16 @@ Alternatively we could pass =echo "root:$(tr -dc A-Za-z0-9 </dev/urandom | head 
 
 The biggest difference is whether we want to show the password in the logs or not. Also the Clojure version is more readable.
 
+*** Install dependencies for the current project
+
+#+begin_src clojure :tangle scripts/current-project
+  <<bb-helpers>>
+
+  (block "install BizMentor dependencies"
+    (run "apt-get update")
+    (package "nodejs" "r-base"))
+#+end_src
+
 *** Verify the installation
 
 Verify the image as the last step of the build. This way we can never push corrupted image which we forgot to test.
@@ -627,11 +654,20 @@ FROM jakubstastny/base:latest
 ADD scripts/unminimise-system /build/unminimise-system
 RUN /build/unminimise-system
 
+ADD scripts/install-ssh-key /build/install-ssh-key
+RUN /build/install-ssh-key
+
 ADD scripts/install-dev-tools /build/install-dev-tools
 RUN /build/install-dev-tools
 
 ADD scripts/install-gh-cli /build/install-gh-cli
 RUN /build/install-gh-cli
+
+ADD scripts/secure-installation /build/secure-installation
+RUN /build/secure-installation
+
+ADD scripts/verify-installation /build/verify-installation
+RUN /build/verify-installation
 #+end_src
 
 ** The build scripts
@@ -680,6 +716,15 @@ Package =expect-dev= is for autologin scripts.
 
   (block "installing dev tools"
     (package "htop" "silversearcher-ag" "neovim" "tmux" "tree" "expect-dev" "rlwrap"))
+#+end_src
+
+*** Install SSH key
+
+#+begin_src clojure :tangle scripts/install-ssh-key
+  <<bb-helpers>>
+
+  (block "installing SSH key"
+    (run "test -d ~/.ssh || (mkdir ~/.ssh && chmod 700 ~/.ssh) && echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCe5WreqccV7LRRauK/wWrgegK3Tk9GVrzAfftJEArIwcqYVM3znjTqYFs0X5SIXabI5afM3r62JQRfDaMFuyVCfCxSk+C7jPTvs0EmKDsYY8kFeYk65aQEvltdeEtShGWHM9LqjFjcM+hVNfkWglNG6f7TK3GkXnY+6ymotd2Xs5HZB0mj/n0gnnpZALSF/oFfh5DSQTotNzmluyJ0Vx9VN8V/1SPORBsrsguoXVr7EGgzg0fjuX2Gbp0rGLHaPBjmf6LqV3RTwb/Pu+uTLn74RcwJkTWjg8Deu8Oy/zZ08NI4CLSSItX+ZRiEkRF56zi5aCdHKt8Idekblu8EpYXf jakub@Jakubs-MacBook-Air.local' > ~/.ssh/authorized_keys"))
 #+end_src
 
 ** Run OpenSSH server
